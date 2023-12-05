@@ -1,0 +1,84 @@
+.container{
+    display: flex;
+    padding: 2rem 22.8rem;
+    gap: 14.8rem;
+}
+
+.product_gallery{
+    display: flex;
+    justify-content: center;
+    width: 84.4rem;
+    height: 73.4rem;
+    background-color: #fff;
+    border-radius: 1.1rem;
+    overflow: hidden;
+}
+
+
+.product-carousel .carousel-container {
+    width: 70%;  
+}
+
+.product_image{
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product_info{
+    padding: 1.6rem;
+    color: #000;
+    font-size: 1.6rem;
+    font-family: 'DaysOne';
+    width: 47.2rem;
+    height: 37.6rem;
+    background-color: #fff;
+}
+
+.product_name{
+    margin-bottom: 3rem;
+}
+
+.product_price{
+    color: #CA0D0D;
+    font-family: 'Normalidad';
+    font-weight: 700;
+    margin-bottom: 8rem;
+}
+
+.sizes-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+}
+
+.size-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8.2rem;
+    height: 5.6rem;
+    background-color: #0ABAB5;
+    border-radius: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.size-box:hover{
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transform: scale(1.05); 
+    border-color: #1a9cb7;
+}
+
+.buy-btn{
+    width: 27rem;
+    height: 4.5rem;
+    background-color: #D9D9D9;
+    border-radius: 0.5rem;
+    font: 1.6rem 'DaysOne';
+}
+
+.selected{
+    background-color: #000;
+    color: #0ABAB5;
+}

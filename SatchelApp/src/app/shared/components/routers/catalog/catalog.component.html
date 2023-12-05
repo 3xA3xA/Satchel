@@ -1,0 +1,20 @@
+<app-header></app-header>
+
+<div class="settings-bar"> 
+    <div>Фильтры</div>
+    <div>Сортировка</div>
+</div>
+
+<div class="container">
+    <div class="product" *ngFor="let product of products">
+      <img class="star" ngClass="active" src="" alt="">
+      <div class="product-image">
+        <app-carousel [images]="product.images"></app-carousel>
+      </div>
+      <div class="product-description" (click)="goToProduct(product.id)">
+        <h2 class="product-name">{{product.name}}</h2>
+        <p class="product-price">{{getFormattedPrice(product.price)}}</p>
+      </div>
+    </div>
+</div>
+<app-footer></app-footer>

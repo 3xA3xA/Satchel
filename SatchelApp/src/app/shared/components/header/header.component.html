@@ -1,0 +1,26 @@
+<header>
+    <div class="container">
+      <a routerLink="">
+        <div class="header_logo">
+          SATCHEL
+        </div>
+      </a>
+  
+      <nav class="header_navigation">
+        <ul class="header_nav-list">
+          <li class="header_nav-list__item"><a routerLink="">Информация</a></li>
+          <li class="header_nav-list__item"><a routerLink="/catalog">Одежда</a></li>
+          <li class="header_nav-list__item"><a>Обувь</a></li>
+          <li class="header_nav-list__item"><a>Аксессуары</a></li>  
+        </ul>
+      </nav>
+  
+      <div class="header_icons">
+        <a class="header_icons__item" routerLink="/favourites"><img src="./assets/images/icons/favourites.svg" alt="Favorites"></a>
+        <a class="header_icons__item" routerLink="/cart"><img src="./assets/images/icons/bag.svg" alt="Cart"></a>
+        <!-- <a class="header_icons__item" routerLink="/profile"><img src="./assets/images/icons/personalArea.svg" alt="My Account"></a> -->
+        <a class="header_icons__item" (click)="openAuthWindow()"><img src="./assets/images/icons/personalArea.svg" alt="My Account"></a>
+      </div>
+
+    </div>
+</header>

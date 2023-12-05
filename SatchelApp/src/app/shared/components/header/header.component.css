@@ -1,0 +1,48 @@
+
+.container{
+    display: flex;
+    padding: 2rem 22.8rem;
+    width: 100%;
+    height: 12rem;
+    background-color: #000;
+}
+
+.header_logo{
+    font-size: 6.2rem;
+    font-family: 'DaysOne', sans-serif;
+    color: #0ABAB5;
+    margin-right: 14.8rem;
+}
+
+.header_navigation{
+    display: flex;
+    align-items: center;
+    margin-right: 18.7rem;
+}
+
+.header_nav-list{
+    display: flex;
+    justify-content: center;
+    gap: 2.4rem;
+}
+
+.header_nav-list__item{
+    font-size: 1.4rem;
+    font-family: 'DaysOne', sans-serif;
+}
+
+.header_nav-list__item a{
+    color: #0ABAB5;
+}
+
+.header_icons{
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 8.4rem;
+}
+
+.header_icons__item{
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+}
