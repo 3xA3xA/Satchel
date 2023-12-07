@@ -16,6 +16,7 @@
     background: white;
     width: 50rem;
     height: 50rem;
+    padding: 3.5rem 5.2rem;
     border: 0.5rem solid #0ABAB5;
     border-radius: 5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,6 +30,10 @@
     margin-bottom: 20px;
     font-family: 'DaysOne', sans-serif;
     font-size: 4rem;
+    color: black;
+  }
+
+  .title{
     color: black;
   }
   

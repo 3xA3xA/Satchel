@@ -10,6 +10,11 @@
          url('./assets/fonts/NormalidadText/NormalidadCompact-Thin.woff2') format('woff2')
 }
 
+@font-face {
+    font-family: 'EricaOne';
+    src: url('./assets/fonts/EricaOne/Erica-One.woff') format('woff')
+}
+
 html{
     box-sizing: border-box;
     font-size: calc(100vw / 1920 * 10);

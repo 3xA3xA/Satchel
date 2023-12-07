@@ -1,14 +1,15 @@
 <!-- app.component.html -->
-<div class="overlay">
+<div class="overlay" >
     <div class="registration-form">
       
-      <h2>Форма Регистрации</h2>
+      <h2>Satchel ID</h2>
       <form>
-        <input type="text" placeholder="Email" required>
-        <input type="text" placeholder="Имя" required>
-        <input type="password" placeholder="Пароль" required>
-        <button type="submit">Зарегистрироваться</button>
-        <button (click)="closeAuthWindow()">Закрыть</button>
+        <p class="title"> {{ step$.title }} </p>
+
+        <input *ngFor="let field of step$.fields" placeholder="{{field.name}}">
+
+        <button type="button" class="mainBtn" (click)="nextStep()">Войти</button>
+        <button type="button" class="secondaryBtn" (click)="nextStep()">Зарегестрироваться</button>
       </form>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { AuthorizationService, Step } from 'src/app/core/services/authorization.service';
+import { switchMap, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-auth-window',
@@ -8,7 +9,30 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 })
 export class AuthWindowComponent {
 
+  title = 'Что-то не так'
+
+  step$ = this.registrationService.step;
+
+  ngOnInit() {
+    this.registrationService.stepChange.subscribe(() => {
+      this.updateStep(); 
+    });
+
+  }  
+
   constructor(private registrationService: AuthorizationService) { }
+
+  updateStep() {
+    this.step$ = this.registrationService.step; 
+  }
+
+  nextStep(): void {
+    this.registrationService.next()
+  }
+
+  prevStep(): void {
+    this.registrationService.prev()
+  }
 
   closeAuthWindow( ): void {
       this.registrationService.closeAuthWindow();
