@@ -9,7 +9,6 @@ import { AuthorizationService, IUser } from 'src/app/core/services/authorization
 export class AuthWindowComponent {
 
   step$ = this.registrationService.step;
-
   email: string = '';
   password: string = '';
 
@@ -17,7 +16,6 @@ export class AuthWindowComponent {
     this.registrationService.stepChange.subscribe(() => {
       this.updateStep(); 
     });
-
   }  
 
   constructor(private registrationService: AuthorizationService) { }
@@ -49,7 +47,8 @@ export class AuthWindowComponent {
   }
   
   registration() : void{
-    if (this.email || this.password)
+
+    if (this.email && this.password)
     {
       this.registrationService.registation(this.email, this.password, 0).subscribe(
         (user: IUser) => {
@@ -65,11 +64,19 @@ export class AuthWindowComponent {
     }  
   }
 
-  closeAuthWindow( ): void {
+  public onBgClick(event: any) {
+    // проверка цели клика
+    if (!event.target.classList.contains('registration-form')) { 
+      // если кликнули не по форме - закрываем
+      this.closeAuthWindow();
+    } 
+  }
+
+  closeAuthWindow(): void {
       this.registrationService.closeAuthWindow();
    }
 
-   onEmailChange(event: any): void {
+  onEmailChange(event: any): void {
     this.email = event.target.value;
   }
 

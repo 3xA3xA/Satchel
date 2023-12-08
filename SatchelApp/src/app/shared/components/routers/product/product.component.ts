@@ -20,8 +20,6 @@ export class ProductComponent implements OnInit {
     } else {
       this.selectedSize = size;
     }
-
-    console.log('Selected size:', this.selectedSize);
   }
 
   constructor( private route: ActivatedRoute, private productService: ProductService) { }
@@ -33,7 +31,6 @@ export class ProductComponent implements OnInit {
     this.productService.getProductById(this.id).subscribe(
       (product) => {
         this.product = product;
-        console.log(product);
       },
       (error) => {
         console.error('Error fetching product by ID:', error);

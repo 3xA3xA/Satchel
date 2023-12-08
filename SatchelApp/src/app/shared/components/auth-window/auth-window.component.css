@@ -1,64 +1,95 @@
 
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .registration-form {
-    background: white;
-    width: 50rem;
-    height: 50rem;
-    padding: 3.5rem 5.2rem;
-    border: 0.5rem solid #0ABAB5;
-    border-radius: 5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display:  flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .registration-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'DaysOne', sans-serif;
-    font-size: 4rem;
-    color: black;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .title{
-    color: black;
-  }
-  
-  .registration-form form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .registration-form input {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .registration-form button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .registration-form button:hover {
-    background-color: #0056b3;
-  }
-  
+.registration-form {
+  background: white;
+  width: 50rem;
+  height: 50rem;
+  padding: 3.5rem 5.2rem;
+  border: 0.5rem solid #0ABAB5;
+  border-radius: 5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display:  flex;
+  flex-direction: column;
+}
+
+.registration-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'DaysOne', sans-serif;
+  font-size: 4rem;
+  color: black;
+}
+
+.title{
+  margin-bottom: 2rem;
+  color: black;
+  font: 2rem 'DaysOne', sans-serif;
+  color: black;
+  margin-bottom: 2rem;
+}
+
+.form-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.input-group{
+  margin-bottom: 3.5rem;
+}
+
+.form-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #0ABAB5;
+  border-radius: 5px;
+  color: #fff;
+  font: 2rem 'DaysOne', sans-serif;
+  caret-color: #0ABAB5;
+  background: #D9D9D9;
+}
+
+.form-input::placeholder{
+  color: #fff;
+}
+
+.btn {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  font: 2rem 'DaysOne', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.mainBtn{
+  background-color: #0ABAB5;
+  color: white;
+  margin-bottom: 1.2rem;
+}
+
+.mainBtn:hover{
+  color: #0ABAB5;
+  background-color: #000;
+}
+
+.secondaryBtn{
+  color: #D9D9D9;
+}
+
+.secondaryBtn:hover{
+  color: #000;
+}
+

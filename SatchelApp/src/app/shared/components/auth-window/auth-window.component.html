@@ -1,14 +1,18 @@
-<div class="overlay" >
-    <div class="registration-form">
-      
-      <h2>Satchel ID</h2>
-      <form>
-        <p class="title"> {{ step$.title }} </p>
+<div class="overlay" (click)="onBgClick($event)">
 
-        <input *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
+  <div class="registration-form" (click)="$event.stopPropagation()">
+    
+    <h2>Satchel ID</h2>
+    <form class="form-details">
+      <p class="title"> {{ step$.title }} </p>
 
-        <button type="button" class="mainBtn" (click)="login()">Войти</button>
-        <button type="button" class="secondaryBtn" (click)="registration()">Зарегестрироваться</button>
-      </form>
-    </div>
+      <div class="input-group">
+        <input class="form-input" *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
+      </div>
+
+      <button type="button" class="mainBtn btn" (click)="login()">Войти</button>
+      <button type="button"  class="secondaryBtn btn" (click)="registration()">Зарегестрироваться</button>
+    </form>
+  </div>
+
 </div>
