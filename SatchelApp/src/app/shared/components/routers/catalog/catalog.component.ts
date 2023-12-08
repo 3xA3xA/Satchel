@@ -1,5 +1,5 @@
 import { Component, Input, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/core/services/product.service';
 
 export default interface Product{
@@ -22,20 +22,22 @@ export default interface Product{
 })
 export class CatalogComponent implements OnInit{
 
-  constructor(private router: Router, private productService: ProductService) { }
+  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) { }
 
   products : Product[] = [];
 
   ngOnInit() {
-    this.productService.getAllClothes().subscribe(
-      (productsFromQuery: Product[]) => {
-        this.products = productsFromQuery;
-        console.log(this.products[0].images);
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
+    this.route.params.subscribe(params => {
+      let productType : string = params['item'];
+      this.productService.getAllClothes(productType).subscribe(
+        (productsFromQuery: Product[]) => {
+          this.products = productsFromQuery;
+        },
+        (error) => {
+          console.error('Error fetching products', error);
+        }
+      );
+    });
   }
 
   goToProduct(id: number) {

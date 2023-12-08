@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using SatchelAPI.Application.Models;
 
 namespace Satchel.Application.Models;
-
 public class Product
 {
     [Key]
@@ -17,6 +16,7 @@ public class Product
 
     [Precision(18, 2)]
     public required decimal Price { get; set; }
+    public ICollection<ProductImages>? ProductImages { get; set; }
     public required int BrandTypeId { get; set; }
     public required int GenderTypeId { get; set; }
     public required int SizeTypeId { get; set; }
@@ -44,5 +44,4 @@ public class Product
 
     [InverseProperty(nameof(ShoppingCart.Product))]
     public required ICollection<ShoppingCart> ShoppingCarts { get; set; }
-    public ICollection<ProductImages>? ProductImages { get; set; } // возможно - кривое поле. я хз
 }

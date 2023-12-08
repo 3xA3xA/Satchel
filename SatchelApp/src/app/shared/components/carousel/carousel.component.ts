@@ -18,7 +18,6 @@ export class CarouselComponent {
     if(this.autoslide){
       this.autoSlideImage()
     }
-    console.log(this.images);
   }
 
   autoSlideImage(): void{

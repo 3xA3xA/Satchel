@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'cart', component: CartPageComponent},
   {path: 'favourites', component:FavouritesPageComponent},
   {path: 'profile', component: UserPageComponent},
-  {path: 'catalog', component: CatalogComponent},
+  {path: 'catalog/:item', component: CatalogComponent},
   {path: 'catalog/product/:id', component: ProductComponent}
 ];
 

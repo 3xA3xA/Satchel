@@ -1,4 +1,3 @@
-<!-- app.component.html -->
 <div class="overlay" >
     <div class="registration-form">
       
@@ -6,11 +5,10 @@
       <form>
         <p class="title"> {{ step$.title }} </p>
 
-        <input *ngFor="let field of step$.fields" placeholder="{{field.name}}">
+        <input *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
 
-        <button type="button" class="mainBtn" (click)="nextStep()">Войти</button>
-        <button type="button" class="secondaryBtn" (click)="nextStep()">Зарегестрироваться</button>
+        <button type="button" class="mainBtn" (click)="login()">Войти</button>
+        <button type="button" class="secondaryBtn" (click)="registration()">Зарегестрироваться</button>
       </form>
     </div>
-  </div>
-  
+</div>
