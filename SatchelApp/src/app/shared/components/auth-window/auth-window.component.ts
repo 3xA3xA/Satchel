@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthorizationService, IUser } from 'src/app/core/services/authorization.service';
+import { AuthorizationService} from 'src/app/core/services/authorization.service';
+import { IUser } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-auth-window',
@@ -9,8 +10,10 @@ import { AuthorizationService, IUser } from 'src/app/core/services/authorization
 export class AuthWindowComponent {
 
   step$ = this.registrationService.step;
+
   email: string = '';
   password: string = '';
+  userTypeName: string = 'Admin';
 
   ngOnInit() {
     this.registrationService.stepChange.subscribe(() => {
@@ -24,33 +27,25 @@ export class AuthWindowComponent {
     this.step$ = this.registrationService.step; 
   }
 
-  login(): void {
+  handleUserLogin(): void {
     if (this.email && this.password) {
-      this.registrationService.login(this.email, this.password).subscribe(
+      this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
         (user: IUser) => {
           console.log(user); // поменять обработку тут и в error
         },
         error => {
           console.log(error);
-          this.email = this.password = '';
-          this.registrationService.resetSteps();
         }
       );
-    }
-    else {
-      if (this.email) // полная уйня, если есть логин но нет пароля - редирект на регистрацию - вообще отказаться от ++
-      {
-        this.registrationService.currentStep++;
-        this.updateStep();
-      }     
-    }
+    } // можно дописать логику для else, чтобы выдать валидацию 
   }
   
-  registration() : void{
+  handleUserRegistration() : void {
+    this.registrationService.goToRegistration();
 
-    if (this.email && this.password)
+    if (this.email && this.password && this.userTypeName)
     {
-      this.registrationService.registation(this.email, this.password, 0).subscribe(
+      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: IUser) => {
           console.log(user); // поменять обработку тут и в error
         },
@@ -58,16 +53,11 @@ export class AuthWindowComponent {
           console.log(error);
         }
       );
-    }
-    else{
-      this.registrationService.goToRegistration();
-    }  
+    }// можно дописать логику для else, чтобы выдать валидацию 
   }
 
   public onBgClick(event: any) {
-    // проверка цели клика
     if (!event.target.classList.contains('registration-form')) { 
-      // если кликнули не по форме - закрываем
       this.closeAuthWindow();
     } 
   }

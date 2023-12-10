@@ -10,8 +10,8 @@
         <input class="form-input" *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
       </div>
 
-      <button type="button" class="mainBtn btn" (click)="login()">Войти</button>
-      <button type="button"  class="secondaryBtn btn" (click)="registration()">Зарегестрироваться</button>
+      <button type="button" class="mainBtn btn" (click)="handleUserLogin()">Войти</button>
+      <button type="button"  class="secondaryBtn btn" (click)="handleUserRegistration()">Зарегестрироваться</button>
     </form>
   </div>
 

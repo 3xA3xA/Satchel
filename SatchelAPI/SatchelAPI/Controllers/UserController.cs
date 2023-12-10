@@ -11,6 +11,7 @@ using Satchel.Application.Models;
 using Satchel.Infrastructure;
 using SatchelAPI.Application.Models;
 using SatchelAPI.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace SatchelAPI.Controllers
@@ -25,48 +26,18 @@ namespace SatchelAPI.Controllers
             _context = context;
         }
 
-        private IActionResult CheckValidData(UserDTO data) // вынести бы!
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Неверные данные пользователя");
-            }
-
-            int userTypeId = data.UserTypeId;
-            if (data.UserTypeId == 0)
-            {
-                Console.Out.WriteLine(data.Email);
-                userTypeId = _context.User.FirstOrDefault(e => e.Email == data.Email).UserTypeId;
-            }
-
-            UserType? userType = _context.UserTypes.Find(userTypeId);           
-
-            if (userType == null)
-            {
-                return BadRequest("Тип пользователя не существует");
-            }
-            if (data.UserTypeId != 0 && UserExists(data.Email)) // дурацкая проверка
-            {
-                return BadRequest("Пользователь с таким email уже существует");
-            }
-
-            return Ok();
-        }
-
         [HttpPost, ActionName("LoginUser")]
         [Route("api/LoginUser")]
         //[ValidateAntiForgeryToken] - это важная штука, после настроим
-        public async Task<IActionResult> LoginUser([FromBody] UserDTO userData)
+        public IActionResult LoginUser([FromBody] UserDTO userData)
         {
-            var validationAnswer = CheckValidData(userData);
-            await Console.Out.WriteLineAsync("После валидации");
-            if (validationAnswer is OkResult)
+            if (ModelState.IsValid)
             {
-                await Console.Out.WriteLineAsync("WROK");
+                //здесь не сделал проверку на правильный логин и пароль
                 return Ok(userData);
             }
 
-            return validationAnswer;
+            return BadRequest("Неверные данные пользователя");
         }
 
 
@@ -75,31 +46,34 @@ namespace SatchelAPI.Controllers
         //[ValidateAntiForgeryToken] - это важная штука, после настроим
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userData)
         {
-            UserType? userType = _context.UserTypes.Find(userData.UserTypeId);
-
-            var validationAnswer = CheckValidData(userData);
-
-            if ( validationAnswer is OkResult)
+            if (!ModelState.IsValid)
             {
-                User newUser = new User
-                {
-                    Email = userData.Email,
-                    Password = userData.Password,
-                    UserTypeId = userData.UserTypeId,
-                    UserType = userType,
-                    Feedbacks = new List<Feedback>(),
-                    Orders = new List<Order>(),
-                    Favourites = new List<Favourites>(),
-                    ShoppingCarts = new List<ShoppingCart>(),
-                };
-
-                newUser.Password = UserService.HashPassword(newUser.Password);
-                _context.Add(newUser);
-                await _context.SaveChangesAsync();
-                return Ok(userData);
+                return BadRequest("Неверные данные пользователя");
             }
 
-            return validationAnswer;
+            if (UserExists(userData.Email))
+            {
+                return BadRequest("Пользователь с таким email уже существует");
+            }
+
+            UserType userType = _context.UserTypes.FirstOrDefault(ut => ut.Name == userData.UserTypeName);
+
+            User newUser = new User
+            {
+                Email = userData.Email,
+                Password = userData.Password,
+                UserTypeId = userType.UserTypeId,
+                UserType = userType,
+                Feedbacks = new List<Feedback>(),
+                Orders = new List<Order>(),
+                Favourites = new List<Favourites>(),
+                ShoppingCarts = new List<ShoppingCart>(),
+            };
+
+            //newUser.Password = UserService.HashPassword(newUser.Password);
+            _context.Add(newUser);
+            await _context.SaveChangesAsync();
+            return Ok(userData);
         }
 
         private bool UserExists(string email)

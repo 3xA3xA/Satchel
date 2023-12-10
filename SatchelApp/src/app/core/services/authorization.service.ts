@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { IUser } from './user.service';
 
 export interface Step {
   title: string;
@@ -9,12 +9,6 @@ export interface Step {
     name: string;
     type: string;
   }[] 
-}
-
-export interface IUser {
-  email : string;
-  password: string;
-  userType: number;
 }
 
 @Injectable({
@@ -32,14 +26,9 @@ export class AuthorizationService {
 
   steps: Step[] = [
     {
-      title: 'Введите email',
+      title: 'Вход в аккаунт',
       fields: [
-        {name: 'email', type: 'email'}  
-      ]
-    },
-    {
-      title: 'Введите пароль',
-      fields: [
+        {name: 'email', type: 'email'},
         {name: 'password', type: 'password'} 
       ]
     },
@@ -57,37 +46,21 @@ export class AuthorizationService {
     return this.steps[this.currentStep]; 
   }
 
-  login(email?: string, password?: string): Observable<IUser> {
-    this.currentStep = 1; 
-    this.stepChange.next(this.currentStep); 
-  
-    if (email && password)
-    {
-      this.resetSteps();
-      this.closeAuthWindow();
-      const user = {
-        email: email,
-        password: password
-      };
-      return this.http.post<IUser>(this.apiUrl + '/LoginUser', user);
-    }
-    return of({email: '', password: '', userType: 0}); //пустой
+  sendLoginRequestToBackend(email: string, password: string): Observable<IUser> {
+    this.closeAuthWindow();
+    const user = { //поменять
+      email: email,
+      password: password
+    };
+    return this.http.post<IUser>(this.apiUrl + '/LoginUser', user);   
   }
 
-  registation(email : string, password : string, userTypeId : number){
-    this.currentStep = 2;
-    this.stepChange.next(this.currentStep); 
-
+  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) {
     //перепутаны поля password и нижнее для типа аккаунта
-    console.log(email, password)
+    console.log(email, password);
 
-    if (email && password)
-    {
-      this.resetSteps();
-      this.closeAuthWindow();
-      return this.addNewUser(email, password, 1);
-    }
-    return of({email: '', password: '', userType: userTypeId}); //пустой
+    this.closeAuthWindow();
+    return this.addNewUser(email, password, userTypeName);
   }
   
   resetSteps() {
@@ -96,7 +69,7 @@ export class AuthorizationService {
   }  
 
   goToRegistration(){
-    this.currentStep = 2; 
+    this.currentStep = 1; 
     this.stepChange.next(this.currentStep); 
   }
 
@@ -105,15 +78,17 @@ export class AuthorizationService {
   }
 
   closeAuthWindow() : void{
+    this.resetSteps();
     this.isRegistrationOpen = false;
   }
 
-  addNewUser(email: string, password: string, userTypeId: number): Observable<IUser> {
+  addNewUser(email: string, password: string, userTypeName: string): Observable<IUser> {
     const user = {
       email: email,
       password: password,
-      userTypeId: userTypeId
+      userTypeName: userTypeName
     };
+    console.log('уже создаем');
     return this.http.post<IUser>(this.apiUrl + '/CreateUser', user);
   }
 }
