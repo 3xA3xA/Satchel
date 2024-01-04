@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { IUser } from 'src/app/core/services/user.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class AuthWindowComponent {
     });
   }  
 
-  constructor(private registrationService: AuthorizationService) { }
+  constructor(private registrationService: AuthorizationService, private userService: UserService) { }
 
   updateStep() {
     this.step$ = this.registrationService.step; 
@@ -32,6 +33,7 @@ export class AuthWindowComponent {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
         (user: IUser) => {
           console.log(user); // поменять обработку тут и в error
+          this.userService.setAuthorizedStatus()
         },
         error => {
           console.log(error);
@@ -47,6 +49,8 @@ export class AuthWindowComponent {
     {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: IUser) => {
+          this.userService.setAuthorizedStatus()
+          console.log(this.userService.isAuthorized)
           console.log(user); // поменять обработку тут и в error
         },
         error => {

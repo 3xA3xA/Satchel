@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,9 +11,16 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 })
 export class HeaderComponent {
 
-  constructor(private registrationService: AuthorizationService) { }
+  constructor(private registrationService: AuthorizationService, private userService: UserService, private router: Router) { }
 
   openAuthWindow() {
-    this.registrationService.openAuthWindow();
+
+    console.log(this.userService.isAuthorized)
+
+    if(this.userService.authorizedStatus){
+      this.router.navigate(['/profile']);
+    } else{
+      this.registrationService.setAuthWindowStatus();
+    }
   }
 }

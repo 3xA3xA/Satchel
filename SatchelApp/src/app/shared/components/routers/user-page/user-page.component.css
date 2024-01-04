@@ -1,0 +1,35 @@
+.container{
+    padding: 5rem 22.8rem;
+}
+
+.dataSection{
+
+}
+
+.mainData{
+    display: flex;
+}
+
+.heading{
+    font: 2rem 'DaysOne', sans-serif;
+    margin-bottom: 1.1rem;
+}
+
+.blockName{
+    font: 1.6rem 'DaysOne', sans-serif;
+    margin-bottom: 1.6rem;
+}
+
+.fullnameInput{
+    width: 34.6rem;
+    height: 2.4rem;
+    background: #D9D9D9;
+}
+
+.fullNameList-item{
+    margin-bottom: 1.6rem
+}
+
+.fullNameList-item:last-child{
+    margin-bottom: 0
+}

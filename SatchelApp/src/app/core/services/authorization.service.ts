@@ -73,7 +73,7 @@ export class AuthorizationService {
     this.stepChange.next(this.currentStep); 
   }
 
-  openAuthWindow() : void {
+  setAuthWindowStatus() : void {
     this.isRegistrationOpen = true;
   }
 

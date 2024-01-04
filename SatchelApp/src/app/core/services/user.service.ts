@@ -12,5 +12,15 @@ export interface IUser {
 
 export class UserService {
 
+  isAuthorized = true
+
+  setAuthorizedStatus(){
+    this.isAuthorized = !this.isAuthorized;
+  }
+
+  get authorizedStatus(){
+    return this.isAuthorized
+  }
+
   constructor() { }
 }
