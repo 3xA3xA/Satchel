@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from './user.service';
+import {environment} from "../../../environments/environment";
 
 export interface Step {
   title: string;
   fields: {
     name: string;
     type: string;
-  }[] 
+  }[]
 }
 
 @Injectable({
@@ -18,7 +19,7 @@ export class AuthorizationService {
 
   constructor(private http: HttpClient) {}
 
-  private apiUrl = 'https://localhost:7082/api';
+  private apiUrl = `${environment.apiUrl}`;
 
   stepChange = new Subject();
   currentStep = 0;
@@ -29,7 +30,7 @@ export class AuthorizationService {
       title: 'Вход в аккаунт',
       fields: [
         {name: 'email', type: 'email'},
-        {name: 'password', type: 'password'} 
+        {name: 'password', type: 'password'}
       ]
     },
     {
@@ -39,11 +40,11 @@ export class AuthorizationService {
         {name: 'password', type: 'password'},
         {name: 'userTypeId', type: 'userTypeId'}
       ]
-    } 
+    }
   ]
 
   get step() {
-    return this.steps[this.currentStep]; 
+    return this.steps[this.currentStep];
   }
 
   sendLoginRequestToBackend(email: string, password: string): Observable<IUser> {
@@ -52,7 +53,7 @@ export class AuthorizationService {
       email: email,
       password: password
     };
-    return this.http.post<IUser>(this.apiUrl + '/LoginUser', user);   
+    return this.http.post<IUser>(this.apiUrl + '/LoginUser', user);
   }
 
   sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) {
@@ -62,15 +63,15 @@ export class AuthorizationService {
     this.closeAuthWindow();
     return this.addNewUser(email, password, userTypeName);
   }
-  
+
   resetSteps() {
-    this.currentStep = 0; 
-    this.stepChange.next(this.currentStep); 
-  }  
+    this.currentStep = 0;
+    this.stepChange.next(this.currentStep);
+  }
 
   goToRegistration(){
-    this.currentStep = 1; 
-    this.stepChange.next(this.currentStep); 
+    this.currentStep = 1;
+    this.stepChange.next(this.currentStep);
   }
 
   setAuthWindowStatus() : void {

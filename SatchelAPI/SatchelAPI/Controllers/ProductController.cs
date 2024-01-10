@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,11 @@ namespace SatchelAPI.Controllers
     public class ProductController : Controller
     {
         private readonly SatchelDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductController(SatchelDbContext context)
+        public ProductController(SatchelDbContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
