@@ -8,23 +8,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Satchel.Application.Models;
 using Satchel.Infrastructure;
+using SatchelAPI.Application.Dto;
 using SatchelAPI.Application.Models;
+using SatchelAPI.Interfaces.ServicesInterfaces;
 using SatchelAPI.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SatchelAPI.Controllers
 {
-    [Route("api")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductController : Controller
     {
         private readonly SatchelDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IProductService _service;
 
-        public ProductController(SatchelDbContext context, IMapper mapper)
+        public ProductController(SatchelDbContext context, IMapper mapper, IProductService service)
         {
-            _mapper = mapper;
             _context = context;
+            _service = service;
         }
 
         [HttpGet("{productType}")]
@@ -73,6 +75,54 @@ namespace SatchelAPI.Controllers
                }).FirstOrDefault();
 
             return product;
+        }
+
+        public class ProductData
+        {
+            public ProductDto ProductDto { get; set; }
+            public ICollection<ProductImageDto> AddProductImagesDto { get; set; }
+        }
+        
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddProduct([FromBody] ProductData addProductData)
+        {
+            try
+            {
+                await _service.AddProduct(addProductData.ProductDto, addProductData.AddProductImagesDto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
+        {
+            try
+            {
+                await _service.DeleteProduct(productId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPut("{productId}")]
+        public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductData productData)
+        {
+            try
+            {
+                //await _service.;
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }

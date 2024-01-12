@@ -7,41 +7,45 @@ namespace Satchel.Application.Models;
 public class Product
 {
     [Key]
-    public required int ProductId { get; set; }
+    [Required]
+    public int ProductId { get; set; }
     [MaxLength(50)]
-    public required string Name { get; set; }
+    [Required]
+    public string Name { get; set; }
     [MaxLength(1000)]
-    public required string Description { get; set; }
-    public required int ProductTypeId { get; set; }
+    [Required]
+    public string Description { get; set; }
+    [Required] public int ProductTypeId { get; set; }
 
     [Precision(18, 2)]
-    public required decimal Price { get; set; }
+    [Required]
+    public decimal Price { get; set; }
     public ICollection<ProductImages>? ProductImages { get; set; }
-    public required int BrandTypeId { get; set; }
-    public required int GenderTypeId { get; set; }
-    public required int SizeTypeId { get; set; }
+    [Required] public int BrandTypeId { get; set; }
+    [Required]public int GenderTypeId { get; set; }
+    [Required] public int SizeTypeId { get; set; }
 
     [ForeignKey(nameof(ProductTypeId))]
-    public required ProductType ProductType { get; set; }
+    public ProductType ProductType { get; set; }
 
     [ForeignKey(nameof(BrandTypeId))]
-    public required BrandType BrandType { get; set; }
+    public BrandType BrandType { get; set; }
 
     [ForeignKey(nameof(GenderTypeId))]
-    public required GenderType GenderType { get; set; }
+    public GenderType GenderType { get; set; }
 
     [ForeignKey(nameof(SizeTypeId))]
-    public required SizeType SizeType { get; set; }
+    public SizeType SizeType { get; set; }
 
     [InverseProperty(nameof(Feedback.Product))]
-    public required ICollection<Feedback> Feedbacks { get; set; }
+    public ICollection<Feedback> Feedbacks { get; set; }
 
     [InverseProperty(nameof(Order.Product))]
-    public required ICollection<Order> Orders { get; set; }
+    public ICollection<Order> Orders { get; set; }
 
     [InverseProperty(nameof(Models.Favourites.Product))]
-    public required ICollection<Favourites> Favourites { get; set; }
+    public ICollection<Favourites> Favourites { get; set; }
 
     [InverseProperty(nameof(ShoppingCart.Product))]
-    public required ICollection<ShoppingCart> ShoppingCarts { get; set; }
+    public ICollection<ShoppingCart> ShoppingCarts { get; set; }
 }

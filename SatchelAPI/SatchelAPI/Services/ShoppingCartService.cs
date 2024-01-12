@@ -54,4 +54,18 @@ public class ShoppingCartService : IShoppingCartService
         _context.ShoppingCarts.Remove(deleteShoppingCart);
         await _context.SaveChangesAsync();
     }
+
+    private async Task<IEnumerable<ShoppingCart>> GetShoppingCarts(int userId)
+    {
+        return await _context.ShoppingCarts
+            .Where(_ => _.UserId == userId)
+            .ToListAsync();
+    }
+
+    public async Task DeleteAllProductFromShoppingCart(int userId)
+    {
+        var deleteShoppingCarts = await GetShoppingCarts(userId);
+        _context.ShoppingCarts.RemoveRange(deleteShoppingCarts);
+        await _context.SaveChangesAsync();
+    }
 }

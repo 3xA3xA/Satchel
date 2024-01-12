@@ -5,14 +5,20 @@ namespace Satchel.Application.Models;
 
 public class Favourites
 {
+    public Favourites(int productId, int userId)
+    {
+        ProductId = productId;
+        UserId = userId;
+    }
+    
     [Key]
-    public required int FavouritesId { get; set; }
-    public required int ProductId { get; set; }
-    public required int UserId { get; set; }
+    [Required] public int FavouritesId { get; set; }
+    [Required] public int ProductId { get; set; }
+    [Required] public int UserId { get; set; }
 
     [ForeignKey(nameof(ProductId))]
-    public required Product Product { get; set; }
+    public Product Product { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public required User User { get; set; }
+    public User User { get; set; }
 }

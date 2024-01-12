@@ -28,6 +28,8 @@ builder.Services.AddDbContext<SatchelDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFavouritesService, FavouritesService>();
 
 var app = builder.Build();
 

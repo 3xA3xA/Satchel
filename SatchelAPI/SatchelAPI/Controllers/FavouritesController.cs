@@ -6,22 +6,22 @@ namespace SatchelAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ShoppingCartController : Controller
+public class FavouritesController : Controller
 {
-    private readonly IShoppingCartService _service;
+    private readonly IFavouritesService _service;
     
-    public ShoppingCartController(IShoppingCartService service)
+    public FavouritesController(IFavouritesService service)
     {
         _service = service;
     }
     
     [HttpGet("[action]")]
     [ProducesResponseType(typeof(ProductCartDto), 200)]
-    public async Task<IActionResult> GetShoppingCart(int userId)
+    public async Task<IActionResult> GetFavourites(int userId)
     {
         try
         {
-            var response = await _service.GetShoppingCart(userId);
+            var response = await _service.GetFavourites(userId);
             return Ok(response);
         }
         catch (ArgumentNullException)
@@ -35,11 +35,11 @@ public class ShoppingCartController : Controller
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> AddProductToShoppingCart(int productId, int userId)
+    public async Task<IActionResult> AddProductToFavourites(int productId, int userId)
     {
         try
         {
-            await _service.AddProductToShoppingCart(productId, userId);
+            await _service.AddProductToFavourites(productId, userId);
             return Ok();
         }
         catch (Exception  e)
@@ -49,11 +49,11 @@ public class ShoppingCartController : Controller
     }
 
     [HttpDelete("[action]")]
-    public async Task<IActionResult> DeleteProductFromShoppingCart(int productId, int userId)
+    public async Task<IActionResult> DeleteProductFromFavourites(int productId, int userId)
     {
         try
         {
-            await _service.DeleteProductFromShoppingCart(productId, userId);
+            await _service.DeleteProductFromFavourites(productId, userId);
             return Ok();
         }
         catch (Exception  e)
@@ -63,11 +63,11 @@ public class ShoppingCartController : Controller
     }
     
     [HttpDelete("[action]")]
-    public async Task<IActionResult> DeleteAllProductFromShoppingCart(int userId)
+    public async Task<IActionResult> DeleteAllProductFromFavourites(int userId)
     {
         try
         {
-            await _service.DeleteAllProductFromShoppingCart(userId);
+            await _service.DeleteAllProductFromFavourites(userId);
             return Ok();
         }
         catch (Exception  e)
