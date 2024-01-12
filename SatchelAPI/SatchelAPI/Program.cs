@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Satchel.Infrastructure;
-using System.Data.SqlClient;
+using SatchelAPI.Interfaces.ServicesInterfaces;
+using SatchelAPI.Profiles;
+using SatchelAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyOrigin",
-        builder => builder.WithOrigins("http://localhost:4200") // URL Angular-приложения
+        builder => builder.WithOrigins("http://localhost:4200") // URL Angular
                            .AllowAnyHeader()
                            .AllowAnyMethod());
 });
@@ -22,6 +24,12 @@ var connectionString = builder.Configuration.GetConnectionString("Satchel");
 
 builder.Services.AddDbContext<SatchelDbContext>(options =>
     options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'Satchel' not found")));
+
+builder.Services.AddAutoMapper(typeof(AppMappingProfile));
+
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFavouritesService, FavouritesService>();
 
 var app = builder.Build();
 

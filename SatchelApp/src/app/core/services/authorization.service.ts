@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from './user.service';
+import { environment } from 'src/environments/environment';
 
 export interface Step {
   title: string;
@@ -18,7 +19,7 @@ export class AuthorizationService {
 
   constructor(private http: HttpClient) {}
 
-  private apiUrl = 'https://localhost:7082/api';
+  private apiUrl: string = `${environment.apiUrl}/User`;
 
   stepChange = new Subject();
   currentStep = 0;
@@ -88,7 +89,6 @@ export class AuthorizationService {
       password: password,
       userTypeName: userTypeName
     };
-    console.log('уже создаем');
     return this.http.post<IUser>(this.apiUrl + '/CreateUser', user);
   }
 }

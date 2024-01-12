@@ -12,7 +12,7 @@ export interface IUser {
 
 export class UserService {
 
-  isAuthorized = true
+  isAuthorized = false; // если true - пользователь зашел в аккаунт
 
   setAuthorizedStatus(){
     this.isAuthorized = !this.isAuthorized;

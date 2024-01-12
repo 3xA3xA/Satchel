@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Reflection.Emit;
 using Microsoft.EntityFrameworkCore;
 using Satchel.Application.Models;
+using SatchelAPI.Application.Models;
 
 namespace Satchel.Infrastructure;
 
@@ -23,6 +24,7 @@ public class SatchelDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<ShippingType> ShippingTypes { get; set; }
+    public DbSet<ProductImages> ProductImages { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<SizeType> SizeTypes { get; set; }
     public DbSet<SizeTypeToProductType> SizeTypeToProductTypes { get; set; }

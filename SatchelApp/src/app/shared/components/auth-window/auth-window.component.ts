@@ -14,7 +14,7 @@ export class AuthWindowComponent {
 
   email: string = '';
   password: string = '';
-  userTypeName: string = 'Admin';
+  userTypeName: string = 'Admin'; // убарть
 
   ngOnInit() {
     this.registrationService.stepChange.subscribe(() => {
@@ -50,7 +50,6 @@ export class AuthWindowComponent {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: IUser) => {
           this.userService.setAuthorizedStatus()
-          console.log(this.userService.isAuthorized)
           console.log(user); // поменять обработку тут и в error
         },
         error => {

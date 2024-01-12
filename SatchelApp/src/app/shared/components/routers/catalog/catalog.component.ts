@@ -29,7 +29,7 @@ export class CatalogComponent implements OnInit{
   ngOnInit() {
     this.route.params.subscribe(params => {
       let productType : string = params['item'];
-      this.productService.getAllClothes(productType).subscribe(
+      this.productService.getAllProducts(productType).subscribe(
         (productsFromQuery: Product[]) => {
           this.products = productsFromQuery;
         },

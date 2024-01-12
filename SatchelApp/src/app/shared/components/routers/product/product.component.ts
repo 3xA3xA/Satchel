@@ -31,6 +31,7 @@ export class ProductComponent implements OnInit {
     this.productService.getProductById(this.id).subscribe(
       (product) => {
         this.product = product;
+        console.log(product.sizes)
       },
       (error) => {
         console.error('Error fetching product by ID:', error);

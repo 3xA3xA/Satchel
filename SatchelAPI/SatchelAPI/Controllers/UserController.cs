@@ -16,6 +16,7 @@ using static NuGet.Packaging.PackagingConstants;
 
 namespace SatchelAPI.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
     {
@@ -26,23 +27,20 @@ namespace SatchelAPI.Controllers
             _context = context;
         }
 
-        [HttpPost, ActionName("LoginUser")]
-        [Route("api/LoginUser")]
+        [HttpPost("[action]")]
         //[ValidateAntiForgeryToken] - это важная штука, после настроим
         public IActionResult LoginUser([FromBody] UserDTO userData)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && UserExists(userData.Email))
             {
-                //здесь не сделал проверку на правильный логин и пароль
-                return Ok(userData);
+                return Ok(userData); // тут нужно будет найти пользователя в бд
             }
 
-            return BadRequest("Неверные данные пользователя");
+            return BadRequest("Пользователь с таким email уже существует");           
         }
 
 
-        [HttpPost, ActionName("CreateUser")]
-        [Route("api/CreateUser")]
+        [HttpPost("[action]")]
         //[ValidateAntiForgeryToken] - это важная штука, после настроим
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userData)
         {

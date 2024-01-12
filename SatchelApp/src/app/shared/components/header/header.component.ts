@@ -14,9 +14,6 @@ export class HeaderComponent {
   constructor(private registrationService: AuthorizationService, private userService: UserService, private router: Router) { }
 
   openAuthWindow() {
-
-    console.log(this.userService.isAuthorized)
-
     if(this.userService.authorizedStatus){
       this.router.navigate(['/profile']);
     } else{
