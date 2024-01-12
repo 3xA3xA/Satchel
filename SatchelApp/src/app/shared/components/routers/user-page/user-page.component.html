@@ -1,63 +1,54 @@
 <app-header></app-header>
 <div class="container">
     <section class="dataSection">
+
+        <h2 class="heading">Учётные данные</h2>
         <div class="mainData">
-            
-            <div>
-                <h2 class="heading">Учётные данные</h2>
+            <div class="dataGroup">
                 <p class="blockName">ФИО:</p>
                 <ul class="fullNameList">
                     <li class="fullNameList-item">
-                        <input class="fullnameInput" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Имя" type="text">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Фамилия" type="text">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Отчество" type="text">
                     </li>
                 </ul>
             </div>
-            <div class="dataGroup">
+
+            <div class="dataGroup secondaryDataGroup">
                 <div class="secondaryData">
                     <p class="blockName">Почта:</p>
-                    <ul class="fullNameList">
-                        <li>
-                            <input type="text">
-                        </li>
-                    </ul>
+                    <input class="secondaryInfoInput personalAreaInput" placeholder="Почта" type="text ">
                 </div>
+
                 <div class="secondaryData">
                     <p class="blockName">Дата рождения:</p>
-                    <ul class="birthdayList">
-                        <li>
-                            <input type="text">
-                        </li>
-                    </ul>
+                    <input class="secondaryInfoInput personalAreaInput" placeholder="Дата Рождения" type="date">
                 </div>
             </div>
+
+            <div>
+                <img src="/src/assets/images/icons/bag.svg" alt="">
+            </div>
         </div>
-
-        <div>
-            <h2 class="heading">Оплата</h2>
-
-            <ul>
-                <li>Cпособ оплаты:</li>
-            </ul>
-        </div>
-
-        <div>
-            <h2 class="heading">Отзывы</h2>
-            <div>Мои отзывы:</div>
-        </div>
-
     </section>
 
     <section class="payDataSection">
-
+        <h2 class="heading">Оплата</h2>
+        <div class="payData">
+            <p class="blockName">Cпособ оплаты:</p>
+            <select  class="personalAreaSelect" name="paySelection"> <option value="ShipPay">Оплата при получении заказа</option> <option value="MasterCard">Оплата на сайте</option> <option value="Visa">Оплата при погрузке</option> </select>
+        </div>
     </section>
 
     <section class="feedbackDataSection">
-
+        <h2 class="heading">Отзывы</h2>
+        <div>
+            <div class="">Мои отзывы:</div>
+        </div>
     </section>
 </div>
