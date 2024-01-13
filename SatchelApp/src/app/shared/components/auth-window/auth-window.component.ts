@@ -34,8 +34,8 @@ export class AuthWindowComponent {
     this.isSwitchVisible = true;
   }
 
-  updateUserTypeName(){
-    if(this.isChecked === true)
+  updateUserTypeName(isChecked: boolean) {
+    if (isChecked === false)
       this.userTypeName = 'Продавец'
     else
       this.userTypeName = 'Покупатель'
@@ -60,7 +60,6 @@ export class AuthWindowComponent {
 
     if (this.email && this.password && this.userTypeName)
     {
-      this.updateUserTypeName(); //обновляет тип аккаунта перед отправкой
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: IUserDto) => {
           console.log(user);

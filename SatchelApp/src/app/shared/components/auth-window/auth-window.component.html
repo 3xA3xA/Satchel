@@ -13,7 +13,7 @@
           <p class="select-choise">Покупатель</p>
 
           <label class="switch">
-            <input class="toggle" name="checkbox" [ngModel]="isChecked" type="checkbox">
+            <input class="toggle" name="checkbox" (change)="updateUserTypeName(isChecked)" type="checkbox">
             <span class="slider"></span>
             <span class="card-side"></span>
           </label>

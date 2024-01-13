@@ -63,8 +63,6 @@ export class AuthorizationService {
       password: password,
       userTypeName: userTypeName
     };
-    console.log('jkk')
-    console.log(user)
     return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
   }
   
