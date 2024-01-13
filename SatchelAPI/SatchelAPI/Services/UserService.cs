@@ -13,6 +13,7 @@ using Satchel.Infrastructure;
 using SatchelAPI.Application.Dto;
 using SatchelAPI.Interfaces.ServicesInterfaces;
 using static NuGet.Packaging.PackagingConstants;
+using IUserService = SatchelAPI.Interfaces.ServicesInterfaces.IUserService;
 
 namespace SatchelAPI.Services
 {

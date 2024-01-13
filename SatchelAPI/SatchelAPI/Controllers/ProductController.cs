@@ -116,7 +116,7 @@ namespace SatchelAPI.Controllers
         {
             try
             {
-                //await _service.;
+                await _service.UpdateProduct(productId, productData.ProductDto, productData.AddProductImagesDto);
                 return Ok();
             }
             catch (Exception e)

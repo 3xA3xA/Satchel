@@ -16,6 +16,11 @@ public class User
     [Required]
     public string Password { get; set; }
 
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? MiddleName { get; set; }
+    public DateTime? Birthday { get; set; }
+
     [ForeignKey(nameof(UserTypeId))]
     [Required]
     public UserType UserType { get; set; }
