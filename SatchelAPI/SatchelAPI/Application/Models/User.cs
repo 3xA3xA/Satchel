@@ -10,22 +10,25 @@ public class User
     public int UserId { get; set; }
     public int UserTypeId { get; set; }
     [MaxLength(150)]
-    public required string Email { get; set; }
+    [Required]
+    public string Email { get; set; }
     [MaxLength(150)]
-    public required string Password { get; set; }
+    [Required]
+    public string Password { get; set; }
 
     [ForeignKey(nameof(UserTypeId))]
-    public required UserType UserType { get; set; }
+    [Required]
+    public UserType UserType { get; set; }
 
     [InverseProperty(nameof(Feedback.User))]
-    public required ICollection<Feedback> Feedbacks { get; set; }
+    public ICollection<Feedback> Feedbacks { get; set; }
 
     [InverseProperty(nameof(Order.User))]
-    public required ICollection<Order> Orders { get; set; }
+    public ICollection<Order> Orders { get; set; }
 
     [InverseProperty(nameof(Models.Favourites.User))]
-    public required ICollection<Favourites> Favourites { get; set; }
+    public ICollection<Favourites> Favourites { get; set; }
 
     [InverseProperty(nameof(ShoppingCart.User))]
-    public required ICollection<ShoppingCart> ShoppingCarts { get; set; }
+    public ICollection<ShoppingCart> ShoppingCarts { get; set; }
 }

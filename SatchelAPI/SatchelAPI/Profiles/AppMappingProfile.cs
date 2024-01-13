@@ -29,5 +29,15 @@ public class AppMappingProfile : Profile
         CreateMap<ProductImageDto, ProductImages>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom(s => s.ProductId))
             .ForMember(_ => _.ImagePath, _ => _.MapFrom(s => s.ImagePath));
+
+        CreateMap<UserDTO, User>()
+            .ForMember(_ => _.Email, _ => _.MapFrom(s => s.Email))
+            .ForMember(_ => _.Password, _ => _.MapFrom(s => s.Password))
+            .ForMember(_ => _.UserTypeId, _ => _.MapFrom(s => s.UserTypeId));
+
+        CreateMap<User, GetUserDTO>()
+            .ForMember(_ => _.UserId, _ => _.MapFrom(s => s.UserId))
+            .ForMember(_ => _.Email, _ => _.MapFrom(s => s.Email))
+            .ForMember(_ => _.UserTypeName, _ => _.MapFrom(s => s.UserType.Name));
     }
 }

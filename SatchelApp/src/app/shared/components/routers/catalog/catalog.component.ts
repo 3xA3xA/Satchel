@@ -2,7 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/core/services/product.service';
 
-export default interface Product{
+export interface Product{
   id: number,
   name: string,
   description: string,
@@ -25,6 +25,11 @@ export class CatalogComponent implements OnInit{
   constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) { }
 
   products : Product[] = [];
+  
+  inactiveStar = '../../../../../assets/images/icons/favourites.svg'
+  activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
+  starStatus = this.inactiveStar
+  isActive = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -38,6 +43,14 @@ export class CatalogComponent implements OnInit{
         }
       );
     });
+  }
+
+  addToFavourite(product: Product, star: HTMLImageElement){
+    if(star.src.includes('activeFavourite')){
+      star.src = this.inactiveStar;
+    }
+    else star.src = this.activeStar
+    
   }
 
   goToProduct(id: number) {

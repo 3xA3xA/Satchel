@@ -4,19 +4,30 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Satchel.Application.Models;
 using Satchel.Infrastructure;
-using SatchelAPI.Application.Models;
+using SatchelAPI.Application.Dto;
+using SatchelAPI.Interfaces.ServicesInterfaces;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace SatchelAPI.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        public static string HashPassword(string password)
+        private readonly SatchelDbContext _context;
+        private readonly IMapper _mapper;
+
+        public UserService(SatchelDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public string HashPassword(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
@@ -31,23 +42,31 @@ namespace SatchelAPI.Services
             }
         }
 
-        //private string CheckValidData(UserDTO data, UserType userType)
-        //{
-        //    if (data == null)
-        //    {
-        //        return "Неверные данные пользователя";
-        //    }
+        public async Task<GetUserDTO?> LoginUser(string login, string password)
+        {
+            var user = await _context.User.FirstOrDefaultAsync(e => e.Email == login && e.Password == HashPassword(password));
 
-        //    if (userType == null)
-        //    {
-        //        return "Тип пользователя не существует";
-        //    }
-        //    if (UserExists(data.Email))
-        //    {
-        //        return BadRequest("Пользователь с таким email уже существует");
-        //    }
+            return _mapper.Map<GetUserDTO>(user);
+        }
 
-        //    return Ok();
-        //}
+        public async Task<GetUserDTO?> AddNewUser(UserDTO userData)
+        {
+            UserType? userType = _context.UserTypes.FirstOrDefault(ut => ut.Name == userData.UserTypeName); //затычка до появления toggle
+
+            userData.UserTypeId = userType!.UserTypeId;
+
+            var newUser = _mapper.Map<User>(userData);
+            newUser.Password = HashPassword(newUser.Password);
+
+            await _context.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<GetUserDTO>(newUser);
+        }
+
+        public bool UserExists(string email)
+        {
+            return _context.User.Any(e => e.Email == email);
+        }
     }
 }
