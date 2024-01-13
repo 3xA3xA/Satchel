@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-export interface IUser {
-  email: string;
-  password: string;
-  userType: string;
+export interface IUserDto {
+  userId: number,
+  email: string,
+  userTypeName: string
 }
 
 @Injectable({
@@ -13,6 +13,7 @@ export interface IUser {
 export class UserService {
 
   isAuthorized = false; // если true - пользователь зашел в аккаунт
+  userId = 0;
 
   setAuthorizedStatus(){
     this.isAuthorized = !this.isAuthorized;

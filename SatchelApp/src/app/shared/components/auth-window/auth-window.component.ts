@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { IUser } from 'src/app/core/services/user.service';
+import { IUserDto } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-auth-window',
@@ -31,7 +31,7 @@ export class AuthWindowComponent {
   handleUserLogin(): void {
     if (this.email && this.password) {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
-        (user: IUser) => {
+        (user: IUserDto) => {
           console.log(user); // поменять обработку тут и в error
           this.userService.setAuthorizedStatus()
         },
@@ -48,9 +48,9 @@ export class AuthWindowComponent {
     if (this.email && this.password && this.userTypeName)
     {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
-        (user: IUser) => {
+        (user: IUserDto) => {
+          console.log(user);
           this.userService.setAuthorizedStatus()
-          console.log(user); // поменять обработку тут и в error
         },
         error => {
           console.log(error);

@@ -30,6 +30,7 @@ builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IFavouritesService, FavouritesService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

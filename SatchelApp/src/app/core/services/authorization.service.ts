@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IUser } from './user.service';
 import { environment } from 'src/environments/environment';
+import { IUserDto } from './user.service';
 
 export interface Step {
   title: string;
@@ -25,6 +25,7 @@ export class AuthorizationService {
   currentStep = 0;
   isRegistrationOpen : boolean = false;
 
+  // полная залупа
   steps: Step[] = [
     {
       title: 'Вход в аккаунт',
@@ -38,7 +39,7 @@ export class AuthorizationService {
       fields: [
         {name: 'email', type: 'email'},
         {name: 'password', type: 'password'},
-        {name: 'userTypeId', type: 'userTypeId'}
+        //{name: 'userTypeId', type: 'userTypeId'}
       ]
     } 
   ]
@@ -47,21 +48,24 @@ export class AuthorizationService {
     return this.steps[this.currentStep]; 
   }
 
-  sendLoginRequestToBackend(email: string, password: string): Observable<IUser> {
+  sendLoginRequestToBackend(email: string, password: string): Observable<IUserDto> {
     this.closeAuthWindow();
     const user = { //поменять
       email: email,
       password: password
     };
-    return this.http.post<IUser>(this.apiUrl + '/LoginUser', user);   
+    return this.http.post<IUserDto>(this.apiUrl + '/LoginUser', user);   
   }
 
-  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) {
+  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<IUserDto> {
     //перепутаны поля password и нижнее для типа аккаунта
-    console.log(email, password);
-
     this.closeAuthWindow();
-    return this.addNewUser(email, password, userTypeName);
+    const user = {
+      email: email,
+      password: password,
+      userTypeName: userTypeName
+    };
+    return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
   }
   
   resetSteps() {
@@ -81,14 +85,5 @@ export class AuthorizationService {
   closeAuthWindow() : void{
     this.resetSteps();
     this.isRegistrationOpen = false;
-  }
-
-  addNewUser(email: string, password: string, userTypeName: string): Observable<IUser> {
-    const user = {
-      email: email,
-      password: password,
-      userTypeName: userTypeName
-    };
-    return this.http.post<IUser>(this.apiUrl + '/CreateUser', user);
   }
 }

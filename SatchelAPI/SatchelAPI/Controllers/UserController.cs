@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Satchel.Application.Models;
 using Satchel.Infrastructure;
-using SatchelAPI.Application.Models;
+using SatchelAPI.Application.Dto;
+using SatchelAPI.Interfaces.ServicesInterfaces;
 using SatchelAPI.Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static NuGet.Packaging.PackagingConstants;
@@ -20,63 +21,45 @@ namespace SatchelAPI.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly SatchelDbContext _context;
+        private readonly IUserService _service;
 
-        public UserController(SatchelDbContext context)
+        public UserController(IUserService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpPost("[action]")]
-        //[ValidateAntiForgeryToken] - это важная штука, после настроим
-        public IActionResult LoginUser([FromBody] UserDTO userData)
+        public async Task<IActionResult> LoginUser([FromBody] UserDTO userData)
         {
-            if (ModelState.IsValid && UserExists(userData.Email))
+            if (_service.UserExists(userData.Email))
             {
-                return Ok(userData); // тут нужно будет найти пользователя в бд
-            }
+                var user = await _service.LoginUser(userData.Email, userData.Password);
 
-            return BadRequest("Пользователь с таким email уже существует");           
+                if (user != null)
+                    return Ok(user);
+                else
+                    return Unauthorized("Пароль и email не совпадают!");
+            }
+            return Unauthorized("Неверный email");
         }
 
 
         [HttpPost("[action]")]
-        //[ValidateAntiForgeryToken] - это важная штука, после настроим
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userData)
         {
-            if (!ModelState.IsValid)
+            if (_service.UserExists(userData.Email))
             {
-                return BadRequest("Неверные данные пользователя");
+                return Unauthorized("Пользователь с таким email уже существует");
             }
 
-            if (UserExists(userData.Email))
-            {
-                return BadRequest("Пользователь с таким email уже существует");
-            }
+            var user = await _service.AddNewUser(userData);
 
-            UserType userType = _context.UserTypes.FirstOrDefault(ut => ut.Name == userData.UserTypeName);
+            if (user == null) 
+                return Unauthorized("Ошибка создания аккаунта!");
 
-            User newUser = new User
-            {
-                Email = userData.Email,
-                Password = userData.Password,
-                UserTypeId = userType.UserTypeId,
-                UserType = userType,
-                Feedbacks = new List<Feedback>(),
-                Orders = new List<Order>(),
-                Favourites = new List<Favourites>(),
-                ShoppingCarts = new List<ShoppingCart>(),
-            };
-
-            //newUser.Password = UserService.HashPassword(newUser.Password);
-            _context.Add(newUser);
-            await _context.SaveChangesAsync();
-            return Ok(userData);
+            return Ok(user);
         }
 
-        private bool UserExists(string email)
-        {
-            return _context.User.Any(e => e.Email == email);
-        }        
+        
     }
 }
