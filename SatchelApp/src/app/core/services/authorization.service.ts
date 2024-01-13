@@ -39,7 +39,6 @@ export class AuthorizationService {
       fields: [
         {name: 'email', type: 'email'},
         {name: 'password', type: 'password'},
-        //{name: 'userTypeId', type: 'userTypeId'}
       ]
     } 
   ]
@@ -57,13 +56,13 @@ export class AuthorizationService {
     return this.http.post<IUserDto>(this.apiUrl + '/LoginUser', user);   
   }
 
-  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<IUserDto> {
+  sendRegistrationRequestToBackend(email : string, password : string, userTypeId : boolean) : Observable<IUserDto> {
     //перепутаны поля password и нижнее для типа аккаунта
     this.closeAuthWindow();
     const user = {
       email: email,
       password: password,
-      userTypeName: userTypeName
+      userTypeId: userTypeId
     };
     return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
   }

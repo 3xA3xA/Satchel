@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserDto } from 'src/app/core/services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-window',
@@ -14,7 +15,10 @@ export class AuthWindowComponent {
 
   email: string = '';
   password: string = '';
-  userTypeName: string = 'Admin'; // убарть
+  userTypeId: boolean = false; // убарть
+  isLoginVisible = true;
+  isSwitchVisible = false;
+  isChecked: boolean = false;
 
   ngOnInit() {
     this.registrationService.stepChange.subscribe(() => {
@@ -26,6 +30,8 @@ export class AuthWindowComponent {
 
   updateStep() {
     this.step$ = this.registrationService.step; 
+    this.isLoginVisible = false;
+    this.isSwitchVisible = true;
   }
 
   handleUserLogin(): void {
@@ -45,9 +51,9 @@ export class AuthWindowComponent {
   handleUserRegistration() : void {
     this.registrationService.goToRegistration();
 
-    if (this.email && this.password && this.userTypeName)
+    if (this.email && this.password && this.userTypeId)
     {
-      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
+      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeId).subscribe(
         (user: IUserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus()
