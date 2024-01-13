@@ -98,9 +98,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  width: 50px;
-  height: 20px;
+  gap: 3rem;
+  width: 5rem;
+  height: 2rem;
 }
 
 .toggle {
@@ -111,9 +111,9 @@
 
 .slider {
   box-sizing: border-box;
-  border-radius: 5px;
-  border: 2px solid var(--main-color);
-  box-shadow: 4px 4px var(--main-color);
+  border-radius: 0.5rem;
+  border: 0.2rem solid var(--main-color);
+  box-shadow: 0.4rem 0.4rem var(--main-color);
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -128,14 +128,14 @@
   box-sizing: border-box;
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
-  border: 2px solid var(--main-color);
-  border-radius: 5px;
-  left: -2px;
-  bottom: 2px;
+  height: 2rem;
+  width: 2rem;
+  border: 0.2rem solid var(--main-color);
+  border-radius: 0.5rem;
+  left: -0.2rem;
+  bottom: 0.2rem;
   background-color: var(--bg-color);
-  box-shadow: 0 3px 0 var(--main-color);
+  box-shadow: 0 0.3rem 0 var(--main-color);
   transition: 0.3s;
 }
 
