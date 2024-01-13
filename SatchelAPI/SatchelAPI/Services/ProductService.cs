@@ -98,15 +98,31 @@ namespace SatchelAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(int productId, ProductDto productDto, ICollection<ProductImageDto> productImageDto)
+        private async Task UpdateProductImages(int productId, ICollection<ProductImageDto> productImageDto)
         {
-            var updateProduct = await GetProduct(productId);
             var productImages = await GetProductImagesByProductId(productId);
             AddProductIdToProductImagesDto(productImageDto, productId);
             var newProductImages = _mapper.Map<ICollection<ProductImages>>(productImageDto);
             
             _context.ProductImages.RemoveRange(productImages);
-            //await _context.ProductImages.AddAsync(newProductImages);
+            await _context.ProductImages.AddRangeAsync(newProductImages);
+        }
+
+        private void SetProductNewValues(Product product, ProductDto productDto)
+        {
+            product.Name = productDto.Name;
+            product.Description = productDto.Description;
+            product.Price = productDto.Price;
+            product.ProductTypeId = productDto.ProductTypeId;
+            product.BrandTypeId = productDto.BrandTypeId;
+            product.GenderTypeId = productDto.GenderTypeId;
+        }
+
+        public async Task UpdateProduct(int productId, ProductDto productDto, ICollection<ProductImageDto> productImageDto)
+        {
+            var updateProduct = await GetProduct(productId);
+            await UpdateProductImages(productId, productImageDto);
+            
         }
     }
 }

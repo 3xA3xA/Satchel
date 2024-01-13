@@ -6,6 +6,7 @@
         <entry key="Common:2961f646-b2fa-4a99-80ca-cb8dad1bb897:dbContext" value="Satchel.Infrastructure.SatchelDbContext" />
         <entry key="Common:buildConfiguration" value="Debug" />
         <entry key="Common:noBuild" value="false" />
+        <entry key="Common:outputFolder" value="Migrations" />
         <entry key="Common:useDefaultConnection" value="true" />
       </map>
     </option>

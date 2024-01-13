@@ -23,7 +23,6 @@ public class Product
     public ICollection<ProductImages>? ProductImages { get; set; }
     [Required] public int BrandTypeId { get; set; }
     [Required]public int GenderTypeId { get; set; }
-    [Required] public int SizeTypeId { get; set; }
 
     [ForeignKey(nameof(ProductTypeId))]
     public ProductType ProductType { get; set; }
@@ -33,9 +32,6 @@ public class Product
 
     [ForeignKey(nameof(GenderTypeId))]
     public GenderType GenderType { get; set; }
-
-    [ForeignKey(nameof(SizeTypeId))]
-    public SizeType SizeType { get; set; }
 
     [InverseProperty(nameof(Feedback.Product))]
     public ICollection<Feedback> Feedbacks { get; set; }

@@ -24,8 +24,7 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Price))
             .ForMember(_ => _.ProductTypeId, _ => _.MapFrom(s => s.ProductTypeId))
             .ForMember(_ => _.BrandTypeId, _ => _.MapFrom(s => s.BrandTypeId))
-            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
-            .ForMember(_ => _.SizeTypeId, _ => _.MapFrom(s => s.SizeTypeId));
+            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId));
 
         CreateMap<ProductImageDto, ProductImages>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom(s => s.ProductId))

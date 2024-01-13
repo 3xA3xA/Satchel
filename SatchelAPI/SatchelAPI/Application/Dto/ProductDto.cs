@@ -10,8 +10,7 @@ public class ProductDto
         int productTypeId,
         decimal price,
         int brandTypeId,
-        int genderTypeId,
-        int sizeTypeId)
+        int genderTypeId)
     {
         Name = name;
         Description = description;
@@ -19,7 +18,6 @@ public class ProductDto
         Price = price;
         BrandTypeId = brandTypeId;
         GenderTypeId = genderTypeId;
-        SizeTypeId = sizeTypeId;
     }
     
     public string Name { get; set; }
@@ -28,5 +26,4 @@ public class ProductDto
     public decimal Price { get; set; }
     public int BrandTypeId { get; set; }
     public int GenderTypeId { get; set; }
-    public int SizeTypeId { get; set; }
 }
