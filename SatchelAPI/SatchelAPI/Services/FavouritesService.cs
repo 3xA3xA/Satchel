@@ -22,6 +22,7 @@ public class FavouritesService : IFavouritesService
     {
         return await _context.Favourites
             .Include(_ => _.Product)
+            .ThenInclude(_ => _.ProductImages)
             .Where(_ => _.UserId == userId)
             .Select(_ => _.Product)
             .ToListAsync();

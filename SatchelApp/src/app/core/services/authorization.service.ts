@@ -25,7 +25,6 @@ export class AuthorizationService {
   currentStep = 0;
   isRegistrationOpen : boolean = false;
 
-  // полная залупа
   steps: Step[] = [
     {
       title: 'Вход в аккаунт',
@@ -63,10 +62,9 @@ export class AuthorizationService {
       password: password,
       userTypeName: userTypeName
     };
-    console.log(user)
     return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
   }
-  
+
   resetSteps() {
     this.currentStep = 0; 
     this.stepChange.next(this.currentStep); 

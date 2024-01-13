@@ -1,6 +1,8 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/core/services/product.service';
+import { FavouriteService } from 'src/app/core/services/favourite.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 export interface Product{
   id: number,
@@ -22,14 +24,13 @@ export interface Product{
 })
 export class CatalogComponent implements OnInit{
 
-  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private productService: ProductService, private favouriteService: FavouriteService, private userService: UserService, private route: ActivatedRoute) { }
 
   products : Product[] = [];
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
-  starStatus = this.inactiveStar
-  isActive = false;
+  starStatus = this.inactiveStar;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -45,11 +46,18 @@ export class CatalogComponent implements OnInit{
     });
   }
 
-  addToFavourite(product: Product, star: HTMLImageElement){
+  public addToFavourite(product: Product, star: HTMLImageElement) {
+    if (!this.userService.isAuthorized)
+      return;
+    
     if(star.src.includes('activeFavourite')){
       star.src = this.inactiveStar;
+      this.favouriteService.DeleteProductFromFavourites(product.id, this.userService.userId);
     }
-    else star.src = this.activeStar
+    else {
+      star.src = this.activeStar;
+      this.favouriteService.AddFavouriteProduct(product.id, this.userService.userId);
+    }
     
   }
 

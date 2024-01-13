@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserDto } from 'src/app/core/services/user.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-window',
@@ -46,7 +45,8 @@ export class AuthWindowComponent {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
         (user: IUserDto) => {
           console.log(user);
-          this.userService.setAuthorizedStatus()
+          this.userService.setAuthorizedStatus();
+          this.setUserId(user.userId);
         },
         error => {
           console.log(error);
@@ -63,13 +63,18 @@ export class AuthWindowComponent {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: IUserDto) => {
           console.log(user);
-          this.userService.setAuthorizedStatus()
+          this.userService.setAuthorizedStatus();
+          this.setUserId(user.userId);
         },
         error => {
           console.log(error);
         }
       );
     }
+  }
+
+  setUserId(userId: number) {
+    this.userService.userId = userId;
   }
 
   public onBgClick(event: any) {

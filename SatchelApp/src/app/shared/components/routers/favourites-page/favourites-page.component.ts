@@ -1,7 +1,8 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from '../catalog/catalog.component';
+import { FavouriteService } from 'src/app/core/services/favourite.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-favourites-page',
@@ -10,35 +11,27 @@ import { Product } from '../catalog/catalog.component';
 })
 export class FavouritesPageComponent {
 
-  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private favouriteService: FavouriteService, private userService: UserService, private route: ActivatedRoute) { }
 
   favouriteProducts : Product[] = [];
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
   starStatus = this.inactiveStar
-  isActive = false;
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      let productType : string = params['item'];
-      this.productService.getAllProducts(productType).subscribe(
-        (productsFromQuery: Product[]) => {
-          this.favouriteProducts = productsFromQuery;
-        },
-        (error) => {
-          console.error('Error fetching products', error);
-        }
-      );
-    });
+    this.favouriteService.GetFavourites(this.userService.userId).subscribe(
+      (productsFromQuery: Product[]) => {
+        this.favouriteProducts = productsFromQuery;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
   }
 
-  addToFavourite(product: Product, star: HTMLImageElement){
-    if(star.src.includes('activeFavourite')){
-      star.src = this.inactiveStar;
-    }
-    else star.src = this.activeStar
-    
+  public addToFavourite(product: Product, star: HTMLImageElement) {
+    // надо написать логику 
   }
 
   goToProduct(id: number) {
