@@ -124,7 +124,7 @@ namespace SatchelAPI.Services
             await UpdateProductImages(productId, productImageDto);
             SetProductNewValues(updateProduct, productDto);
 
-            await _context.Products.AddAsync(updateProduct);
+            _context.Products.Update(updateProduct);
             await _context.SaveChangesAsync();
         }
     }
