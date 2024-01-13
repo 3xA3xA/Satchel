@@ -22,6 +22,7 @@ public class ShoppingCartService : IShoppingCartService
     {
         return await _context.ShoppingCarts
             .Include(_ => _.Product)
+            .ThenInclude(_ => _.ProductImages)
             .Where(_ => _.UserId == userId)
             .Select(_ => _.Product)
             .ToListAsync();

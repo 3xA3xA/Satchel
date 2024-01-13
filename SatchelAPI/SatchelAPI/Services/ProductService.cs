@@ -127,5 +127,30 @@ namespace SatchelAPI.Services
             _context.Products.Update(updateProduct);
             await _context.SaveChangesAsync();
         }
+
+        // public async Task<IEnumerable<ProductCartDto>> GetAllProducts(string productType)
+        // {
+        //     var products = await _context.Products
+        //         .Include(p => p.ProductType)
+        //         .ToListAsync();
+        //
+        //
+        //     var productsWithImages = products
+        //         .Where(p => p.ProductType.Name == productType)
+        //         .Select(p => new ProductDTO
+        //         {
+        //             Id = p.ProductId,
+        //             Name = p.Name,
+        //             Price = p.Price,
+        //             Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
+        //         });
+        //     
+        //     return productsWithImages;
+        // }
+
+        // public async Task<IEnumerable<ProductCartDto>> GetProductByMinPrice()
+        // {
+        //     
+        // }
     }
 }

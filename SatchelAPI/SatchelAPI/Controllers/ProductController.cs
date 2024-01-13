@@ -32,22 +32,18 @@ namespace SatchelAPI.Controllers
         [HttpGet("[action]/{productType}")]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts(string productType)
         {
-            await Console.Out.WriteLineAsync(productType);
             IQueryable<Product> query = _context.Products.Include(p => p.ProductType);
 
-            await Console.Out.WriteLineAsync(productType + '1');
-
-            // Дописать поля, которые хотим получать.
             var productsWithImages = await query
-            .Where(p => p.ProductType.Name == productType)
-            .Select(p => new ProductDTO
-            {
-                Id = p.ProductId,
-                Name = p.Name,
-                Price = p.Price,
-                Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
-            })
-            .ToListAsync();
+                .Where(p => p.ProductType.Name == productType)
+                .Select(p => new ProductDTO
+                {
+                    Id = p.ProductId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
+                })
+                .ToListAsync();
 
             return productsWithImages;
         }
