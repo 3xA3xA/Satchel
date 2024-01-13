@@ -1,17 +1,11 @@
 .container{
     padding: 5rem 22.8rem;
     display: flex;
-    flex-direction: column;
-    gap: 5.6rem;
-
-}
-
-.dataSection{
-    
 }
 
 .mainData{
     display: flex;
+    flex-wrap: wrap;
     gap: 9rem;
 }
 
@@ -63,11 +57,12 @@
     margin-bottom: 0
 }
 
-.secondaryDataGroup{
-    
-}
-
-
 .secondaryData:last-child{
     margin-top: 2rem;
+}
+
+.user-avatar{
+    width: 50rem;
+    height: 50rem;
+    border-radius: 50%;
 }

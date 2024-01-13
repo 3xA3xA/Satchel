@@ -6,12 +6,24 @@
     <form class="form-details">
       <p class="title"> {{ step$.title }} </p>
 
-      <div class="input-group">
-        <input class="form-input" *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
+      <div class="input-group"> 
+        <input class="form-input" [type]="field.type" *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
+
+        <div class="select-container" *ngIf="isSwitchVisible">
+          <p class="select-choise">Покупатель</p>
+
+          <label class="switch">
+            <input class="toggle" name="checkbox" (change)="updateUserTypeName(isChecked)" type="checkbox">
+            <span class="slider"></span>
+            <span class="card-side"></span>
+          </label>
+
+          <p class="select-choise">Продавец</p>
+        </div> 
       </div>
 
-      <button type="button" class="mainBtn btn" (click)="handleUserLogin()">Войти</button>
-      <button type="button"  class="secondaryBtn btn" (click)="handleUserRegistration()">Зарегестрироваться</button>
+      <button type="button" *ngIf="isLoginVisible" class="mainBtn btn" (click)="handleUserLogin()">Войти</button>
+      <button type="button" class="secondaryBtn btn" (click)="handleUserRegistration()">Зарегестрироваться</button>
     </form>
   </div>
 

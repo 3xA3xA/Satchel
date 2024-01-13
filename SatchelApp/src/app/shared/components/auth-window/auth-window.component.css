@@ -1,5 +1,3 @@
-
-
 .overlay {
   position: fixed;
   top: 0;
@@ -10,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 4;
 }
 
 .registration-form {
@@ -22,6 +21,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display:  flex;
   flex-direction: column;
+  z-index: 5;
 }
 
 .registration-form h2 {
@@ -63,6 +63,88 @@
 
 .form-input::placeholder{
   color: #fff;
+}
+
+.select-container{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.select-choise{
+  font: 2rem 'DaysOne', sans-serif;;
+  color: #000;
+}
+
+.toggle-wrapper {
+  flex: 1 1 calc(100% / 3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.switch {
+  --input-focus: #0ABAB5;;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  width: 5rem;
+  height: 2rem;
+}
+
+.toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  border: 0.2rem solid var(--main-color);
+  box-shadow: 0.4rem 0.4rem var(--main-color);
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-colorcolor);
+  transition: 0.3s;
+}
+
+.slider:before {
+  box-sizing: border-box;
+  position: absolute;
+  content: "";
+  height: 2rem;
+  width: 2rem;
+  border: 0.2rem solid var(--main-color);
+  border-radius: 0.5rem;
+  left: -0.2rem;
+  bottom: 0.2rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 0.3rem 0 var(--main-color);
+  transition: 0.3s;
+}
+
+.toggle:checked + .slider {
+  background-color: var(--input-focus);
+}
+
+.toggle:checked + .slider:before {
+  transform: translateX(2.8rem);
 }
 
 .btn {

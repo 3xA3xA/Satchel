@@ -1,0 +1,28 @@
+.favourites-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin: 8rem 22.8rem 16.7rem;
+}
+
+.favourites-list__item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 47.2rem;
+    height: 38.4rem;
+    background-color: #fff;
+    border-radius: 2.5rem;
+    padding: 0.8rem 1.6rem;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+.star{
+    cursor: pointer;
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 3;
+}

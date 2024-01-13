@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserDto } from 'src/app/core/services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-window',
@@ -14,7 +15,10 @@ export class AuthWindowComponent {
 
   email: string = '';
   password: string = '';
-  userTypeName: string = 'Admin'; // убарть
+  userTypeName: string = 'Покупатель'; // лучше поменять на id 
+  isLoginVisible = true;
+  isSwitchVisible = false;
+  isChecked: boolean = false;
 
   ngOnInit() {
     this.registrationService.stepChange.subscribe(() => {
@@ -26,20 +30,29 @@ export class AuthWindowComponent {
 
   updateStep() {
     this.step$ = this.registrationService.step; 
+    this.isLoginVisible = false;
+    this.isSwitchVisible = true;
+  }
+
+  updateUserTypeName(isChecked: boolean) {
+    if (isChecked === false)
+      this.userTypeName = 'Продавец'
+    else
+      this.userTypeName = 'Покупатель'
   }
 
   handleUserLogin(): void {
     if (this.email && this.password) {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
         (user: IUserDto) => {
-          console.log(user); // поменять обработку тут и в error
+          console.log(user);
           this.userService.setAuthorizedStatus()
         },
         error => {
           console.log(error);
         }
       );
-    } // можно дописать логику для else, чтобы выдать валидацию 
+    }
   }
   
   handleUserRegistration() : void {
@@ -56,7 +69,7 @@ export class AuthWindowComponent {
           console.log(error);
         }
       );
-    }// можно дописать логику для else, чтобы выдать валидацию 
+    }
   }
 
   public onBgClick(event: any) {

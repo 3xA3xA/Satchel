@@ -14,6 +14,7 @@ import { ProductComponent } from './shared/components/routers/product/product.co
 import { ProductService } from './core/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthWindowComponent } from './shared/components/auth-window/auth-window.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,12 +28,13 @@ import { AuthWindowComponent } from './shared/components/auth-window/auth-window
     CarouselComponent,
     CatalogComponent,
     ProductComponent,
-    AuthWindowComponent,
+    AuthWindowComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
