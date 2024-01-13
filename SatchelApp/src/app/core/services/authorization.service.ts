@@ -49,21 +49,22 @@ export class AuthorizationService {
 
   sendLoginRequestToBackend(email: string, password: string): Observable<IUserDto> {
     this.closeAuthWindow();
-    const user = { //поменять
+    const user = {
       email: email,
       password: password
     };
     return this.http.post<IUserDto>(this.apiUrl + '/LoginUser', user);   
   }
 
-  sendRegistrationRequestToBackend(email : string, password : string, userTypeId : boolean) : Observable<IUserDto> {
-    //перепутаны поля password и нижнее для типа аккаунта
+  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<IUserDto> {
     this.closeAuthWindow();
     const user = {
       email: email,
       password: password,
-      userTypeId: userTypeId
+      userTypeName: userTypeName
     };
+    console.log('jkk')
+    console.log(user)
     return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
   }
   

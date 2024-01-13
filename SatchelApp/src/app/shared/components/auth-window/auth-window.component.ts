@@ -15,7 +15,7 @@ export class AuthWindowComponent {
 
   email: string = '';
   password: string = '';
-  userTypeId: boolean = false; // убарть
+  userTypeName: string = 'Покупатель'; // лучше поменять на id 
   isLoginVisible = true;
   isSwitchVisible = false;
   isChecked: boolean = false;
@@ -34,26 +34,16 @@ export class AuthWindowComponent {
     this.isSwitchVisible = true;
   }
 
+  updateUserTypeName(){
+    if(this.isChecked === true)
+      this.userTypeName = 'Продавец'
+    else
+      this.userTypeName = 'Покупатель'
+  }
+
   handleUserLogin(): void {
     if (this.email && this.password) {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
-        (user: IUserDto) => {
-          console.log(user); // поменять обработку тут и в error
-          this.userService.setAuthorizedStatus()
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } // можно дописать логику для else, чтобы выдать валидацию 
-  }
-  
-  handleUserRegistration() : void {
-    this.registrationService.goToRegistration();
-
-    if (this.email && this.password && this.userTypeId)
-    {
-      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeId).subscribe(
         (user: IUserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus()
@@ -62,7 +52,25 @@ export class AuthWindowComponent {
           console.log(error);
         }
       );
-    }// можно дописать логику для else, чтобы выдать валидацию 
+    }
+  }
+  
+  handleUserRegistration() : void {
+    this.registrationService.goToRegistration();
+
+    if (this.email && this.password && this.userTypeName)
+    {
+      this.updateUserTypeName(); //обновляет тип аккаунта перед отправкой
+      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
+        (user: IUserDto) => {
+          console.log(user);
+          this.userService.setAuthorizedStatus()
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   public onBgClick(event: any) {
