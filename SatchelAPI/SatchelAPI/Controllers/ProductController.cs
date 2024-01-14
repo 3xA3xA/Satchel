@@ -20,21 +20,27 @@ namespace SatchelAPI.Controllers
     [ApiController]
     public class ProductController : Controller
     {
-        private readonly SatchelDbContext _context;
         private readonly IProductService _service;
 
-        public ProductController(SatchelDbContext context, IMapper mapper, IProductService service)
+        public ProductController(IProductService service)
         {
-            _context = context;
             _service = service;
         }
 
         [HttpGet("[action]/{productType}")]
-        public async Task<IActionResult> GetAllProducts(string productType)
+        public async Task<IActionResult> GetAllProducts(
+            string productType, 
+            int? filterByMinPrice, 
+            int? filterByMaxPrice, 
+            int? filterByGender,
+            string? filterByName,
+            bool isFilterByDecreasePrice,
+            bool isFilterByIncreasePrice)
         {
             try
             {
-                var products = await _service.GetAllProducts(productType);
+                var products = await _service.GetAllProducts(productType, filterByMinPrice,
+                    filterByMaxPrice, filterByGender, filterByName, isFilterByDecreasePrice, isFilterByIncreasePrice);
                 return Ok(products);
             }
             catch (Exception e)

@@ -128,18 +128,107 @@ namespace SatchelAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductCartDto>> GetAllProducts(string productType)
+        private List<Product> FiltrationProductsByMinPrice(List<Product> products, int? filterByMinPrice)
+        {
+            if (filterByMinPrice != null)
+            {
+                return products.Where(_ => _.Price >= filterByMinPrice).ToList();
+            }
+
+            return products;
+        }
+        
+        private List<Product> FiltrationProductsByMaxPrice(List<Product> products, int? filterByMaxPrice)
+        {
+            if (filterByMaxPrice != null)
+            {
+                return products.Where(_ => _.Price <= filterByMaxPrice).ToList();
+            }
+
+            return products;
+        }
+        
+        private List<Product> FiltrationProductsByGender(List<Product> products, int? filterByGender)
+        {
+            if (filterByGender != null)
+            {
+                return products.Where(_ => _.GenderTypeId == filterByGender).ToList();
+            }
+
+            return products;
+        }
+        
+        private List<Product> FiltrationProductsByName(List<Product> products, string? filterByName)
+        {
+            if (filterByName != null)
+            {
+                return products.Where(_ => _.Name.Contains(filterByName)).ToList();
+            }
+
+            return products;
+        }
+        
+        private List<Product> FiltrationProductsByDecreasePrice(List<Product> products, bool isFilterByDecreasePrice)
+        {
+            if (isFilterByDecreasePrice)
+            {
+                return products.OrderBy(_ => _.Price).ToList();
+            }
+
+            return products;
+        }
+        
+        private List<Product> FiltrationProductsByIncreasePrice(List<Product> products, bool isFilterByIncreasePrice)
+        {
+            if (isFilterByIncreasePrice)
+            {
+                return products.OrderByDescending(_ => _.Price).ToList();
+            }
+
+            return products;
+        }
+
+        private List<Product> FiltrationProducts(
+            List<Product> products,
+            int? filterByMinPrice,
+            int? filterByMaxPrice,
+            int? filterByGender,
+            string? filterByName,
+            bool isFilterByDecreasePrice,
+            bool isFilterByIncreasePrice)
+        {
+            products = FiltrationProductsByMinPrice(products, filterByMinPrice);
+            products = FiltrationProductsByMaxPrice(products, filterByMaxPrice);
+            products = FiltrationProductsByGender(products, filterByGender);
+            products = FiltrationProductsByName(products, filterByName);
+            products = FiltrationProductsByDecreasePrice(products, isFilterByDecreasePrice);
+            products = FiltrationProductsByIncreasePrice(products, isFilterByIncreasePrice);
+            
+            return products;
+        }
+
+        public async Task<IEnumerable<ProductCartDto>> GetAllProducts(
+            string productType, 
+            int? filterByMinPrice, 
+            int? filterByMaxPrice, 
+            int? filterByGender,
+            string? filterByName,
+            bool isFilterByDecreasePrice,
+            bool isFilterByIncreasePrice)
         {
             var products = await _context.Products
                 .Include(_ => _.ProductImages)
                 .ToListAsync();
 
+            products = FiltrationProducts(products, filterByMinPrice,
+                filterByMaxPrice, filterByGender, filterByName, isFilterByDecreasePrice, isFilterByIncreasePrice);
+            
             var productCarts = _mapper.Map<IEnumerable<ProductCartDto>>(products);
             
             return productCarts;
         }
 
-        public async Task<Product> GetProductWithImagesAndSizes(int productId)
+        private async Task<Product> GetProductWithImagesAndSizes(int productId)
         {
             return await _context.Products
                 .Include(_ => _.ProductImages)
@@ -157,9 +246,6 @@ namespace SatchelAPI.Services
             return getProductDto;
         }
 
-        // public async Task<IEnumerable<ProductCartDto>> GetProductByMinPrice()
-        // {
-        //     
-        // }
+        
     }
 }
