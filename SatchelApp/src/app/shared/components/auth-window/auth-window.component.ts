@@ -46,7 +46,7 @@ export class AuthWindowComponent {
         (user: IUserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus();
-          this.setUserId(user.userId);
+          this.setUserData(user.userId);
         },
         error => {
           console.log(error);
@@ -64,7 +64,7 @@ export class AuthWindowComponent {
         (user: IUserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus();
-          this.setUserId(user.userId);
+          this.setUserData(user.userId);
         },
         error => {
           console.log(error);
@@ -73,7 +73,7 @@ export class AuthWindowComponent {
     }
   }
 
-  setUserId(userId: number) {
+  setUserData(userId: number) {
     this.userService.userId = userId;
   }
 

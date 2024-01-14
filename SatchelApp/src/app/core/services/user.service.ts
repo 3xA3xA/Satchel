@@ -16,6 +16,7 @@ export interface IUserPageData{
   email: string;
   dateOfBirth: Date;
   userPhotoSrc: string;
+  userType: string;
   // можно будет дописать - отзывы
 }
 
@@ -29,6 +30,7 @@ export class UserService {
   private apiUrl: string = `${environment.apiUrl}/User`;
   isAuthorized = false; // если true - пользователь зашел в аккаунт
   userId = 0;
+  userTypeName = 'Покупатель';
 
   setAuthorizedStatus(){
     this.isAuthorized = !this.isAuthorized;
@@ -44,7 +46,6 @@ export class UserService {
   }
 
   updateUserInfo(userData: IUserPageData): Observable<IUserPageData>  {
-    console.log(userData)
     return this.http.put<IUserPageData>(`${this.apiUrl}/UpdateProfileInfoUser/${this.userId}`, userData);
   }
 

@@ -17,4 +17,13 @@ export class CartPageService {
   GetShoppingCart(userId: number): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl + `/GetShoppingCart?userId=${userId}`)
   }
+
+  AddProductToShoppingCart(productId: number, userId: number) {
+    return this.http.post(this.apiUrl + `/AddProductToShoppingCart?productId=${productId}&userId=${userId}`, null)
+    .subscribe(data => {
+      console.log(data + 'сохранилось');
+    }, error => {
+      console.error(error);
+    });
+  }
 }
