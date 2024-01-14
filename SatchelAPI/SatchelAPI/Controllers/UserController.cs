@@ -60,12 +60,12 @@ namespace SatchelAPI.Controllers
             return Ok(user);
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetViewUserDate(int userId)
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetViewUserData([FromRoute] int userId)
         {
             try
             {
-                var getViewUser = await _service.GetViewUserDate(userId);
+                var getViewUser = await _service.GetViewUserData(userId);
                 return Ok(getViewUser);
             }
             catch (Exception  e)
@@ -73,5 +73,7 @@ namespace SatchelAPI.Controllers
                 return BadRequest(e);
             }
         }
+        
+        
     }
 }
