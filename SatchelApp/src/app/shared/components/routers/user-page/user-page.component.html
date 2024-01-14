@@ -48,7 +48,7 @@
 
             <div class="button-group">
                 <button (click)="updateUserInfo()" class="btn save-btn">Сохранить</button>
-                <button (click)="openCreateWindow()" class="btn create-btn">Добавить товар</button>
+                <button *ngIf="this.userData.userType == 'Продавец'" (click)="openCreateWindow()" class="btn create-btn">Добавить товар</button>
                 <button (click)="exitFromAccount()" class="btn delete-btn">Выйти</button>
             </div>
 
@@ -58,3 +58,5 @@
     <img class="user-avatar" src="{{userData.userPhotoSrc}}" alt="">
 
 </div>
+
+<app-create-window *ngIf="isCreateOpen"></app-create-window>

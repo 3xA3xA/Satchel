@@ -13,6 +13,7 @@ export class UserPageComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   defaultUserPhoto: string = 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1705190400&semt=ais';
+  isCreateOpen = false;
 
   userData: IUserPageData = {
     firstName: '',
@@ -21,6 +22,7 @@ export class UserPageComponent {
     email: '',
     dateOfBirth: new Date(2024, 0, 1),
     userPhotoSrc: '',
+    userType: 'Покупатель'
   }
 
   userInfoForm = new FormGroup({
@@ -37,7 +39,6 @@ export class UserPageComponent {
     this.userService.getUserData().subscribe(
       (data: IUserPageData) => {
         this.userData = data;
-        console.log(this.userData)
         this.getUserInfo()
         if (this.userData.userPhotoSrc == null)
           this.userData.userPhotoSrc = this.defaultUserPhoto;
@@ -80,7 +81,7 @@ export class UserPageComponent {
   }
 
   openCreateWindow(){
-    
+    this.isCreateOpen = true;
   }
 
   exitFromAccount(){
