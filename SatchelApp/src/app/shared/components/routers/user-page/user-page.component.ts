@@ -79,6 +79,10 @@ export class UserPageComponent {
     );
   }
 
+  openCreateWindow(){
+    
+  }
+
   exitFromAccount(){
     this.userService.exitFromAccount();
     this.router.navigate(['/']);

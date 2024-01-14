@@ -15,5 +15,4 @@ export class AppComponent {
   get isRegistrationOpen(): boolean {
     return this.authService.isRegistrationOpen;
   }
-
 }

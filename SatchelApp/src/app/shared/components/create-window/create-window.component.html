@@ -1,0 +1,56 @@
+<div class="overlay" (click)="onBgClick($event)">
+
+    <div class="registration-form" (click)="$event.stopPropagation()">
+        <h1 class="registration-form__title">Добавление товара</h1>
+
+        <div class="formsGroup">
+            <form class="form" action="">
+                <h2 class="form__title">Форма добавления</h2>
+
+                <div class="form-inputGroup">
+                    <ul class="form-inputGroup__list">
+                        <li class="form-inputGroup__list__item">
+                            <label class="form-input__label" for="">Название:</label>
+                            <input class="form-input" type="text">
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
+                            <label class="form-input__label" for="">Тип продукта:</label>
+                            <select class="form-input" name="" id="">
+                                <option value=""></option>
+                            </select>
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
+                            <label class="form-input__label" for="">Описание:</label>
+                            <textarea class="form-textarea" type="text"></textarea>
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
+                            <label class="form-input__label" for="">Цена:</label>
+                            <input class="form-input" type="text">
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
+                            <label class="form-input__label" for="">Бренд:</label>
+                            <select class="form-input" name="" id="">
+                                <option value=""></option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                
+            </form>
+
+            <form class="form" action="">
+                <h2 class="form__title">Фото товара</h2>
+                
+                <button class="image-btn"></button>
+
+                <img class="" src="" alt="">
+            </form>
+        </div>
+
+        <button class="create-btn">Создать товар</button>
+    </div>
+</div>

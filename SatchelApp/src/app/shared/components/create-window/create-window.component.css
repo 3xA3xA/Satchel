@@ -1,0 +1,99 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.registration-form{
+    width: 94.9rem;
+    height: 64rem;
+    background-color: #fff;
+    border: 0.1rem solid #000;
+    padding: 3rem 4.6rem;
+    font: 1.6rem 'DaysOne';
+    color: #000;
+}
+
+.registration-form__title{
+    font: 3.2rem 'DaysOne';
+    text-align: end;
+}
+
+.formsGroup{
+    display: flex;
+    gap: 10.6rem;
+    margin-top: 5rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 3.3rem;
+    align-items: center;
+    width: 36.3rem;
+    height: 37.3rem;
+    background-color: #D9D9D9;
+    border-radius: 1.1rem;
+    border: 0.1rem solid #0ABAB5;
+    padding: 1.4rem 2.4rem;
+}
+
+.form__title{
+    font: 2rem 'DaysOne';
+}
+
+.form-input{
+    width: 15.3rem;
+    height: 2rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 0.6rem;
+}
+
+.form-inputGroup__list{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-inputGroup__list__item{
+    display: flex;
+    justify-content: end;
+    gap: 1.1rem;
+}
+
+.form-textarea{
+    width: 19rem;
+    height: 11.6rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    resize: none;
+}
+
+.image-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30.3rem;
+    height: 4.2rem;
+    background-color: #0ABAB5;
+}
+
+.create-btn{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24.8rem;
+    height: 5.6rem;
+    background-color: #D9D9D9;
+}
