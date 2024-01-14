@@ -17,10 +17,23 @@ export class HeaderComponent {
   isAuthorize = this.userService.isAuthorized
 
   openAuthWindow() {
+    console.log(this.isAuthorize)
     if(this.userService.authorizedStatus){
       this.router.navigate(['/profile']);
     } else{
       this.registrationService.setAuthWindowStatus();
+    }
+  }
+
+  routeToFavourites() {
+    if(this.userService.authorizedStatus){
+      this.router.navigate(['/favourites']);
+    }
+  }
+
+  routeToShoppingCart() {
+    if(this.userService.authorizedStatus){
+      this.router.navigate(['/cart']);
     }
   }
 }

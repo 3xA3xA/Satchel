@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 export interface IUserDto {
   userId: number,
@@ -6,12 +9,24 @@ export interface IUserDto {
   userTypeName: string
 }
 
+export interface IUserPageData{
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  dateOfBirth: string;
+  userPhotoSrc: string;
+  // можно будет дописать - отзывы
+}
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
+  constructor(private http: HttpClient) { }
 
+  private apiUrl: string = `${environment.apiUrl}`;
   isAuthorized = false; // если true - пользователь зашел в аккаунт
   userId = 0;
 
@@ -23,5 +38,7 @@ export class UserService {
     return this.isAuthorized
   }
 
-  constructor() { }
+  getUserData(): Observable<IUserPageData> {
+    return this.http.get<IUserPageData>(`${this.apiUrl}/Product/GetAllProducts/${this.userId}`);
+  } 
 }
