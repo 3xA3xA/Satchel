@@ -39,6 +39,6 @@ export class UserService {
   }
 
   getUserData(): Observable<IUserPageData> {
-    return this.http.get<IUserPageData>(`${this.apiUrl}/Product/GetAllProducts/${this.userId}`);
+    return this.http.get<IUserPageData>(`${this.apiUrl}/User/GetViewUserData/${this.userId}`);
   } 
 }
