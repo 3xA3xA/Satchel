@@ -2,8 +2,11 @@
 
 <main class="container">
     <ul class="cart-list">
-        <li class="cart-list__item">
-            <div class="cart-list__item__size"></div>
+        <li class="cart-list__item" *ngFor="let product of shoppingCart">
+            <div class="cart-list__item__image">
+                <app-carousel [images]="product.images"></app-carousel>
+            </div>
+            <div class="cart-list__item__size">{{product.price}}</div>
         </li>
     </ul>
 
@@ -11,14 +14,9 @@
         <h2 class="cartInfo__heading">Информация об оплате:</h2>
 
         <ol class="cartInfo-list">
-            <li class="cartInfo-list__item">
-                <p class="cart-list__item__name">Название товара</p>
-                <p class="cart-list__item__price">Цена</p>
-            </li>
-
-            <li class="cartInfo-list__item">
-                <p class="cart-list__item__name">Название товара</p>
-                <p class="cart-list__item__price">Цена</p>
+            <li class="cartInfo-list__item" *ngFor="let product of shoppingCart">
+                <p class="cart-list__item__name">{{product.name}}</p>
+                <p class="cart-list__item__price">{{product.price}}</p>
             </li>
         </ol>
 

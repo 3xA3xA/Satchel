@@ -14,7 +14,7 @@ import { ProductComponent } from './shared/components/routers/product/product.co
 import { ProductService } from './core/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthWindowComponent } from './shared/components/auth-window/auth-window.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

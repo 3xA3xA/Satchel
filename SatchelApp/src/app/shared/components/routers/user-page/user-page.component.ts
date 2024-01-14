@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
@@ -22,12 +23,20 @@ export class UserPageComponent {
     userPhotoSrc: '',
   }
 
+  userInfoForm = new FormGroup({
+    firstName: new FormControl(''),
+    middleName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl('')
+  });
+
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
     this.userService.getUserData().subscribe(
       (data: IUserPageData) => {
         this.userData = data;
+        this.getUserInfo()
         if (this.userData.userPhotoSrc == null)
           this.userData.userPhotoSrc = this.defaultUserPhoto;
         console.log(this.userData)
@@ -36,5 +45,20 @@ export class UserPageComponent {
         console.error('Error fetching products', error);
       }
     );
+  }
+
+  getUserInfo(){
+    const form = this.userInfoForm;
+    const firstName = form.get('firstName');
+    const middleName = form.get('middleName');
+    const lastName = form.get('lastName');
+    const email = form.get('email')
+
+
+    console.log(this.userData.email, email)
+    // firstName?.setValue(this.userData.firstName)
+    // middleName?.setValue(this.userData.middleName)
+    // lastName?.setValue(this.userData.lastName)
+    email?.setValue(this.userData.email)
   }
 }

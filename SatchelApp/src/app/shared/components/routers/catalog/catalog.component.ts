@@ -70,7 +70,7 @@ export class CatalogComponent implements OnInit{
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
   
-  getFormattedPrice(price: number) {
+  public getFormattedPrice(price: number) {
     return `${this.formatNumber(price)} ₽`; 
   }
 }

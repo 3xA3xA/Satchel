@@ -1,5 +1,6 @@
 .container{
     display: flex;
+    height: 80vh;
     gap: 2.4rem;
     margin: 8rem 22.8rem;
 }
@@ -12,14 +13,27 @@
 
 .cart-list__item{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 42.4rem;
     height: 42.4rem;
+    padding: 4rem;
+    font: 1.6rem 'DaysOne';
     background-color: #fff;
     border-radius: 2.5rem;
 }
 
+.cart-list__item__image{
+    width: 25rem;
+    height: 25rem;
+}
+
 .cart-list__item__size{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 8.2rem;
     height: 5.6rem;
     background-color: #0ABAB5;
@@ -29,6 +43,8 @@
 }
 
 .cartInfo{
+    position: relative;
+    left: 45rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
