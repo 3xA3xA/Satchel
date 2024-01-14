@@ -15,6 +15,7 @@ import { ProductService } from './core/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthWindowComponent } from './shared/components/auth-window/auth-window.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateWindowComponent } from './shared/components/create-window/create-window.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CarouselComponent,
     CatalogComponent,
     ProductComponent,
-    AuthWindowComponent
+    AuthWindowComponent,
+    CreateWindowComponent
   ],
   imports: [
     BrowserModule,

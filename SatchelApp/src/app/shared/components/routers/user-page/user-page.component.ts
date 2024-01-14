@@ -19,7 +19,7 @@ export class UserPageComponent {
     middleName: '',
     lastName: '',
     email: '',
-    dateOfBirth: '',
+    dateOfBirth: new Date(2024, 0, 1),
     userPhotoSrc: '',
   }
 
@@ -27,7 +27,8 @@ export class UserPageComponent {
     firstName: new FormControl(''),
     middleName: new FormControl(''),
     lastName: new FormControl(''),
-    email: new FormControl('')
+    email: new FormControl(''),
+    birth: new FormControl(new Date(2024, 0, 1)),
   });
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class UserPageComponent {
     this.userService.getUserData().subscribe(
       (data: IUserPageData) => {
         this.userData = data;
+        console.log(this.userData)
         this.getUserInfo()
         if (this.userData.userPhotoSrc == null)
           this.userData.userPhotoSrc = this.defaultUserPhoto;
@@ -47,18 +49,57 @@ export class UserPageComponent {
     );
   }
 
+  onFirtsNameChange(event: any): void {
+    this.userData.firstName = event.target.value;
+  }
+
+  onMiddleNameChange(event: any): void {
+    this.userData.middleName = event.target.value;
+  }
+
+  onLastNameChange(event: any): void {
+    this.userData.lastName = event.target.value;
+  }
+
+  onEmailChange(event: any): void {
+    this.userData.email = event.target.value;
+  }
+
+  onDateChange(event: any): void {
+    this.userData.dateOfBirth = event.target.value;
+  }
+
+  updateUserInfo() {
+    this.userService.updateUserInfo(this.userData).subscribe(
+      (data: IUserPageData) => {
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
+  }
+
+  openCreateWindow(){
+    
+  }
+
+  exitFromAccount(){
+    this.userService.exitFromAccount();
+    this.router.navigate(['/']);
+  }
+
   getUserInfo(){
     const form = this.userInfoForm;
     const firstName = form.get('firstName');
     const middleName = form.get('middleName');
     const lastName = form.get('lastName');
-    const email = form.get('email')
+    const email = form.get('email');
+    const birth = form.get('birth');
 
-
-    console.log(this.userData.email, email)
-    // firstName?.setValue(this.userData.firstName)
-    // middleName?.setValue(this.userData.middleName)
-    // lastName?.setValue(this.userData.lastName)
+    firstName?.setValue(this.userData.firstName)
+    middleName?.setValue(this.userData.middleName)
+    lastName?.setValue(this.userData.lastName)
     email?.setValue(this.userData.email)
+    birth?.setValue(this.userData.dateOfBirth)
   }
 }
