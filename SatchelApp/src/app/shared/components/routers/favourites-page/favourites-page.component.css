@@ -26,3 +26,20 @@
     right: 2rem;
     z-index: 3;
 }
+
+.favourites-item__image{
+    height: 30rem;
+    width: 30rem;
+}
+
+.favourites-item__description{
+    color: black;
+}
+
+.favourites-item__name{
+    font: 1.6rem 'DaysOne';
+}
+
+.favourites-item__price{
+    font: 1.6rem 'Normalidad';
+}
