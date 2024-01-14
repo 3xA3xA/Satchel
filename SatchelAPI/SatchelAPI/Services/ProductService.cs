@@ -248,6 +248,20 @@ namespace SatchelAPI.Services
             return getProductDto;
         }
 
-        
+        private async Task<IEnumerable<Product>> GetProductsBuUserId(int userId)
+        {
+            return await _context.Products
+                .Include(_ => _.ProductImages)
+                .Where(_ => _.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProductCartDto>> GetSellerProducts(int userId)
+        {
+            var products = await GetProductsBuUserId(userId);
+            var productsCartDto = _mapper.Map<IEnumerable<ProductCartDto>>(products);
+
+            return productsCartDto;
+        }
     }
 }

@@ -8,4 +8,5 @@ public class GetViewUserDto
     public string Email { get; set; }
     public DateTime? DateOfBirth { get; set; }
     public string? UserPhotoSrc { get; set; }
+    public string UserType { get; set; }
 }

@@ -58,6 +58,7 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.LastName, _ => _.MapFrom(s => s.LastName))
             .ForMember(_ => _.Email, _ => _.MapFrom(s => s.Email))
             .ForMember(_ => _.DateOfBirth, _ => _.MapFrom(s => s.Birthday))
-            .ForMember(_ => _.UserPhotoSrc, _ => _.MapFrom(s => s.Image));
+            .ForMember(_ => _.UserPhotoSrc, _ => _.MapFrom(s => s.Image))
+            .ForMember(_ => _.UserType, _ => _.MapFrom(s => s.UserType.Name));
     }
 }

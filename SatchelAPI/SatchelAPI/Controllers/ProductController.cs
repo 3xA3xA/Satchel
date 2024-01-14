@@ -112,5 +112,19 @@ namespace SatchelAPI.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetSellerProducts(int userId)
+        {
+            try
+            {
+                var sellerProducts = await _service.GetSellerProducts(userId);
+                return Ok(sellerProducts);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

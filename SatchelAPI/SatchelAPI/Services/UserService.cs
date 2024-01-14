@@ -73,6 +73,7 @@ namespace SatchelAPI.Services
         private async Task<User> GetUser(int userId)
         {
             return await _context.User
+                .Include(_ => _.UserType)
                 .FirstOrDefaultAsync(_ => _.UserId == userId);
         }
 
