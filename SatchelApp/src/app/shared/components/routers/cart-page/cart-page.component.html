@@ -1,1 +1,35 @@
-<p>cart-page works!</p>
+<app-header></app-header>
+
+<main class="container">
+    <ul class="cart-list">
+        <li class="cart-list__item" *ngFor="let product of shoppingCart">
+            <div class="cart-list__item__image">
+                <app-carousel [images]="product.images"></app-carousel>
+            </div>
+            <div class="cart-list__item__size">{{product.price}}</div>
+        </li>
+    </ul>
+
+    <div class="cartInfo">
+        <h2 class="cartInfo__heading">Информация об оплате:</h2>
+
+        <ol class="cartInfo-list">
+            <li class="cartInfo-list__item" *ngFor="let product of shoppingCart">
+                <p class="cart-list__item__name">{{product.name}}</p>
+                <p class="cart-list__item__price">{{product.price}}</p>
+            </li>
+        </ol>
+
+        <select class="cart-list__select" name="" id="">
+            <option value="">На месте получения</option>
+            <option value="">Добавить новую карту</option>
+        </select>
+
+        <div class="cartInfo__promoSection">
+            <label class="cartInfo__promoSection__label" for="">Ввести промокод</label>
+            <input class="cartInfo__promoSection__input" type="text">
+        </div>
+    </div>
+</main>
+
+<app-footer></app-footer>

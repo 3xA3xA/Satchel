@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
   }
 
   @Input() product: Product = {
-    id: 0,   
+    productId: 0,   
     name: '',
     description: '',
     producrCategoryId: 0,

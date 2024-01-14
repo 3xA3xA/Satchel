@@ -37,7 +37,7 @@
     <div class="product-image">
       <app-carousel [images]="product.images"></app-carousel>
     </div>
-    <div class="product-description" (click)="goToProduct(product.id)">
+    <div class="product-description" (click)="goToProduct(product.productId)">
       <h2 class="product-name">{{product.name}}</h2>
       <p class="product-price">{{getFormattedPrice(product.price)}}</p>
     </div>

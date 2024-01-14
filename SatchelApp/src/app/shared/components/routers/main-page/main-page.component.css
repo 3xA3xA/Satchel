@@ -31,3 +31,36 @@
     margin-top: 2rem;
 }
 
+.title{
+    font: 3.6rem 'DaysOne';
+    text-align: center;
+}
+
+.advantages-list{
+    display: flex;
+    justify-content: space-between;
+    margin: 3.7rem 22.8rem 0;
+}
+
+.advantages-list__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+    width: 37.8rem;
+    height: 24rem;
+    padding: 3.5rem;
+    background-color: #fff;
+    border-radius: 2.5rem;
+    font: 1.6rem 'DaysOne';
+    color: #000;
+    text-align: center;
+}
+
+.advantages-list__item__image{
+    width: 10rem;
+    height: 10rem;
+    object-fit: contain;
+}
+
+

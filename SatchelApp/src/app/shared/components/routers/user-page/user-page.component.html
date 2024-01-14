@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container">
-    <section class="dataSection">
+    <form class="dataSection" [formGroup]="userInfoForm">
 
         <h2 class="heading">Учётные данные</h2>
         <div class="mainData">
@@ -8,13 +8,13 @@
                 <p class="blockName">ФИО:</p>
                 <ul class="fullNameList">
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Имя" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Имя" formControlName="firstName" type="text">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Фамилия" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Фамилия" formControlName="middleName" type="text">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Отчество" type="text">
+                        <input class="fullnameInput personalAreaInput" placeholder="Отчество" formControlName="lastName" type="text">
                     </li>
                 </ul>
             </div>
@@ -22,7 +22,7 @@
             <div class="dataGroup secondaryDataGroup">
                 <div class="secondaryData">
                     <p class="blockName">Почта:</p>
-                    <input class="secondaryInfoInput personalAreaInput" placeholder="Почта" type="text ">
+                    <input class="secondaryInfoInput personalAreaInput" placeholder="Почта" formControlName="email" type="text ">
                 </div>
 
                 <div class="secondaryData">
@@ -46,8 +46,13 @@
                 </div>
             </section>
 
+            <div class="button-group">
+                <button class="btn save-btn">Сохранить</button>
+                <button class="btn delete-btn">Выйти</button>
+            </div>
+
         </div>
-    </section>
+    </form>
 
     <img class="user-avatar" src="{{userData.userPhotoSrc}}" alt="">
 

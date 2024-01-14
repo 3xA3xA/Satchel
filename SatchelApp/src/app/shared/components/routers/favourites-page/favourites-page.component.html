@@ -7,7 +7,7 @@
             <div class="favourites-item__image">
               <app-carousel [images]="product.images"></app-carousel>
             </div>
-            <div class="favourites-item__description" (click)="goToProduct(product.id)">
+            <div class="favourites-item__description" (click)="goToProduct(product.productId)">
               <h2 class="favourites-item__name">{{product.name}}</h2>
               <p class="favourites-item__price">{{getFormattedPrice(product.price)}}</p>
             </div>
