@@ -37,4 +37,7 @@ public class User
 
     [InverseProperty(nameof(ShoppingCart.User))]
     public ICollection<ShoppingCart> ShoppingCarts { get; set; }
+    
+    [InverseProperty(nameof(Product.User))]
+    public ICollection<Product> Products { get; set; }
 }

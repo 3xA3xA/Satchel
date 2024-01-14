@@ -34,5 +34,11 @@ public class SatchelDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Product>()
+            .HasOne(_ => _.User)
+            .WithMany(_ => _.Products)
+            .HasForeignKey(_ => _.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

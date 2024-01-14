@@ -90,8 +90,8 @@ namespace SatchelAPI.Services
             user.LastName = viewUserDto.LastName;
             user.MiddleName = viewUserDto.MiddleName;
             user.Email = viewUserDto.Email;
-            user.Image = viewUserDto.Image;
-            user.Birthday = viewUserDto.Birthday;
+            user.Image = viewUserDto.UserPhotoSrc;
+            user.Birthday = viewUserDto.DateOfBirth;
         }
 
         public async Task UpdateProfileInfoUser(int userId, GetViewUserDto viewUserDto)
