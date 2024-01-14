@@ -30,47 +30,33 @@ namespace SatchelAPI.Controllers
         }
 
         [HttpGet("[action]/{productType}")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts(string productType)
+        public async Task<IActionResult> GetAllProducts(string productType)
         {
-            IQueryable<Product> query = _context.Products.Include(p => p.ProductType);
-
-            var productsWithImages = await query
-                .Where(p => p.ProductType.Name == productType)
-                .Select(p => new ProductDTO
-                {
-                    Id = p.ProductId,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
-                })
-                .ToListAsync();
-
-            return productsWithImages;
+            try
+            {
+                var products = await _service.GetAllProducts(productType);
+                return Ok(products);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ProductDTO> GetProductById(int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
-            IQueryable<Product> query = _context.Products.Where(p => p.ProductId == id);
-
-            
-            var product = query
-               .Select(p => new ProductDTO
-               {
-                   Id = p.ProductId,
-                   Name = p.Name,
-                   Description = p.Description,
-                   ProductTypeId = p.ProductTypeId,
-                   Price = p.Price,
-                   BrandTypeId = p.BrandTypeId,
-                   GenderTypeId = p.GenderTypeId,
-                   Sizes = p.ProductType.SizeTypeToProductTypes.Select(sizes => sizes.SizeType.Name).ToList(),
-                   Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
-               }).FirstOrDefault();
-
-            return product;
+            try
+            {
+                var product = await _service.GetProduct(id);
+                return Ok(product);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         public class ProductData

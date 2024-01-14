@@ -39,5 +39,17 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.UserId, _ => _.MapFrom(s => s.UserId))
             .ForMember(_ => _.Email, _ => _.MapFrom(s => s.Email))
             .ForMember(_ => _.UserTypeName, _ => _.MapFrom(s => s.UserType.Name));
+
+        CreateMap<Product, GetProductDto>()
+            .ForMember(_ => _.Id, _ => _.MapFrom(s => s.ProductId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
+            .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Price))
+            .ForMember(_ => _.ProductTypeId, _ => _.MapFrom(s => s.ProductTypeId))
+            .ForMember(_ => _.BrandTypeId, _ => _.MapFrom(s => s.BrandTypeId))
+            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
+            .ForMember(_ => _.Images, _ => _.MapFrom(s => s.ProductImages.Select(_ => _.ImagePath)))
+            .ForMember(_ => _.Sizes,
+                _ => _.MapFrom(s => s.ProductType.SizeTypeToProductTypes
+                    .Select(_ => _.SizeType.Name)));
     }
 }

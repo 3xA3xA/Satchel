@@ -38,7 +38,7 @@ namespace SatchelAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        private async Task<Product> GetProduct(int productId)
+        private async Task<Product> GetProductById(int productId)
         {
             return await _context.Products
                 .FirstOrDefaultAsync(_ => _.ProductId == productId);
@@ -81,7 +81,7 @@ namespace SatchelAPI.Services
 
         public async Task DeleteProduct(int productId)
         {
-            var product = await GetProduct(productId);
+            var product = await GetProductById(productId);
             var productImages = await GetProductImagesByProductId(productId);
             var feedbacks = await GetFeedbacksByProductId(productId);
             var shoppingCarts = await GetShoppingCartByProductId(productId);
@@ -120,7 +120,7 @@ namespace SatchelAPI.Services
 
         public async Task UpdateProduct(int productId, ProductDto productDto, ICollection<ProductImageDto> productImageDto)
         {
-            var updateProduct = await GetProduct(productId);
+            var updateProduct = await GetProductById(productId);
             await UpdateProductImages(productId, productImageDto);
             SetProductNewValues(updateProduct, productDto);
 
@@ -128,25 +128,34 @@ namespace SatchelAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        // public async Task<IEnumerable<ProductCartDto>> GetAllProducts(string productType)
-        // {
-        //     var products = await _context.Products
-        //         .Include(p => p.ProductType)
-        //         .ToListAsync();
-        //
-        //
-        //     var productsWithImages = products
-        //         .Where(p => p.ProductType.Name == productType)
-        //         .Select(p => new ProductDTO
-        //         {
-        //             Id = p.ProductId,
-        //             Name = p.Name,
-        //             Price = p.Price,
-        //             Images = p.ProductImages.Select(img => img.ImagePath).ToList(),
-        //         });
-        //     
-        //     return productsWithImages;
-        // }
+        public async Task<IEnumerable<ProductCartDto>> GetAllProducts(string productType)
+        {
+            var products = await _context.Products
+                .Include(_ => _.ProductImages)
+                .ToListAsync();
+
+            var productCarts = _mapper.Map<IEnumerable<ProductCartDto>>(products);
+            
+            return productCarts;
+        }
+
+        public async Task<Product> GetProductWithImagesAndSizes(int productId)
+        {
+            return await _context.Products
+                .Include(_ => _.ProductImages)
+                .Include(_ => _.ProductType)
+                .ThenInclude(_ => _.SizeTypeToProductTypes)
+                .ThenInclude(_ => _.SizeType)
+                .FirstOrDefaultAsync(_ => _.ProductId == productId);
+        }
+
+        public async Task<GetProductDto> GetProduct(int productId)
+        {
+            var product = await GetProductWithImagesAndSizes(productId);
+            var getProductDto = _mapper.Map<GetProductDto>(product);
+
+            return getProductDto;
+        }
 
         // public async Task<IEnumerable<ProductCartDto>> GetProductByMinPrice()
         // {
