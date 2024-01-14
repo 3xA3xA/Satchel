@@ -1,1 +1,37 @@
-<p>cart-page works!</p>
+<app-header></app-header>
+
+<main class="container">
+    <ul class="cart-list">
+        <li class="cart-list__item">
+            <div class="cart-list__item__size"></div>
+        </li>
+    </ul>
+
+    <div class="cartInfo">
+        <h2 class="cartInfo__heading">Информация об оплате:</h2>
+
+        <ol class="cartInfo-list">
+            <li class="cartInfo-list__item">
+                <p class="cart-list__item__name">Название товара</p>
+                <p class="cart-list__item__price">Цена</p>
+            </li>
+
+            <li class="cartInfo-list__item">
+                <p class="cart-list__item__name">Название товара</p>
+                <p class="cart-list__item__price">Цена</p>
+            </li>
+        </ol>
+
+        <select class="cart-list__select" name="" id="">
+            <option value="">На месте получения</option>
+            <option value="">Добавить новую карту</option>
+        </select>
+
+        <div class="cartInfo__promoSection">
+            <label class="cartInfo__promoSection__label" for="">Ввести промокод</label>
+            <input class="cartInfo__promoSection__input" type="text">
+        </div>
+    </div>
+</main>
+
+<app-footer></app-footer>
