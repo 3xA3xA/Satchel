@@ -14,7 +14,7 @@ export interface IUserPageData{
   middleName: string;
   lastName: string;
   email: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
   userPhotoSrc: string;
   // можно будет дописать - отзывы
 }
@@ -26,7 +26,7 @@ export interface IUserPageData{
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  private apiUrl: string = `${environment.apiUrl}`;
+  private apiUrl: string = `${environment.apiUrl}/User`;
   isAuthorized = false; // если true - пользователь зашел в аккаунт
   userId = 0;
 
@@ -38,7 +38,17 @@ export class UserService {
     return this.isAuthorized
   }
 
+  exitFromAccount(){
+    this.setAuthorizedStatus();
+    this.userId = 0;
+  }
+
+  updateUserInfo(userData: IUserPageData): Observable<IUserPageData>  {
+    console.log(userData)
+    return this.http.put<IUserPageData>(`${this.apiUrl}/UpdateProfileInfoUser/${this.userId}`, userData);
+  }
+
   getUserData(): Observable<IUserPageData> {
-    return this.http.get<IUserPageData>(`${this.apiUrl}/User/GetViewUserData/${this.userId}`);
+    return this.http.get<IUserPageData>(`${this.apiUrl}/GetViewUserData/${this.userId}`);
   } 
 }
