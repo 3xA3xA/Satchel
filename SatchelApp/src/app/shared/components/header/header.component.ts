@@ -17,7 +17,6 @@ export class HeaderComponent {
   isAuthorize = this.userService.isAuthorized
 
   openAuthWindow() {
-    console.log(this.isAuthorize)
     if(this.userService.authorizedStatus){
       this.router.navigate(['/profile']);
     } else{
