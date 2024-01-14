@@ -36,9 +36,9 @@ public class ShoppingCartService : IShoppingCartService
         return response;
     }
 
-    public async Task AddProductToShoppingCart(int productId, int userId)
+    public async Task AddProductToShoppingCart(int productId, int userId, int sizeTypeId)
     {
-        var newShoppingCart = new ShoppingCart(productId, userId);
+        var newShoppingCart = new ShoppingCart(productId, userId, sizeTypeId);
         await _context.ShoppingCarts.AddAsync(newShoppingCart);
         await _context.SaveChangesAsync();
     }

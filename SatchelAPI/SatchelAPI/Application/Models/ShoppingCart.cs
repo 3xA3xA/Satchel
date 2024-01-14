@@ -5,10 +5,11 @@ namespace Satchel.Application.Models;
 
 public class ShoppingCart
 {
-    public ShoppingCart(int productId, int userId)
+    public ShoppingCart(int productId, int userId, int sizeTypeId)
     {
         ProductId = productId;
         UserId = userId;
+        SizeTypeId = sizeTypeId;
     }
     
     [Key] [Required] public int ShoppingCartId { get; set; }
