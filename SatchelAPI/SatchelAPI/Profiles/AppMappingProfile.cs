@@ -51,5 +51,13 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.Sizes,
                 _ => _.MapFrom(s => s.ProductType.SizeTypeToProductTypes
                     .Select(_ => _.SizeType.Name)));
+
+        CreateMap<User, GetViewUserDto>()
+            .ForMember(_ => _.FirstName, _ => _.MapFrom(s => s.FirstName))
+            .ForMember(_ => _.MiddleName, _ => _.MapFrom(s => s.MiddleName))
+            .ForMember(_ => _.LastName, _ => _.MapFrom(s => s.LastName))
+            .ForMember(_ => _.Email, _ => _.MapFrom(s => s.Email))
+            .ForMember(_ => _.Birthday, _ => _.MapFrom(s => s.Birthday))
+            .ForMember(_ => _.Image, _ => _.MapFrom(s => s.Image));
     }
 }

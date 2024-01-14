@@ -60,6 +60,18 @@ namespace SatchelAPI.Controllers
             return Ok(user);
         }
 
-        
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetViewUserDate(int userId)
+        {
+            try
+            {
+                var getViewUser = await _service.GetViewUserDate(userId);
+                return Ok(getViewUser);
+            }
+            catch (Exception  e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

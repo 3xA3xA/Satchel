@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2cfa323-9269-4624-af27-07922ee4dbf1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../SatchelAPI/SatchelAPI/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../SatchelAPI/SatchelAPI/Controllers/ProductController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SatchelAPI/SatchelAPI/Services/ProductService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../SatchelAPI/SatchelAPI/Services/ProductService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +76,7 @@
       <workItem from="1704957887078" duration="2130000" />
       <workItem from="1704965762942" duration="662000" />
       <workItem from="1704975315781" duration="2811000" />
-      <workItem from="1705162608096" duration="1187000" />
+      <workItem from="1705162608096" duration="1785000" />
     </task>
     <servers />
   </component>

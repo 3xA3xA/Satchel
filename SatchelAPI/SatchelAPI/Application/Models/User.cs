@@ -20,6 +20,7 @@ public class User
     public string? LastName { get; set; }
     public string? MiddleName { get; set; }
     public DateTime? Birthday { get; set; }
+    public string? Image { get; set; }
 
     [ForeignKey(nameof(UserTypeId))]
     [Required]

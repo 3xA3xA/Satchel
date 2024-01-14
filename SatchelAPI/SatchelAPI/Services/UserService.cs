@@ -69,5 +69,19 @@ namespace SatchelAPI.Services
         {
             return _context.User.Any(e => e.Email == email);
         }
+
+        public async Task<User> GetUser(int userId)
+        {
+            return await _context.User
+                .FirstOrDefaultAsync(_ => _.UserId == userId);
+        }
+
+        public async Task<GetViewUserDto> GetViewUserDate(int userId)
+        {
+            var user = await GetUser(userId);
+            var getViewUserDto = _mapper.Map<GetViewUserDto>(user);
+
+            return getViewUserDto;
+        }
     }
 }
