@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
 
 @Injectable({
@@ -12,11 +13,31 @@ export class FavouriteService {
 
   constructor(private http: HttpClient) { }
 
-  addFavouriteProduct(productId: number, userId: number){
-    const params = new HttpParams()
-      .set('productId', productId.toString())
-      .set('userId', userId.toString());
+  AddFavouriteProduct(productId: number, userId: number){
+    return this.http.post(this.apiUrl + `/AddProductToFavourites?productId=${productId}&userId=${userId}`, null)
+      .subscribe(data => {
+        console.log(data);
+      }, error => {
+        console.error(error);
+      });
+  }
 
-    this.http.post(this.apiUrl + '/AddProductToFavourites', params);
+  DeleteProductFromFavourites(productId: number, userId: number){
+      return this.http.delete(this.apiUrl + `/DeleteProductFromFavourites?productId=${productId}&userId=${userId}`)
+        .subscribe(data => {
+          console.log(data);
+        }, error => {
+          console.error(error);
+        });
+      }
+
+  getAllProducts(productType : string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}`);
+  }
+
+  GetFavourites(userId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl + `/GetFavourites?userId=${userId}`)
   }
 }
+
+  

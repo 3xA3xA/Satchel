@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { ChangeDetectorRef } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  constructor(private registrationService: AuthorizationService, private userService: UserService, private router: Router) { }
+  constructor(private changeDetector: ChangeDetectorRef ,private registrationService: AuthorizationService, private userService: UserService, private router: Router) { }
+
+  isAuthorize = this.userService.isAuthorized
 
   openAuthWindow() {
     if(this.userService.authorizedStatus){
