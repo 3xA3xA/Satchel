@@ -83,5 +83,24 @@ namespace SatchelAPI.Services
 
             return getViewUserDto;
         }
+
+        private void SetNewValuesToUser(User user, GetViewUserDto viewUserDto)
+        {
+            user.FirstName = viewUserDto.FirstName;
+            user.LastName = viewUserDto.LastName;
+            user.MiddleName = viewUserDto.MiddleName;
+            user.Email = viewUserDto.Email;
+            user.Image = viewUserDto.Image;
+            user.Birthday = viewUserDto.Birthday;
+        }
+
+        public async Task UpdateProfileInfoUser(int userId, GetViewUserDto viewUserDto)
+        {
+            var user = await GetUser(userId);
+            SetNewValuesToUser(user, viewUserDto);
+
+            _context.User.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

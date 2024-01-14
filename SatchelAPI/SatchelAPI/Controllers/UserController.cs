@@ -61,6 +61,7 @@ namespace SatchelAPI.Controllers
         }
 
         [HttpGet("[action]/{userId}")]
+        [ProducesResponseType(typeof(GetViewUserDto), 200)]
         public async Task<IActionResult> GetViewUserData([FromRoute] int userId)
         {
             try
@@ -73,7 +74,19 @@ namespace SatchelAPI.Controllers
                 return BadRequest(e);
             }
         }
-        
-        
+
+        [HttpPut("[action]/{userId}")]
+        public async Task<IActionResult> UpdateProfileInfoUser([FromRoute] int userId, [FromBody] GetViewUserDto viewUserDto)
+        {
+            try
+            {
+                await _service.UpdateProfileInfoUser(userId, viewUserDto);
+                return Ok();
+            }
+            catch (Exception  e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }
