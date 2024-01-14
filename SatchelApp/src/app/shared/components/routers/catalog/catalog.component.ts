@@ -5,7 +5,7 @@ import { FavouriteService } from 'src/app/core/services/favourite.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 export interface Product{
-  id: number,
+  productId: number,
   name: string,
   description: string,
   producrCategoryId: number,
@@ -37,6 +37,7 @@ export class CatalogComponent implements OnInit{
       let productType : string = params['item'];
       this.productService.getAllProducts(productType).subscribe(
         (productsFromQuery: Product[]) => {
+          console.log(productsFromQuery)
           this.products = productsFromQuery;
         },
         (error) => {
@@ -52,11 +53,11 @@ export class CatalogComponent implements OnInit{
     
     if(star.src.includes('activeFavourite')){
       star.src = this.inactiveStar;
-      this.favouriteService.DeleteProductFromFavourites(product.id, this.userService.userId);
+      this.favouriteService.DeleteProductFromFavourites(product.productId, this.userService.userId);
     }
     else {
       star.src = this.activeStar;
-      this.favouriteService.AddFavouriteProduct(product.id, this.userService.userId);
+      this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
     }
     
   }
