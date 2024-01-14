@@ -7,10 +7,9 @@ import { Component } from '@angular/core';
 })
 export class MainPageComponent {
   images = [
-    'https://i.pinimg.com/736x/5b/6e/ca/5b6eca63605bea0eeb48db43f77fa0ce.jpg',
-    'https://foni.club/uploads/posts/2023-01/1672601416_foni-club-p-kartinki-na-telefon-stich-1.png',
-    'https://i.pinimg.com/736x/5b/6e/ca/5b6eca63605bea0eeb48db43f77fa0ce.jpg',
-    'https://foni.club/uploads/posts/2023-01/1672601416_foni-club-p-kartinki-na-telefon-stich-1.png',
-    'https://i.pinimg.com/736x/5b/6e/ca/5b6eca63605bea0eeb48db43f77fa0ce.jpg',
+    'https://gornovosti.ru/media/cache/e8/88/e88864d23b58865f4d7336a4aa9bd4a0.webp',
+    'https://cdn0.divan.ru/img/v1/rsSv4OLvQbYMSNyHv8HIfJUhSR2K639SAYjgxDqAzuU/rs:fit:1920:1440:0:0/g:ce:0:0/bg:ffffff/q:85/czM6Ly9kaXZhbi93aWtpLWFydGljbGUvMzc2OTc2OC5qcGc.jpg',
+    'https://avatars.dzeninfra.ru/get-zen_doc/4120782/pub_636e28839308536fe022cde4_636e28bd5e02fd50d4c70e8b/scale_1200',
+    'https://abcbiznes.ru/wp-content/uploads/2014/09/bspoke-store-at-bayview-village-by-gha-toronto-canada-01.jpg'
   ]
 }

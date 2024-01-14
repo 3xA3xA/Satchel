@@ -39,7 +39,7 @@
 .advantages-list{
     display: flex;
     justify-content: space-between;
-    margin: 3.7rem 22.8rem 0;
+    margin: 3.7rem 22.8rem 10rem;
 }
 
 .advantages-list__item{
