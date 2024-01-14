@@ -218,6 +218,8 @@ namespace SatchelAPI.Services
         {
             var products = await _context.Products
                 .Include(_ => _.ProductImages)
+                .Include(_ => _.ProductType)
+                .Where(_ => _.ProductType.Name == productType)
                 .ToListAsync();
 
             products = FiltrationProducts(products, filterByMinPrice,
