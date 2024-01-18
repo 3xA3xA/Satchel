@@ -23,4 +23,12 @@ export class ProductService {
   getAllProducts(productType : string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}`);
   }
+
+  formatNumber(num: number) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  getFormattedPrice(price: number) {
+    return `${this.formatNumber(price)} ₽`; 
+  }
 }

@@ -8,13 +8,13 @@
                 <p class="blockName">ФИО:</p>
                 <ul class="fullNameList">
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Имя" formControlName="firstName" type="text" (change)="onFirtsNameChange($event)">
+                        <input class="fullnameInput personalAreaInput" placeholder="Имя" formControlName="firstName" type="text" [(ngModel)]="userData.firstName">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Фамилия" formControlName="middleName" type="text" (change)="onMiddleNameChange($event)">
+                        <input class="fullnameInput personalAreaInput" placeholder="Фамилия" formControlName="middleName" type="text" [(ngModel)]="userData.middleName">
                     </li>
                     <li class="fullNameList-item">
-                        <input class="fullnameInput personalAreaInput" placeholder="Отчество" formControlName="lastName" type="text" (change)="onLastNameChange($event)">
+                        <input class="fullnameInput personalAreaInput" placeholder="Отчество" formControlName="lastName" type="text" [(ngModel)]="userData.lastName">
                     </li>
                 </ul>
             </div>
@@ -22,12 +22,12 @@
             <div class="dataGroup secondaryDataGroup">
                 <div class="secondaryData">
                     <p class="blockName">Почта:</p>
-                    <input class="secondaryInfoInput personalAreaInput" placeholder="Почта" formControlName="email" type="text " (change)="onEmailChange($event)">
+                    <input class="secondaryInfoInput personalAreaInput" placeholder="Почта" formControlName="email" type="text " [(ngModel)]="userData.email">
                 </div>
 
                 <div class="secondaryData">
                     <p class="blockName">Дата рождения:</p>
-                    <input class="secondaryInfoInput personalAreaInput" placeholder="Дата Рождения" formControlName="birth" type="date" (change)="onDateChange($event)">
+                    <input class="secondaryInfoInput personalAreaInput" placeholder="Дата Рождения" formControlName="birth" type="date" [(ngModel)]="userData.dateOfBirth">
                 </div>
             </div>
 
@@ -35,7 +35,11 @@
                 <h2 class="heading">Оплата</h2>
                 <div class="payData">
                     <p class="blockName">Cпособ оплаты:</p>
-                    <select  class="personalAreaSelect" name="paySelection"> <option value="ShipPay">Оплата при получении заказа</option> <option value="MasterCard">Оплата на сайте</option> <option value="Visa">Оплата при погрузке</option> </select>
+                     <select name="PayMethod" class="personalAreaSelect" name="paySelection"> <!-- [(ngModel)]="PayMethod" -->
+                        <option value="ShipPay">Оплата при получении заказа</option> 
+                        <option value="MasterCard">Оплата на сайте</option> 
+                        <option value="Visa">Оплата при погрузке</option> 
+                    </select>
                 </div>
             </section>
         

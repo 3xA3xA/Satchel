@@ -66,11 +66,8 @@ export class CatalogComponent implements OnInit{
     this.router.navigate(['catalog/product', id]);
   }
 
-  formatNumber(num: number) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  getFormatPrice(price: number){
+    return (this.productService.getFormattedPrice(price))
   }
-  
-  public getFormattedPrice(price: number) {
-    return `${this.formatNumber(price)} ₽`; 
-  }
+
 }

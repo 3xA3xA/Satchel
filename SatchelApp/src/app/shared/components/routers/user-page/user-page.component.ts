@@ -50,29 +50,10 @@ export class UserPageComponent {
     );
   }
 
-  onFirtsNameChange(event: any): void {
-    this.userData.firstName = event.target.value;
-  }
-
-  onMiddleNameChange(event: any): void {
-    this.userData.middleName = event.target.value;
-  }
-
-  onLastNameChange(event: any): void {
-    this.userData.lastName = event.target.value;
-  }
-
-  onEmailChange(event: any): void {
-    this.userData.email = event.target.value;
-  }
-
-  onDateChange(event: any): void {
-    this.userData.dateOfBirth = event.target.value;
-  }
-
   updateUserInfo() {
     this.userService.updateUserInfo(this.userData).subscribe(
       (data: IUserPageData) => {
+        //получить ответ
       },
       (error) => {
         console.error('Error fetching products', error);

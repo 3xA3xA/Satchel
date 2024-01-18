@@ -2,6 +2,8 @@
     display: flex;
     padding: 2rem 22.8rem;
     gap: 14.8rem;
+    font: 1.6rem 'DaysOne';
+    color: #000;
 }
 
 .product_gallery{
@@ -27,15 +29,13 @@
 
 .product_info{
     padding: 1.6rem;
-    color: #000;
-    font-size: 1.6rem;
-    font-family: 'DaysOne';
     width: 47.2rem;
     height: 37.6rem;
     background-color: #fff;
 }
 
 .product_name{
+    font-size: 2.4rem;
     margin-bottom: 3rem;
 }
 
@@ -81,4 +81,13 @@
 .selected{
     background-color: #000;
     color: #0ABAB5;
+}
+
+.product__description{
+    width: 47.2rem;
+    max-height: 31.7rem;
+    background-color: #fff;
+    padding: 1.6rem;
+    margin-top: 4.2rem;
+    text-align: center;
 }

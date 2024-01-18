@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from '../catalog/catalog.component';
 import { CartPageService } from 'src/app/core/services/cart-page.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 
 @Component({
   selector: 'app-product',
@@ -16,6 +17,8 @@ export class ProductComponent implements OnInit {
 
   selectedSize: string | null = null;
 
+  constructor( private route: ActivatedRoute, private productService: ProductService, private cartPageService: CartPageService, private userService: UserService, private registrationService: AuthorizationService) { }
+
   onSizeClick(size: string) {
     if (size === this.selectedSize) {
       this.selectedSize = null;  
@@ -25,12 +28,16 @@ export class ProductComponent implements OnInit {
   }
 
   addProductToShoppingCart(){
+    if(!this.userService.authorizedStatus){
+      this.registrationService.setAuthWindowStatus();
+      return 
+    } 
     if (this.selectedSize != null && this.userService.userId != 0){
-      this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId);
+        this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId);
     }
   }
 
-  constructor( private route: ActivatedRoute, private productService: ProductService, private cartPageService: CartPageService, private userService: UserService) { }
+
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -39,12 +46,15 @@ export class ProductComponent implements OnInit {
     this.productService.getProductById(this.id).subscribe(
       (product) => {
         this.product = product;
-        console.log(product.sizes)
       },
       (error) => {
         console.error('Error fetching product by ID:', error);
       }
     );
+  }
+
+  getFormatPrice(price: number){
+    return (this.productService.getFormattedPrice(price))
   }
 
   @Input() product: Product = {

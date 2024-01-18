@@ -20,7 +20,7 @@
       <p class="filter-heading">Сортировать по полу:</p>
       <ul class="sex-filter">
         <li class="sex-filter__item">Мужской</li>
-        <li class="sex-filter__item">Женский</li> <!-- тут какая-то хуйня, разберитесь пж, а то они склеились -->
+        <li class="sex-filter__item">Женский</li> 
         <li class="sex-filter__item">Унисекс</li>
       </ul>
     </div>
@@ -33,13 +33,13 @@
   </div>
 
   <div class="product" *ngFor="let product of products">
-    <img class="star" (click)="addToFavourite(product, star)" [src]="inactiveStar" alt="" #star>
+    <img class="star" (click)="addToFavourite(product, star)" [src]="inactiveStar" #star>
     <div class="product-image">
       <app-carousel [images]="product.images"></app-carousel>
     </div>
     <div class="product-description" (click)="goToProduct(product.productId)">
       <h2 class="product-name">{{product.name}}</h2>
-      <p class="product-price">{{getFormattedPrice(product.price)}}</p>
+      <p class="product-price">{{getFormatPrice(product.price)}}</p>
     </div>
   </div>
 </div>

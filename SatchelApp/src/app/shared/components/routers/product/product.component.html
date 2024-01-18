@@ -6,20 +6,27 @@
             <app-carousel class="product-carousel" [images]="product.images"></app-carousel>
         </div>
     </div>
-    <div class="product_info">
-        <p class="product_name">{{product.name}}</p>
-        <p class="product_price">{{product.price}}</p>
 
-        <ul class="sizes-container">
-            <li class="size-box" *ngFor="let size of product.sizes"
-                [class.selected]="size === selectedSize"
-                (click)="onSizeClick(size)"
-            > 
-                {{size}}
-            </li>
-        </ul>
-
-        <button class="buy-btn" (click)="addProductToShoppingCart()"> Добавить в корзину</button>
+    <div>
+        <div class="product_info">
+            <p class="product_name">{{product.name}}</p>
+            <p class="product_price">{{getFormatPrice(product.price)}}</p>
+    
+            <ul class="sizes-container">
+                <li class="size-box" *ngFor="let size of product.sizes"
+                    [class.selected]="size === selectedSize"
+                    (click)="onSizeClick(size)"
+                > 
+                    {{size}}
+                </li>
+            </ul>
+    
+            <button class="buy-btn" (click)="addProductToShoppingCart()"> Добавить в корзину</button>
+        </div>
+    
+        <div class="product__description">
+            {{product.description}}
+        </div>
     </div>
 </div>
 

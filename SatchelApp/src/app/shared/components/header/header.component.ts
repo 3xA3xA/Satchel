@@ -27,12 +27,16 @@ export class HeaderComponent {
   routeToFavourites() {
     if(this.userService.authorizedStatus){
       this.router.navigate(['/favourites']);
+    } else{
+      this.registrationService.setAuthWindowStatus();
     }
   }
 
   routeToShoppingCart() {
     if(this.userService.authorizedStatus){
       this.router.navigate(['/cart']);
+    } else{
+      this.registrationService.setAuthWindowStatus();
     }
   }
 }
