@@ -45,7 +45,8 @@
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
                 
-                <button class="image-btn"></button>
+                <button (click)="fileInput.click()" class="image-btn"></button>
+                <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)">
 
                 <img class="" src="" alt="">
             </form>
