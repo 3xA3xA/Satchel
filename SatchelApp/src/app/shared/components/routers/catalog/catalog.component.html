@@ -1,35 +1,34 @@
 <app-header></app-header>
 
 <div class="settings-bar"> 
-  <div>Фильтры</div>
   <div>Сортировка</div>
 </div>
 
 <div class="container">
 
   <div class="optional-menu">
-    <input class="optional__search" placeholder="Найти" type="text">
+    <input class="optional__search" [(ngModel)]="filters.filterByName" placeholder="Найти" type="text">
 
     <div class="price-filter">
       <p class="filter-heading">Cортировать по цене:</p>
-      <input class="optional__price left" placeholder="Цена от" type="number">
-      <input class="optional__price" placeholder="Цена до" type="number">
+      <input class="optional__price left" [(ngModel)]="filters.filterByMinPrice" placeholder="Цена от" type="number">
+      <input class="optional__price" [(ngModel)]="filters.filterByMaxPrice" placeholder="Цена до" type="number">
     </div>
 
     <div class="sex-filter__container">
       <p class="filter-heading">Сортировать по полу:</p>
       <ul class="sex-filter">
-        <li class="sex-filter__item">Мужской</li>
-        <li class="sex-filter__item">Женский</li> 
-        <li class="sex-filter__item">Унисекс</li>
+        <li [class.selected]= "genderType[0] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[0])">Мужской</li>
+        <li [class.selected]= "genderType[1] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[1])">Женский</li> 
+        <li [class.selected]= "genderType[2] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[2])">Унисекс</li>
       </ul>
     </div>
 
-    <div class="clear-section">
-      <input type="checkbox" name="clear" id="">
-      <label for="clear">Очистить всё</label>
-    </div>
+    <div class="optional-menu__btnGroup">
+      <button class="optional-menu__btn" (click)="clearFilters()">Очистить фильтры</button>
     
+      <button class="optional-menu__btn" (click)="getFilteredProducts()">Применить фильтры</button>
+    </div>
   </div>
 
   <div class="product" *ngFor="let product of products">
