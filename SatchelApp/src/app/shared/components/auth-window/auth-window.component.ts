@@ -29,7 +29,7 @@ export class AuthWindowComponent {
 
   updateStep() {
     this.step$ = this.registrationService.step; 
-    this.isLoginVisible = false;
+    this.isLoginVisible = false; //Кнопка входа 
     this.isSwitchVisible = true;
   }
 

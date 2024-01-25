@@ -18,17 +18,25 @@
                 <p class="cart-list__item__name">{{product.name}}</p>
                 <p class="cart-list__item__price">{{product.price}}</p>
             </li>
+
+            <li class="cartInfo-list__item">
+                <p class="">Итого:</p>
+                <p>{{getFormatPrice(finalPrice)}}</p>
+            </li>
         </ol>
 
         <select class="cart-list__select" name="" id="">
+            <option value="" selected disabled hidden>Способ оплаты</option>
             <option value="">На месте получения</option>
             <option value="">Добавить новую карту</option>
         </select>
 
         <div class="cartInfo__promoSection">
-            <label class="cartInfo__promoSection__label" for="">Ввести промокод</label>
+            <label class="cartInfo__promoSection__label" for="">Ввести промокод:</label>
             <input class="cartInfo__promoSection__input" type="text">
         </div>
+
+        <button class="buyBtn">Оплатить</button>
     </div>
 </main>
 

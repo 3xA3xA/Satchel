@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
+import { CreateService } from 'src/app/core/services/create.service';
 
 @Component({
   selector: 'app-user-page',
@@ -10,10 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent {
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,  private createService: CreateService ,private router: Router) { }
 
   defaultUserPhoto: string = 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1705190400&semt=ais';
-  isCreateOpen = false;
 
   userData: IUserPageData = {
     firstName: '',
@@ -50,29 +50,14 @@ export class UserPageComponent {
     );
   }
 
-  onFirtsNameChange(event: any): void {
-    this.userData.firstName = event.target.value;
-  }
-
-  onMiddleNameChange(event: any): void {
-    this.userData.middleName = event.target.value;
-  }
-
-  onLastNameChange(event: any): void {
-    this.userData.lastName = event.target.value;
-  }
-
-  onEmailChange(event: any): void {
-    this.userData.email = event.target.value;
-  }
-
-  onDateChange(event: any): void {
-    this.userData.dateOfBirth = event.target.value;
+  get isCreateProductWindowOpen(): boolean {
+    return this.createService.isCreateOpen;
   }
 
   updateUserInfo() {
     this.userService.updateUserInfo(this.userData).subscribe(
       (data: IUserPageData) => {
+        //получить ответ
       },
       (error) => {
         console.error('Error fetching products', error);
@@ -80,8 +65,10 @@ export class UserPageComponent {
     );
   }
 
+
+
   openCreateWindow(){
-    this.isCreateOpen = true;
+    this.createService.setCreateWindowStatus();
   }
 
   exitFromAccount(){

@@ -17,6 +17,15 @@ export interface Product{
   genderTypeId: number
 }
 
+export interface Filters{
+  filterByMinPrice?: number, 
+  filterByMaxPrice?: number, 
+  filterByGender?: number, 
+  filterByName?: string, 
+  isFilterByDecreasePrice?: boolean, 
+  isFilterByIncreasePrice?: boolean
+}
+
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -26,18 +35,22 @@ export class CatalogComponent implements OnInit{
 
   constructor(private router: Router, private productService: ProductService, private favouriteService: FavouriteService, private userService: UserService, private route: ActivatedRoute) { }
 
-  products : Product[] = [];
+  products: Product[] = [];
+  filters: Filters = {} ;
+  productType: string = '';
+  selectedGender: number | null = null;
+  genderType = [1, 2 ,3]
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
   starStatus = this.inactiveStar;
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
-      let productType : string = params['item'];
-      this.productService.getAllProducts(productType).subscribe(
+      this.productType = params['item'];
+      this.productService.getAllProducts(this.productType).subscribe(
         (productsFromQuery: Product[]) => {
-          console.log(productsFromQuery)
           this.products = productsFromQuery;
         },
         (error) => {
@@ -48,7 +61,7 @@ export class CatalogComponent implements OnInit{
   }
 
   public addToFavourite(product: Product, star: HTMLImageElement) {
-    if (!this.userService.isAuthorized)
+    if(!this.userService.isAuthorized)
       return;
     
     if(star.src.includes('activeFavourite')){
@@ -59,18 +72,43 @@ export class CatalogComponent implements OnInit{
       star.src = this.activeStar;
       this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
     }
-    
+  }
+
+  onGenderClick(gender: number) {
+    if (gender === this.selectedGender) {
+      this.selectedGender = 0;
+      delete this.filters.filterByGender
+
+    } else {
+      this.selectedGender = gender;
+      this.filters.filterByGender = this.selectedGender
+    }
+  }
+
+  clearFilters(){
+    this.selectedGender = 0
+    this.filters = {}
+    this.getFilteredProducts()
+  }
+
+  getFilteredProducts(){
+
+    this.productService.getFilteredProducts(this.filters, this.productType).subscribe(
+      (productsFromQuery: Product[]) => {
+        this.products = productsFromQuery;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
   }
 
   goToProduct(id: number) {
     this.router.navigate(['catalog/product', id]);
   }
 
-  formatNumber(num: number) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  getFormatPrice(price: number){
+    return (this.productService.getFormattedPrice(price))
   }
-  
-  public getFormattedPrice(price: number) {
-    return `${this.formatNumber(price)} ₽`; 
-  }
+
 }

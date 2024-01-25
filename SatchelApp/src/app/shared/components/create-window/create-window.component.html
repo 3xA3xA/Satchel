@@ -1,7 +1,7 @@
 <div class="overlay" (click)="onBgClick($event)">
 
-    <div class="registration-form" (click)="$event.stopPropagation()">
-        <h1 class="registration-form__title">Добавление товара</h1>
+    <div class="create-form" (click)="$event.stopPropagation()">
+        <h1 class="create-form__title">Добавление товара</h1>
 
         <div class="formsGroup">
             <form class="form" action="">
@@ -45,7 +45,8 @@
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
                 
-                <button class="image-btn"></button>
+                <button (click)="fileInput.click()" class="image-btn"></button>
+                <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)">
 
                 <img class="" src="" alt="">
             </form>
