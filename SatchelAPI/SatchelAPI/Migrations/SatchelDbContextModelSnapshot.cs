@@ -291,10 +291,10 @@ namespace SatchelAPI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SizeTypeId")
+                    b.Property<int?>("SizeTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ShoppingCartId");
@@ -567,15 +567,11 @@ namespace SatchelAPI.Migrations
 
                     b.HasOne("Satchel.Application.Models.SizeType", "SizeType")
                         .WithMany("ShoppingCarts")
-                        .HasForeignKey("SizeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SizeTypeId");
 
                     b.HasOne("Satchel.Application.Models.User", "User")
                         .WithMany("ShoppingCarts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 

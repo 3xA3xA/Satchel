@@ -18,20 +18,20 @@ public class ShoppingCartService : IShoppingCartService
         _mapper = mapper;
     }
 
-    private async Task<List<Product>> GetProductsFromShoppingCart(int userId)
+    private async Task<List<ShoppingCart>> GetProductsFromShoppingCart(int userId)
     {
         return await _context.ShoppingCarts
             .Include(_ => _.Product)
             .ThenInclude(_ => _.ProductImages)
+            .Include(_ => _.SizeType)
             .Where(_ => _.UserId == userId)
-            .Select(_ => _.Product)
             .ToListAsync();
     }
 
     public async Task<IEnumerable<ProductCartDto>> GetShoppingCart(int userId)
     {
-        var products = await GetProductsFromShoppingCart(userId);
-        var response = _mapper.Map<IEnumerable<ProductCartDto>>(products);
+        var shoppingCarts = await GetProductsFromShoppingCart(userId);
+        var response = _mapper.Map<IEnumerable<ProductCartDto>>(shoppingCarts);
 
         return response;
     }
