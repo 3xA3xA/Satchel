@@ -79,3 +79,50 @@
     display: flex;
     gap: 3rem;
 }
+
+.cart-list__select{
+    width: 35.4rem;
+    height: 6rem;
+    background-color: #fff;
+    border: 0.1rem solid #000;
+    text-align: center;
+    margin-bottom: 6rem;
+}
+
+.cartInfo__promoSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35.4rem;
+    height: 5.5rem;
+    background-color: #fff;
+    border: 0.1rem solid #000;
+}
+
+.cartInfo__promoSection__label{
+    font-size: 1.2rem;
+    margin-right: 1.6rem;
+}
+
+.cartInfo__promoSection__input{
+    width: 17.2rem;
+    height: 2.2rem;
+    background-color: #D9D9D9;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    border-radius: 0.6rem;
+    border: 0.1rem solid #000;
+}
+
+.buyBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35.9rem;
+    height: 6.6rem;
+    background-color: #000;
+    color: #fff;
+    font-size: 2.4rem;
+    border-radius: 1.3rem;
+    border: 0.3rem solid #0ABAB5;
+}

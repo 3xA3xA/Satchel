@@ -11,7 +11,7 @@
     z-index: 4;
 }
 
-.registration-form{
+.create-form{
     width: 94.9rem;
     height: 64rem;
     background-color: #fff;
@@ -21,7 +21,7 @@
     color: #000;
 }
 
-.registration-form__title{
+.create-form__title{
     font: 3.2rem 'DaysOne';
     text-align: end;
 }

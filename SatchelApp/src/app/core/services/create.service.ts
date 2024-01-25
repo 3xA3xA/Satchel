@@ -9,7 +9,8 @@ export class CreateService {
 
   constructor() { }
 
-  closeCreateWindow() : void{
-    this.isCreateOpen = false;
+  setCreateWindowStatus() : void{
+    this.isCreateOpen = !this.isCreateOpen;
+    console.log(this.isCreateOpen)
   }
 }

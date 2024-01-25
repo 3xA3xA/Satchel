@@ -11,12 +11,13 @@ export class CreateWindowComponent {
   constructor(private createService: CreateService) { }
 
   public onBgClick(event: any) {
+  
     if (!event.target.classList.contains('create-form')) { 
       this.closeCreateWindow();
     } 
   }
 
   closeCreateWindow(): void {
-    this.createService.closeCreateWindow();
- }
+    this.createService.setCreateWindowStatus();
+  }
 }
