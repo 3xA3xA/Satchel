@@ -61,5 +61,13 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.DateOfBirth, _ => _.MapFrom(s => s.Birthday))
             .ForMember(_ => _.UserPhotoSrc, _ => _.MapFrom(s => s.Image))
             .ForMember(_ => _.UserType, _ => _.MapFrom(s => s.UserType.Name));
+
+        CreateMap<ProductType, GetProductTypeDto>()
+            .ForMember(_ => _.ProductTypeId, _ => _.MapFrom(s => s.ProductTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
+
+        CreateMap<BrandType, GetBrandTypeDto>()
+            .ForMember(_ => _.BrandTypeId, _ => _.MapFrom(s => s.BrandTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
     }
 }
