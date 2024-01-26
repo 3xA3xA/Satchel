@@ -17,9 +17,11 @@ export class FavouritesPageComponent {
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
-  starStatus = this.inactiveStar
+  //starStatus = this.activeStar
 
   ngOnInit() {
+    if (!this.userService.isAuthorized) //проверка, что пользователь авторизирован.
+      this.router.navigate(['/']);
     this.favouriteService.GetFavourites(this.userService.userId).subscribe(
       (productsFromQuery: Product[]) => {
         this.favouriteProducts = productsFromQuery;
@@ -30,8 +32,13 @@ export class FavouritesPageComponent {
     );
   }
 
+  isFavourite(product: Product): boolean {
+    return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
+  }
+
   public addToFavourite(product: Product, star: HTMLImageElement) {
-    // надо написать логику 
+      star.src = this.inactiveStar;
+      this.favouriteService.DeleteProductFromFavourites(product.productId, this.userService.userId);
   }
 
   goToProduct(id: number) {

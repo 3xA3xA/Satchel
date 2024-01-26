@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-export interface IUserDto {
+export interface UserDto {
   userId: number,
   email: string,
   userTypeName: string
 }
 
-export interface IUserPageData{
+export interface UserPageData{
   firstName: string;
   middleName: string;
   lastName: string;
@@ -45,11 +45,11 @@ export class UserService {
     this.userId = 0;
   }
 
-  updateUserInfo(userData: IUserPageData): Observable<IUserPageData>  {
-    return this.http.put<IUserPageData>(`${this.apiUrl}/UpdateProfileInfoUser/${this.userId}`, userData);
+  updateUserInfo(userData: UserPageData): Observable<UserPageData>  {
+    return this.http.put<UserPageData>(`${this.apiUrl}/UpdateProfileInfoUser/${this.userId}`, userData);
   }
 
-  getUserData(): Observable<IUserPageData> {
-    return this.http.get<IUserPageData>(`${this.apiUrl}/GetViewUserData/${this.userId}`);
+  getUserData(): Observable<UserPageData> {
+    return this.http.get<UserPageData>(`${this.apiUrl}/GetViewUserData/${this.userId}`);
   } 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { IUserDto } from 'src/app/core/services/user.service';
+import { UserDto } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-auth-window',
@@ -23,6 +23,7 @@ export class AuthWindowComponent {
     this.registrationService.stepChange.subscribe(() => {
       this.updateStep(); 
     });
+    // Восстановите данные пользователя из localStorage
   }  
 
   constructor(private registrationService: AuthorizationService, private userService: UserService) { }
@@ -43,10 +44,11 @@ export class AuthWindowComponent {
   handleUserLogin(): void {
     if (this.email && this.password) {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
-        (user: IUserDto) => {
+        (user: UserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus();
           this.setUserData(user.userId);
+          localStorage.setItem('userId', user.userId.toString());
         },
         error => {
           console.log(error);
@@ -61,10 +63,11 @@ export class AuthWindowComponent {
     if (this.email && this.password && this.userTypeName)
     {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
-        (user: IUserDto) => {
+        (user: UserDto) => {
           console.log(user);
           this.userService.setAuthorizedStatus();
           this.setUserData(user.userId);
+          localStorage.setItem('userId', user.userId.toString());
         },
         error => {
           console.log(error);

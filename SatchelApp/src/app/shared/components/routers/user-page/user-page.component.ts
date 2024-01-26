@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
-import { IUserPageData } from 'src/app/core/services/user.service';
+import { UserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { CreateService } from 'src/app/core/services/create.service';
 
@@ -15,7 +15,7 @@ export class UserPageComponent {
 
   defaultUserPhoto: string = 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1705190400&semt=ais';
 
-  userData: IUserPageData = {
+  userData: UserPageData = {
     firstName: '',
     middleName: '',
     lastName: '',
@@ -37,7 +37,7 @@ export class UserPageComponent {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
     this.userService.getUserData().subscribe(
-      (data: IUserPageData) => {
+      (data: UserPageData) => {
         this.userData = data;
         this.getUserInfo()
         if (this.userData.userPhotoSrc == null)
@@ -56,7 +56,7 @@ export class UserPageComponent {
 
   updateUserInfo() {
     this.userService.updateUserInfo(this.userData).subscribe(
-      (data: IUserPageData) => {
+      (data: UserPageData) => {
         //получить ответ
       },
       (error) => {
@@ -65,14 +65,13 @@ export class UserPageComponent {
     );
   }
 
-
-
   openCreateWindow(){
     this.createService.setCreateWindowStatus();
   }
 
   exitFromAccount(){
     this.userService.exitFromAccount();
+    localStorage.clear();
     this.router.navigate(['/']);
   }
 

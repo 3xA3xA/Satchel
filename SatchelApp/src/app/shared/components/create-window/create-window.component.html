@@ -44,11 +44,10 @@
 
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
-                
-                <button (click)="fileInput.click()" class="image-btn"></button>
-                <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)">
-
-                <img class="" src="" alt="">
+                <div class="image-container" (click)="fileInput.click()">
+                    <app-carousel  class="product-carousel" [images]="imageUrls"></app-carousel>
+                </div>                 
+                <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" multiple>
             </form>
         </div>
 

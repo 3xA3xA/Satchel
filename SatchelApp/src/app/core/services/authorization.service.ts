@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IUserDto } from './user.service';
+import { UserDto } from './user.service';
 
 export interface Step {
   title: string;
@@ -46,23 +46,23 @@ export class AuthorizationService {
     return this.steps[this.currentStep]; 
   }
 
-  sendLoginRequestToBackend(email: string, password: string): Observable<IUserDto> {
+  sendLoginRequestToBackend(email: string, password: string): Observable<UserDto> {
     this.closeAuthWindow();
     const user = {
       email: email,
       password: password
     };
-    return this.http.post<IUserDto>(this.apiUrl + '/LoginUser', user);   
+    return this.http.post<UserDto>(this.apiUrl + '/LoginUser', user);   
   }
 
-  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<IUserDto> {
+  sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<UserDto> {
     this.closeAuthWindow();
     const user = {
       email: email,
       password: password,
       userTypeName: userTypeName
     };
-    return this.http.post<IUserDto>(this.apiUrl + '/CreateUser', user);
+    return this.http.post<UserDto>(this.apiUrl + '/CreateUser', user);
   }
 
   resetSteps() {

@@ -32,15 +32,10 @@ export class ProductService {
         .filter(([key, value]) => value != null) 
     );
 
-    console.log(filteredParams)
-
     return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}/`, {
       params: filteredParams
     });
   }
-
-  //"https://localhost:7082/api/Product/GetAllProducts/?productType=clothes&filterByMinPrice=200&filterByMaxPrice=1100"
-  //'https://localhost:7082/api/Product/GetAllProducts/clothes?filterByMinPrice=200&filterByMaxPrice=1100'
 
   formatNumber(num: number) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/core/services/product.service';
 import { FavouriteService } from 'src/app/core/services/favourite.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 
 export interface Product{
   productId: number,
@@ -33,9 +34,16 @@ export interface Filters{
 })
 export class CatalogComponent implements OnInit{
 
-  constructor(private router: Router, private productService: ProductService, private favouriteService: FavouriteService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private router: Router, 
+              private productService: ProductService, 
+              private favouriteService: FavouriteService, 
+              private userService: UserService, 
+              private route: ActivatedRoute,
+              private registrationService: AuthorizationService) { }
 
   products: Product[] = [];
+  favouriteProducts: Product[] = [];
+
   filters: Filters = {} ;
   productType: string = '';
   selectedGender: number | null = null;
@@ -43,10 +51,9 @@ export class CatalogComponent implements OnInit{
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
-  starStatus = this.inactiveStar;
+  //starStatus = this.inactiveStar; - если будут баги - вернуть
 
   ngOnInit() {
-
     this.route.params.subscribe(params => {
       this.productType = params['item'];
       this.productService.getAllProducts(this.productType).subscribe(
@@ -58,11 +65,28 @@ export class CatalogComponent implements OnInit{
         }
       );
     });
+
+    if(this.userService.isAuthorized){ //добавил подгрузку массива избранных, если вошли в аккаунт
+      this.favouriteService.GetFavourites(this.userService.userId).subscribe(
+        (productsFromQuery: Product[]) => {
+          this.favouriteProducts = productsFromQuery;
+        },
+        (error) => {
+          console.error('Error fetching products', error);
+        }
+      );
+    } 
+  }
+
+  isFavourite(product: Product): boolean {
+    return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
   }
 
   public addToFavourite(product: Product, star: HTMLImageElement) {
-    if(!this.userService.isAuthorized)
+    if(!this.userService.isAuthorized){
+      this.registrationService.setAuthWindowStatus();
       return;
+    }     
     
     if(star.src.includes('activeFavourite')){
       star.src = this.inactiveStar;

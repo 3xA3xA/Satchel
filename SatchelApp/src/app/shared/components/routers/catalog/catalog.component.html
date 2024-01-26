@@ -32,7 +32,8 @@
   </div>
 
   <div class="product" *ngFor="let product of products">
-    <img class="star" (click)="addToFavourite(product, star)" [src]="inactiveStar" #star>
+    <!-- <img class="star" (click)="addToFavourite(product, star)" [src]="inactiveStar" #star> -->
+    <img class="star" (click)="addToFavourite(product, star)" [src]="isFavourite(product) ? activeStar : inactiveStar" #star>
     <div class="product-image">
       <app-carousel [images]="product.images"></app-carousel>
     </div>

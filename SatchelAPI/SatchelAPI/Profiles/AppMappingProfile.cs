@@ -9,15 +9,26 @@ public class AppMappingProfile : Profile
 {
     public AppMappingProfile()
     {
-        CreateMap<ShoppingCart, ProductCartDto>()
+        // ты заруинил, чини! это типа откат
+        //    CreateMap<ShoppingCart, ProductCartDto>()
+        //        .ForMember(_ => _.ProductId, _ => _.MapFrom((s => s.ProductId)))
+        //        .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Product.Name))
+        //        .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Product.Price))
+        //        .ForMember(_ => _.Images,
+        //_ => _.MapFrom(s => s.Product.ProductImages!
+        //                .Where(e => e.ProductId == s.ProductId)
+        //                .Select(e => e.ImagePath)))
+        //        .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.SizeType.Name));
+
+        CreateMap<Product, ProductCartDto>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom((s => s.ProductId)))
-            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Product.Name))
-            .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Product.Price))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
+            .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Price))
             .ForMember(_ => _.Images,
-    _ => _.MapFrom(s => s.Product.ProductImages!
+        _ => _.MapFrom(s => s.ProductImages!
                     .Where(e => e.ProductId == s.ProductId)
                     .Select(e => e.ImagePath)))
-            .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.SizeType.Name));
+            .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.Name));
 
         CreateMap<ProductDto, Product>()
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
