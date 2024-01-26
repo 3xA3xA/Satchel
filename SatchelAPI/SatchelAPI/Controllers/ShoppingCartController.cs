@@ -35,11 +35,11 @@ public class ShoppingCartController : Controller
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> AddProductToShoppingCart(int productId, int userId, int sizeTypeId)
+    public async Task<IActionResult> AddProductToShoppingCart(int productId, int userId, string sizeTypeName)
     {
         try
         {
-            await _service.AddProductToShoppingCart(productId, userId, sizeTypeId);
+            await _service.AddProductToShoppingCart(productId, userId, sizeTypeName);
             return Ok();
         }
         catch (Exception  e)

@@ -18,10 +18,10 @@ export class CartPageService {
     return this.http.get<Product[]>(this.apiUrl + `/GetShoppingCart?userId=${userId}`)
   }
 
-  AddProductToShoppingCart(productId: number, userId: number) {
-    return this.http.post(this.apiUrl + `/AddProductToShoppingCart?productId=${productId}&userId=${userId}`, null)
+  AddProductToShoppingCart(productId: number, userId: number, selectedSize: string) {
+    return this.http.post(this.apiUrl + `/AddProductToShoppingCart?productId=${productId}&userId=${userId}&sizeTypeName=${selectedSize}`, null)
     .subscribe(data => {
-      console.log(data + 'сохранилось');
+      console.log(data + 'saved');
     }, error => {
       console.error(error);
     });

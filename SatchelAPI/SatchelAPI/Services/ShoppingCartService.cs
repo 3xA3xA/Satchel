@@ -36,8 +36,12 @@ public class ShoppingCartService : IShoppingCartService
         return response;
     }
 
-    public async Task AddProductToShoppingCart(int productId, int userId, int sizeTypeId)
+    public async Task AddProductToShoppingCart(int productId, int userId, string sizeTypeName)
     {
+        var sizeTypeId = await _context.SizeTypes.Where(_ => _.Name == sizeTypeName).Select(_ => _.SizeTypeId).FirstOrDefaultAsync();
+
+        if (sizeTypeId == default) { throw new Exception("SizeTypeId not found"); }
+
         var newShoppingCart = new ShoppingCart(productId, userId, sizeTypeId);
         await _context.ShoppingCarts.AddAsync(newShoppingCart);
         await _context.SaveChangesAsync();

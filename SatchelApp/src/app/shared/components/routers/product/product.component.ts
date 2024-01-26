@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
       return 
     } 
     if (this.selectedSize != null && this.userService.userId != 0){
-        this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId);
+        this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId, this.selectedSize);
     }
   }
 
