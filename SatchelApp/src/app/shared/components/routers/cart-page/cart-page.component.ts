@@ -20,6 +20,7 @@ export class CartPageComponent {
     this.cartPageService.GetShoppingCart(this.userService.userId).subscribe(
       (productsFromQuery: Product[]) => {
         this.shoppingCart = productsFromQuery;
+        console.log(productsFromQuery)
       },
       (error) => {
         console.error('Error fetching products', error);
