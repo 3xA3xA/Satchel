@@ -1,3 +1,16 @@
+.favouriteEmpty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    font: 3rem 'DaysOne';
+    margin-top: 10rem;
+}
+
+.favouriteEmpty__image{
+    border-radius: 50%;
+}
+
 .favourites-list{
     display: flex;
     flex-wrap: wrap;

@@ -51,7 +51,6 @@ export class CatalogComponent implements OnInit{
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
-  //starStatus = this.inactiveStar; - если будут баги - вернуть
 
   ngOnInit() {
     this.route.params.subscribe(params => {

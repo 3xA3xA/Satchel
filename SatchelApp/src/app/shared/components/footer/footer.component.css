@@ -1,5 +1,54 @@
 .footer-container{
+    display: flex;
     width: 100%;
     height: 36.4rem;
     background-color: #0ABAB5;
+    padding: 6.8rem 9.6rem;
+    gap: 18.6rem;
 }
+
+.footer__info{
+    display: flex;
+    gap: 9rem;
+    font: 2rem 'DaysOne';
+}
+
+.footer__info-title{
+    font-size: 3rem;
+    font-family: 'DaysOne';
+}
+
+.footer__info-part{
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    width: 31.4rem;
+    height: 23.1rem;
+    font-size: 2rem;
+}
+
+.footer__info-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer__info-list__item{
+    list-style-type: none;
+}
+
+.footer__info-list__item::before{
+    content: '○ ';
+}
+
+.socialNetwork-section{
+    display: flex;
+    flex-direction: column;
+    gap: 3.3rem;
+}
+
+.socialNetwork-section__images{
+    display: flex;
+    gap: 8.7rem;
+}
+

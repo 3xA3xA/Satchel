@@ -1,6 +1,10 @@
 <app-header></app-header>
 
 <main>
+    <div class="favouriteEmpty" *ngIf="favouriteProducts.length === 0">
+      <p class="favouriteEmpty__desc">К сожалению, вы ничего не добавили в избранное :(</p>
+      <img class="favouriteEmpty__image" src="../../../../../assets/images/sadMan.jpg" alt="">
+    </div>
     <ul class="favourites-list">
         <li class="favourites-list__item" *ngFor="let product of favouriteProducts">
             <img class="star" (click)="addToFavourite(product, star)" [src]="isFavourite(product) ? activeStar : inactiveStar" #star>

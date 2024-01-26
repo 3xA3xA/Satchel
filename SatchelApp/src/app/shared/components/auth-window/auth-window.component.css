@@ -68,8 +68,7 @@
 .select-container{
   margin-top: 2rem;
   display: flex;
-  justify-content: center;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .select-choise{

@@ -17,10 +17,9 @@ export class FavouritesPageComponent {
   
   inactiveStar = '../../../../../assets/images/icons/favourites.svg'
   activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
-  //starStatus = this.activeStar
 
   ngOnInit() {
-    if (!this.userService.isAuthorized) //проверка, что пользователь авторизирован.
+    if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
     this.favouriteService.GetFavourites(this.userService.userId).subscribe(
       (productsFromQuery: Product[]) => {
