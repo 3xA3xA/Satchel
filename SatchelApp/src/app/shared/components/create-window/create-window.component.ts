@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CreateService } from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
+import { Product } from '../routers/catalog/catalog.component';
 
 @Component({
   selector: 'app-create-window',

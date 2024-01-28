@@ -15,7 +15,8 @@ export interface Product{
   images: string[],
   sizes: string[]
   brandTypeId: number,
-  genderTypeId: number
+  genderTypeId: number,
+  sizeName?: string
 }
 
 export interface Filters{

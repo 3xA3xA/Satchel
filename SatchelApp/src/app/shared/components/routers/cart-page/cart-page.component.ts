@@ -23,6 +23,7 @@ export class CartPageComponent {
     this.cartPageService.GetShoppingCart(this.userService.userId).subscribe(
       (productsFromQuery: Product[]) => {
         this.shoppingCart = productsFromQuery;
+        this.sumPriceCart()
       },
       (error) => {
         console.error('Error fetching products', error);
@@ -30,12 +31,15 @@ export class CartPageComponent {
     );
   }
 
-
-  // ты его нигде не использовал :)
   sumPriceCart(){
     for(let product of this.shoppingCart){
       this.finalPrice += product.price
     }
+    return this.finalPrice
+  }
+
+  removeFromCart(){
+    
   }
 
   getFormatPrice(price: number){

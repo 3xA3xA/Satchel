@@ -29,6 +29,23 @@
     height: 25rem;
 }
 
+.cart-list__item__trash{
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    top: 35rem;
+    left: 4rem;
+    cursor: pointer;
+}
+
+.cart-list__item__price{
+    position: absolute;
+    left: 17rem;
+    top: 35.5rem;
+    color: #000;
+    font-size: 24px;
+}
+
 .cart-list__item__size{
     position: absolute;
     display: flex;
@@ -43,8 +60,8 @@
 }
 
 .cartInfo{
-    position: relative;
-    left: 45rem;
+    position: absolute;
+    left: 130rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;

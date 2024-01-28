@@ -27,6 +27,27 @@
                         </li>
 
                         <li class="form-inputGroup__list__item">
+                            <label for="">Размеры в наличии:</label>
+                            <select class="form-input sizeSelect" multiple size="2" id="">
+                                <option value="">XS</option>
+                                <option value="">S</option>
+                                <option value="">L</option>
+                                <option value="">M</option>
+                                <option value="">XL</option>
+                                <option value="">XXL</option>
+                            </select>
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
+                            <label for="">Для кого:</label>
+                            <select class="form-input" id="">
+                                <option value="">Мужской</option>
+                                <option value="">Женский</option>
+                                <option value="">Унисекс</option>
+                            </select>
+                        </li>
+
+                        <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Цена:</label>
                             <input class="form-input" type="text">
                         </li>
@@ -44,7 +65,7 @@
 
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
-                <div class="image-container" (click)="fileInput.click()">
+                <div class="image-container" (dblclick)="fileInput.click()">
                     <app-carousel  class="product-carousel" [images]="imageUrls"></app-carousel>
                 </div>                 
                 <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" multiple>

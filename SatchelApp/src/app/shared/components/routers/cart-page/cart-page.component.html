@@ -6,7 +6,14 @@
             <div class="cart-list__item__image">
                 <app-carousel [images]="product.images"></app-carousel>
             </div>
-            <div class="cart-list__item__size">{{product.price}}</div>
+
+            <div class="cart-list__item__info">
+                <img class="cart-list__item__trash" src="../../../../../assets/images/icons/trash.svg" alt="">
+
+                <div class="cart-list__item__price">{{getFormatPrice(product.price)}}</div>
+
+                <div class="cart-list__item__size">{{product.sizeName}}</div>
+            </div>
         </li>
     </ul>
 
@@ -15,8 +22,9 @@
 
         <ol class="cartInfo-list">
             <li class="cartInfo-list__item" *ngFor="let product of shoppingCart">
-                <p class="cart-list__item__name">{{product.name}}</p>
-                <p class="cart-list__item__price">{{product.price}}</p>
+                <p class="cartInfo__item__name">{{product.name}}</p>
+                <p class="cartInfo__item__price">{{getFormatPrice(product.price)}}</p>
+                <p class="cartInfo__item__size">{{product.sizeName}}</p>
             </li>
 
             <li class="cartInfo-list__item">

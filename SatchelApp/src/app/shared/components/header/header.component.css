@@ -27,7 +27,7 @@
 }
 
 .header_nav-list__item{
-    font-size: 1.4rem;
+    font-size: 2rem;
     font-family: 'DaysOne', sans-serif;
 }
 
@@ -42,8 +42,8 @@
 }
 
 .header_icons__item{
-    width: 4rem;
-    height: 4rem;
+    width: 4.3rem;
+    height: 4.3rem;
     object-fit: cover;
     cursor: pointer;
 }
