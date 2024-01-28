@@ -24,6 +24,7 @@ export class CartPageComponent {
       (productsFromQuery: Product[]) => {
         this.shoppingCart = productsFromQuery;
         this.sumPriceCart()
+        console.log(this.shoppingCart)
       },
       (error) => {
         console.error('Error fetching products', error);

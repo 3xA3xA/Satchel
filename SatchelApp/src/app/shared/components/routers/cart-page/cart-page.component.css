@@ -8,7 +8,8 @@
 .cart-list{
     display: flex;
     flex-wrap: wrap;
-    gap: 2.4rem;
+    width: 92rem;
+    gap: 4.4rem;
 }
 
 .cart-list__item{
@@ -89,7 +90,8 @@
     height: 13.8rem;
     padding: 1rem;
     background-color: #fff;
-    list-style-type: decimal
+    list-style-type: decimal;
+    overflow-y: auto;
 }
 
 .cartInfo-list__item{
