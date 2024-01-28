@@ -14,7 +14,7 @@ public class BrandTypeController : Controller
         _service = service;
     }
 
-    [HttpPost("[action]")]
+    [HttpGet("[action]")]
     public async Task<IActionResult> GetBrandTypes()
     {
         try

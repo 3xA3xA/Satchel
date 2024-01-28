@@ -36,8 +36,15 @@ export class FavouritesPageComponent {
   }
 
   public addToFavourite(product: Product, star: HTMLImageElement) {
+    if(star.src.includes('activeFavourite'))
+    {
       star.src = this.inactiveStar;
       this.favouriteService.DeleteProductFromFavourites(product.productId, this.userService.userId);
+    }
+    else {
+      star.src = this.activeStar;
+      this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
+    }
   }
 
   goToProduct(id: number) {

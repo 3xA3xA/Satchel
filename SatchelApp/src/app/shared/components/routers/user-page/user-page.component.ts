@@ -20,7 +20,7 @@ export class UserPageComponent {
     middleName: '',
     lastName: '',
     email: '',
-    dateOfBirth: new Date(2024, 0, 1),
+    dateOfBirth: new Date(2024, 0, 1), //тут поменять надо
     userPhotoSrc: '',
     userType: 'Покупатель'
   }
@@ -31,6 +31,7 @@ export class UserPageComponent {
     lastName: new FormControl(''),
     email: new FormControl(''),
     birth: new FormControl(new Date(2024, 0, 1)),
+    userPhoto: new FormControl('')
   });
 
   ngOnInit() {
@@ -82,11 +83,26 @@ export class UserPageComponent {
     const lastName = form.get('lastName');
     const email = form.get('email');
     const birth = form.get('birth');
+    const userPhotoSrc = form.get('userPhoto');
 
     firstName?.setValue(this.userData.firstName)
     middleName?.setValue(this.userData.middleName)
     lastName?.setValue(this.userData.lastName)
     email?.setValue(this.userData.email)
     birth?.setValue(this.userData.dateOfBirth)
+    userPhotoSrc?.setValue(this.userData.userPhotoSrc)
   }
+
+  onFileSelected(event : any) {
+    const file:File = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            this.userData.userPhotoSrc = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+  }
+
 }

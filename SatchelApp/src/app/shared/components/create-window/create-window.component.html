@@ -17,7 +17,7 @@
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Тип продукта:</label>
                             <select class="form-input" name="" id="">
-                                <option value=""></option>
+                                <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{productType.name}}</option>
                             </select>
                         </li>
 
@@ -55,9 +55,9 @@
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Бренд:</label>
                             <select class="form-input" name="" id="">
-                                <option value=""></option>
+                                <option *ngFor="let brandType of brandTypes" [value]="brandType.brantTypeId">{{brandType.name}}</option>
                             </select>
-                        </li>
+                        </li>                 
                     </ul>
                 </div>
                 
@@ -72,6 +72,6 @@
             </form>
         </div>
 
-        <button class="create-btn">Создать товар</button>
+        <button class="create-btn" (click)="addNewProduct()">Создать товар</button>
     </div>
 </div>

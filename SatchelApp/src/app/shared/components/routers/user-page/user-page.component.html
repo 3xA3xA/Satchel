@@ -59,7 +59,8 @@
         </div>
     </form>
 
-    <img class="user-avatar" src="{{userData.userPhotoSrc}}" alt="">
+    <img class="user-avatar" formControlName="userPhoto" (click)="fileInput.click()" [src]="userData.userPhotoSrc" alt="Ваша фотография">              
+    <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)">  
 
 </div>
 

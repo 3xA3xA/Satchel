@@ -1,22 +1,45 @@
 import { Component } from '@angular/core';
-import { CreateService } from 'src/app/core/services/create.service';
+import { CreateService, Brand, ProductType} from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Product } from '../routers/catalog/catalog.component';
+
+
 
 @Component({
   selector: 'app-create-window',
   templateUrl: './create-window.component.html',
   styleUrls: ['./create-window.component.css']
 })
+
 export class CreateWindowComponent {
   imageUrls = ['https://www.fivebranches.edu/wp-content/uploads/2021/08/default-image.jpg'];
   // массивы нужны для хранения списка брендов и типов продукта.
-  productTypes = {};
-  brandTypes = {};
+  productTypes : ProductType[] = [];
+  brandTypes : Brand[] = [];
 
   constructor(private createService: CreateService) { }
 
   @ViewChild('fileInput') fileInput = new ElementRef(null) ;
+
+  ngOnInit() {
+    this.createService.getBrandTypes().subscribe(
+      (data: any) => {
+        this.brandTypes = data;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
+
+    this.createService.getProductTypes().subscribe(
+      (data: any) => {
+        this.productTypes = data;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
+  }
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length) {
@@ -32,14 +55,16 @@ export class CreateWindowComponent {
         reader.readAsDataURL(file);
       }
     }
-    console.log(this.imageUrls)
   }
 
   public onBgClick(event: any) {
-  
     if (!event.target.classList.contains('create-form')) { 
       this.closeCreateWindow();
     } 
+  }
+
+  addNewProduct(){
+    
   }
 
   closeCreateWindow(): void {

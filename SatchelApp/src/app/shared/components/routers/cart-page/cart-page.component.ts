@@ -38,8 +38,8 @@ export class CartPageComponent {
     return this.finalPrice
   }
 
-  removeFromCart(){
-    
+  deleteProductFromProductCart(productId : number) {
+    return this.cartPageService.DeleteProductFromShoppingCart(productId, this.userService.userId)
   }
 
   getFormatPrice(price: number){
