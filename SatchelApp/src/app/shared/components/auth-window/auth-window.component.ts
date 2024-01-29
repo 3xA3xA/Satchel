@@ -11,6 +11,10 @@ import { UserDto, ConfigService } from 'src/app/core/services/config.service';
 
 export class AuthWindowComponent {
 
+  constructor(private registrationService: AuthorizationService, 
+    private userService: UserService,
+    private configService: ConfigService) { }
+
   step$ = this.registrationService.step;
 
   email: string = '';
@@ -26,14 +30,11 @@ export class AuthWindowComponent {
     });
   }  
 
-  constructor(private registrationService: AuthorizationService, 
-              private userService: UserService,
-              private configService: ConfigService) { }
-
   updateStep() {
     this.step$ = this.registrationService.step; 
     this.isLoginVisible = false; //Кнопка входа 
     this.isSwitchVisible = true;
+    console.log(this.isLoginVisible)
   }
 
   updateUserTypeName(isChecked: boolean) {
@@ -44,36 +45,44 @@ export class AuthWindowComponent {
   }
 
   handleUserLogin(): void {
-    if (this.email && this.password) {
-      this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
-        (user: UserDto) => {
-          this.userService.setAuthorizedStatus();
-          this.setUserData(user.userId);
-          localStorage.setItem('userId', user.userId.toString());
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    if (this.email && this.password)
+      this.loginUser();
+    else {
+      // написать оповещение, что не все поля заполнены
     }
   }
   
   handleUserRegistration() : void {
-    this.registrationService.goToRegistration();
-
     if (this.email && this.password && this.userTypeName && !this.isLoginVisible) //дописал проверку, что кнопка логина должна быть скрыта
-    {
-      this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
-        (user: UserDto) => {
-          this.userService.setAuthorizedStatus();
-          this.setUserData(user.userId);
-          localStorage.setItem('userId', user.userId.toString());
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+      this.addNewUser();
+    else
+      this.registrationService.goToRegistration();
+  }
+
+  loginUser() : void {
+    this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
+      (user: UserDto) => {
+        this.userService.setAuthorizedStatus();
+        this.setUserData(user.userId);
+        localStorage.setItem('userId', user.userId.toString());
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  addNewUser() : void {
+    this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
+      (user: UserDto) => {
+        this.userService.setAuthorizedStatus();
+        this.setUserData(user.userId);
+        localStorage.setItem('userId', user.userId.toString());
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   setUserData(userId: number) {
