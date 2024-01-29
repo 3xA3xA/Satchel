@@ -47,15 +47,15 @@ public class ShoppingCartService : IShoppingCartService
         await _context.SaveChangesAsync();
     }
 
-    private async Task<ShoppingCart> GetShoppingCart(int productId, int userId)
+    private async Task<ShoppingCart> GetShoppingCart(int productId, int userId, int sizeTypeId)
     {
         return await _context.ShoppingCarts
-            .FirstOrDefaultAsync(_ => _.UserId == userId && _.ProductId == productId);
+            .FirstOrDefaultAsync(_ => _.UserId == userId && _.ProductId == productId && _.SizeTypeId == sizeTypeId);
     }
 
-    public async Task DeleteProductFromShoppingCart(int productId, int userId)
+    public async Task DeleteProductFromShoppingCart(int productId, int userId, int sizeTypeId)
     {
-        var deleteShoppingCart = await GetShoppingCart(productId, userId);
+        var deleteShoppingCart = await GetShoppingCart(productId, userId, sizeTypeId);
         _context.ShoppingCarts.Remove(deleteShoppingCart);
         await _context.SaveChangesAsync();
     }

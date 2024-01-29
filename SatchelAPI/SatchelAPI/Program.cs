@@ -33,6 +33,7 @@ builder.Services.AddScoped<IFavouritesService, FavouritesService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<ISizeTypeService, SizeTypeService>();
 
 var app = builder.Build();
 

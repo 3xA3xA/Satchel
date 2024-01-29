@@ -49,11 +49,11 @@ public class ShoppingCartController : Controller
     }
 
     [HttpDelete("[action]")]
-    public async Task<IActionResult> DeleteProductFromShoppingCart(int productId, int userId)
+    public async Task<IActionResult> DeleteProductFromShoppingCart(int productId, int userId, int sizeTypeId)
     {
         try
         {
-            await _service.DeleteProductFromShoppingCart(productId, userId);
+            await _service.DeleteProductFromShoppingCart(productId, userId, sizeTypeId);
             return Ok();
         }
         catch (Exception  e)
