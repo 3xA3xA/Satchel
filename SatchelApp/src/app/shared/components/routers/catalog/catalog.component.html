@@ -1,7 +1,9 @@
 <app-header></app-header>
 
-<div class="settings-bar"> 
-  <div>Сортировка</div>
+<div (click)="togglePriceFilter()" class="settings-bar"> 
+  <p *ngIf="priceRangeStep === 0" class="">Сортировка</p>
+  <img *ngIf="priceRangeStep === 1" class="settings__image" src="../../../../../assets/images/icons/arrow-down.svg" alt="">
+  <img *ngIf="priceRangeStep === 2" class="settings__image" src="../../../../../assets/images/icons/arrow-up.svg" alt="">
 </div>
 
 <div class="container">

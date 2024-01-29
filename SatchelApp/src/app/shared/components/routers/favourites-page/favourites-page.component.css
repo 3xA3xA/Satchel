@@ -28,8 +28,7 @@
     background-color: #fff;
     border-radius: 2.5rem;
     padding: 0.8rem 1.6rem;
-    margin-left: 2rem;
-    margin-bottom: 2rem;
+    gap: 2rem;
 }
 
 .star{
@@ -55,4 +54,7 @@
 
 .favourites-item__price{
     font: 1.6rem 'Normalidad';
+    color: #CA0D0D;
+    font-weight: 700;
+    text-align: center;
 }

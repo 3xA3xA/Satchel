@@ -45,7 +45,9 @@ export class CreateWindowComponent {
   }
 
   onBgClick(event: any) {
-    this.configeService.onBgClick(event, 'create-form')
+    if (!event.target.classList.contains('create-form')) { 
+      this.createService.setCreateWindowStatus()
+    } 
   }
 
   addNewProduct() : void {

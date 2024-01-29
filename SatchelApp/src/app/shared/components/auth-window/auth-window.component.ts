@@ -11,11 +11,11 @@ import { UserDto, ConfigService } from 'src/app/core/services/config.service';
 
 export class AuthWindowComponent {
 
-  constructor(private registrationService: AuthorizationService, 
+  constructor(private authorizationService: AuthorizationService, 
     private userService: UserService,
     private configService: ConfigService) { }
 
-  step$ = this.registrationService.step;
+  step$ = this.authorizationService.step;
 
   email: string = '';
   password: string = '';
@@ -25,13 +25,13 @@ export class AuthWindowComponent {
   isChecked: boolean = false;
 
   ngOnInit() {
-    this.registrationService.stepChange.subscribe(() => {
+    this.authorizationService.stepChange.subscribe(() => {
       this.updateStep(); 
     });
   }  
 
   updateStep() {
-    this.step$ = this.registrationService.step; 
+    this.step$ = this.authorizationService.step; 
     this.isLoginVisible = false; //Кнопка входа 
     this.isSwitchVisible = true;
     console.log(this.isLoginVisible)
@@ -56,11 +56,11 @@ export class AuthWindowComponent {
     if (this.email && this.password && this.userTypeName && !this.isLoginVisible) //дописал проверку, что кнопка логина должна быть скрыта
       this.addNewUser();
     else
-      this.registrationService.goToRegistration();
+      this.authorizationService.goToRegistration();
   }
 
   loginUser() : void {
-    this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
+    this.authorizationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
       (user: UserDto) => {
         this.userService.setAuthorizedStatus();
         this.setUserData(user.userId);
@@ -73,7 +73,7 @@ export class AuthWindowComponent {
   }
 
   addNewUser() : void {
-    this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
+    this.authorizationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
       (user: UserDto) => {
         this.userService.setAuthorizedStatus();
         this.setUserData(user.userId);
@@ -90,7 +90,9 @@ export class AuthWindowComponent {
   }
 
   onBgClick(event: any) {
-    this.configService.onBgClick(event, 'registration-form')
+    if (!event.target.classList.contains('registration-form')) { 
+      this.authorizationService.closeAuthWindow();
+    } 
   }
 
   onEmailChange(event: any): void {

@@ -47,26 +47,18 @@ export class ConfigService {
   readonly PATHS = {
     inactiveStar: '../../../../../assets/images/icons/favourites.svg',
     activeStar: '../../../../../assets/images/icons/activeFavourite.svg',
-    defaultUserPhoto: 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1705190400&semt=ais',
-    defaultProductImage: 'https://www.fivebranches.edu/wp-content/uploads/2021/08/default-image.jpg' //лучше скачать, долго грузится иногда
+    defaultUserPhoto: '../../../assets/images/defaultUserImage.avif',
+    defaultProductImage: '../../../assets/images/defaultProductImage.jpg' //лучше скачать, долго грузится иногда
   };
 
   readonly mainCarouselImages = [
-    'https://gornovosti.ru/media/cache/e8/88/e88864d23b58865f4d7336a4aa9bd4a0.webp',
-    'https://cdn0.divan.ru/img/v1/rsSv4OLvQbYMSNyHv8HIfJUhSR2K639SAYjgxDqAzuU/rs:fit:1920:1440:0:0/g:ce:0:0/bg:ffffff/q:85/czM6Ly9kaXZhbi93aWtpLWFydGljbGUvMzc2OTc2OC5qcGc.jpg',
-    'https://avatars.dzeninfra.ru/get-zen_doc/4120782/pub_636e28839308536fe022cde4_636e28bd5e02fd50d4c70e8b/scale_1200'
+    '../../../assets/images/mainCarouselImage1.webp',
+    '../../../assets/images/mainCarouselImage2.jpg',
+    '../../../assets/images/mainCarouselImage3.jpg'
   ]
 
   getFormattedPrice(num: number) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ₽';
-  }
-
-
-  //formObject - объект - который не должен находится в месте клика, чтобы закрылась форма
-  public onBgClick(event: any, formObject: string) {
-    if (!event.target.classList.contains(formObject)) { 
-      this.authorizationService.closeAuthWindow();
-    } 
   }
 }
 

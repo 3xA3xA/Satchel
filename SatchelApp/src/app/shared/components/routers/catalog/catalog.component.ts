@@ -43,6 +43,7 @@ export class CatalogComponent implements OnInit{
   productType = '';
   selectedGender: number | null = null;
   genderType = [1, 2 ,3];
+  priceRangeStep = 0;
 
   ngOnInit() {
     this.route.params.subscribe(params => { 
@@ -54,6 +55,28 @@ export class CatalogComponent implements OnInit{
 
   isFavourite(product: Product): boolean {
     return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
+  }
+
+  togglePriceFilter() {
+
+    this.priceRangeStep++;
+  
+    if (this.priceRangeStep === 1) {
+      this.filters.isFilterByDecreasePrice = true;
+      delete this.filters.isFilterByIncreasePrice;
+    }
+
+    if (this.priceRangeStep === 2) {
+      this.filters.isFilterByIncreasePrice = true;
+      delete this.filters.isFilterByDecreasePrice;
+    }
+  
+    if(this.priceRangeStep === 3) {
+      this.priceRangeStep = 0
+      delete this.filters.isFilterByIncreasePrice;
+      delete this.filters.isFilterByDecreasePrice;
+    }
+    this.updateProducts();
   }
 
   toggleFavourite(product: Product, star: HTMLImageElement) {
@@ -105,6 +128,7 @@ export class CatalogComponent implements OnInit{
 
   clearFilters(){
     this.selectedGender = 0;
+    this.priceRangeStep = 0;
     this.filters = {};
     this.updateProducts();
   }
