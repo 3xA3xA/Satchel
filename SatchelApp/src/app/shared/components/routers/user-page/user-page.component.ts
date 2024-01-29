@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UserService } from 'src/app/core/services/user.service';
-import { UserPageData } from 'src/app/core/services/user.service';
+import { UserService, UserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { CreateService } from 'src/app/core/services/create.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-user-page',
@@ -11,44 +11,22 @@ import { CreateService } from 'src/app/core/services/create.service';
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent {
-  constructor(private userService: UserService,  private createService: CreateService ,private router: Router) { }
+  
+  constructor(private userService: UserService, 
+              private createService: CreateService, 
+              private router: Router,
+              private configService: ConfigService) { }
 
-  defaultUserPhoto: string = 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1705190400&semt=ais';
+  defaultUserPhoto: string = this.configService.PATHS.defaultUserPhoto;
 
-  userData: UserPageData = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: '',
-    dateOfBirth: new Date(2024, 0, 1), //тут поменять надо
-    userPhotoSrc: '',
-    userType: 'Покупатель'
-  }
-
-  userInfoForm = new FormGroup({
-    firstName: new FormControl(''),
-    middleName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    birth: new FormControl(new Date(2024, 0, 1)),
-    userPhoto: new FormControl('')
-  });
+  userData: UserPageData = this.initializeUserData();
+  userInfoForm = this.initializeUserInfoForm(this.userData);
 
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
-    this.userService.getUserData().subscribe(
-      (data: UserPageData) => {
-        this.userData = data;
-        this.getUserInfo()
-        if (this.userData.userPhotoSrc == null)
-          this.userData.userPhotoSrc = this.defaultUserPhoto;
-        console.log(this.userData)
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
+
+    this.getUserData();
   }
 
   get isCreateProductWindowOpen(): boolean {
@@ -76,21 +54,18 @@ export class UserPageComponent {
     this.router.navigate(['/']);
   }
 
-  getUserInfo(){
-    const form = this.userInfoForm;
-    const firstName = form.get('firstName');
-    const middleName = form.get('middleName');
-    const lastName = form.get('lastName');
-    const email = form.get('email');
-    const birth = form.get('birth');
-    const userPhotoSrc = form.get('userPhoto');
-
-    firstName?.setValue(this.userData.firstName)
-    middleName?.setValue(this.userData.middleName)
-    lastName?.setValue(this.userData.lastName)
-    email?.setValue(this.userData.email)
-    birth?.setValue(this.userData.dateOfBirth)
-    userPhotoSrc?.setValue(this.userData.userPhotoSrc)
+  getUserData() : void {
+    this.userService.getUserData().subscribe(
+      (data: UserPageData) => {
+        this.userData = data;
+        this.updateUserInfoForm();
+        if (this.userData.userPhotoSrc == null)
+          this.userData.userPhotoSrc = this.defaultUserPhoto;
+      },
+      (error) => {
+        this.handleError('Error fetching user data', error);
+      }
+    );
   }
 
   onFileSelected(event : any) {
@@ -103,6 +78,44 @@ export class UserPageComponent {
         }
         reader.readAsDataURL(file);
     }
+  }
+
+  updateUserInfoForm() {
+    this.userInfoForm.patchValue({
+      firstName: this.userData.firstName,
+      middleName: this.userData.middleName,
+      lastName: this.userData.lastName,
+      email: this.userData.email,
+      birth: this.userData.dateOfBirth,
+      userPhoto: this.userData.userPhotoSrc
+    });
+  }
+
+  initializeUserData(): UserPageData {
+    return {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: '',
+      dateOfBirth: new Date(1990, 0, 1),
+      userPhotoSrc: '',
+      userType: 'Покупатель'
+    };
+  }
+  
+  initializeUserInfoForm(data: UserPageData): FormGroup {
+    return new FormGroup({
+      firstName: new FormControl(data.firstName),
+      middleName: new FormControl(data.middleName),
+      lastName: new FormControl(data.lastName),
+      email: new FormControl(data.email),
+      birth: new FormControl(data.dateOfBirth),
+      userPhoto: new FormControl(data.userPhotoSrc)
+    });
+  }
+
+  handleError(message: string, error: any) {
+    console.error(message, error);
   }
 
 }

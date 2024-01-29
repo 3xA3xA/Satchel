@@ -3,13 +3,9 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-export interface UserDto {
-  userId: number,
-  email: string,
-  userTypeName: string
-}
-
+// не могу вынести
 export interface UserPageData{
+  [key: string]: any;
   firstName: string;
   middleName: string;
   lastName: string;

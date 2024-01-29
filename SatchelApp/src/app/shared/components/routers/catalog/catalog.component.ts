@@ -1,10 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from 'src/app/core/services/product.service';
+import { ProductService, Filters } from 'src/app/core/services/product.service';
 import { FavouriteService } from 'src/app/core/services/favourite.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
+// не получилось вынести его в service
 export interface Product{
   productId: number,
   name: string,
@@ -19,15 +21,6 @@ export interface Product{
   sizeName?: string
 }
 
-export interface Filters{
-  filterByMinPrice?: number, 
-  filterByMaxPrice?: number, 
-  filterByGender?: number, 
-  filterByName?: string, 
-  isFilterByDecreasePrice?: boolean, 
-  isFilterByIncreasePrice?: boolean
-}
-
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -40,7 +33,8 @@ export class CatalogComponent implements OnInit{
               private favouriteService: FavouriteService, 
               private userService: UserService, 
               private route: ActivatedRoute,
-              private registrationService: AuthorizationService) { }
+              private registrationService: AuthorizationService,
+              private configService: ConfigService) { }
 
   products: Product[] = [];
   favouriteProducts: Product[] = [];
@@ -50,39 +44,24 @@ export class CatalogComponent implements OnInit{
   selectedGender: number | null = null;
   genderType = [1, 2 ,3]
   
-  inactiveStar = '../../../../../assets/images/icons/favourites.svg'
-  activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
+  inactiveStar = this.configService.PATHS.inactiveStar;
+  activeStar = this.configService.PATHS.activeStar;
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.productType = params['item'];
-      this.productService.getAllProducts(this.productType).subscribe(
-        (productsFromQuery: Product[]) => {
-          this.products = productsFromQuery;
-        },
-        (error) => {
-          console.error('Error fetching products', error);
-        }
-      );
+    // получение типа продуктов из роута
+    this.route.params.subscribe(params => { 
+      this.productType = params['item']; 
+      this.getAllProducts();   
     });
 
-    if(this.userService.isAuthorized){ //добавил подгрузку массива избранных, если вошли в аккаунт
-      this.favouriteService.GetFavourites(this.userService.userId).subscribe(
-        (productsFromQuery: Product[]) => {
-          this.favouriteProducts = productsFromQuery;
-        },
-        (error) => {
-          console.error('Error fetching products', error);
-        }
-      );
-    } 
+    this.getFavourites();
   }
 
   isFavourite(product: Product): boolean {
     return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
   }
 
-  public addToFavourite(product: Product, star: HTMLImageElement) {
+  addToFavourite(product: Product, star: HTMLImageElement) {
     if(!this.userService.isAuthorized){
       this.registrationService.setAuthWindowStatus();
       return;
@@ -96,6 +75,30 @@ export class CatalogComponent implements OnInit{
       star.src = this.activeStar;
       this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
     }
+  }
+
+  getFavourites() : void {
+    if(this.userService.isAuthorized) { 
+      this.favouriteService.GetFavourites(this.userService.userId).subscribe(
+        (productsFromQuery: Product[]) => {
+          this.favouriteProducts = productsFromQuery;
+        },
+        (error) => {
+          console.error('Error fetching products', error);
+        }
+      );
+    } 
+  }
+
+  getAllProducts() : void {
+    this.productService.getAllProducts(this.productType).subscribe(
+      (productsFromQuery: Product[]) => {
+        this.products = productsFromQuery;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
   }
 
   onGenderClick(gender: number) {
@@ -116,7 +119,6 @@ export class CatalogComponent implements OnInit{
   }
 
   getFilteredProducts(){
-
     this.productService.getFilteredProducts(this.filters, this.productType).subscribe(
       (productsFromQuery: Product[]) => {
         this.products = productsFromQuery;
@@ -132,7 +134,7 @@ export class CatalogComponent implements OnInit{
   }
 
   getFormatPrice(price: number){
-    return (this.productService.getFormattedPrice(price))
+    return (this.configService.getFormattedPrice(price))
   }
 
 }

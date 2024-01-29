@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
 import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Filters } from 'src/app/shared/components/routers/catalog/catalog.component';
+import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
+
+// не могу его вынести
+export interface Filters{
+  filterByMinPrice?: number, 
+  filterByMaxPrice?: number, 
+  filterByGender?: number, 
+  filterByName?: string, 
+  isFilterByDecreasePrice?: boolean, 
+  isFilterByIncreasePrice?: boolean
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +22,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  imageAlt = '';
+  //imageAlt = '';
 
   productRecords : Product[] = []; 
 
@@ -35,13 +44,5 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}/`, {
       params: filteredParams
     });
-  }
-
-  formatNumber(num: number) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  }
-
-  getFormattedPrice(price: number) {
-    return `${this.formatNumber(price)} ₽`; 
   }
 }

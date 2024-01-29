@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CreateService, Brand, ProductType} from 'src/app/core/services/create.service';
+import { CreateService} from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
-import { Product } from '../routers/catalog/catalog.component';
+import { ProductType, Brand, ConfigService } from 'src/app/core/services/config.service';
 
 
 
@@ -12,33 +12,20 @@ import { Product } from '../routers/catalog/catalog.component';
 })
 
 export class CreateWindowComponent {
-  imageUrls = ['https://www.fivebranches.edu/wp-content/uploads/2021/08/default-image.jpg'];
-  // массивы нужны для хранения списка брендов и типов продукта.
+
+  // массивы нужны для хранения списка фотографий продукта, брендов и типов продукта.
+  imageUrls = [this.configeService.PATHS.defaultProductImage];
   productTypes : ProductType[] = [];
   brandTypes : Brand[] = [];
 
-  constructor(private createService: CreateService) { }
+  constructor(private createService: CreateService,
+              private configeService: ConfigService) { }
 
   @ViewChild('fileInput') fileInput = new ElementRef(null) ;
 
   ngOnInit() {
-    this.createService.getBrandTypes().subscribe(
-      (data: any) => {
-        this.brandTypes = data;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
-
-    this.createService.getProductTypes().subscribe(
-      (data: any) => {
-        this.productTypes = data;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
+    this.getBrandTypes();
+    this.getProductTypes();   
   }
 
   onFileSelected(event: any) {
@@ -57,17 +44,34 @@ export class CreateWindowComponent {
     }
   }
 
-  public onBgClick(event: any) {
-    if (!event.target.classList.contains('create-form')) { 
-      this.closeCreateWindow();
-    } 
+  onBgClick(event: any) {
+    this.configeService.onBgClick(event, 'create-form')
   }
 
-  addNewProduct(){
-    
+  addNewProduct() : void {
+    //еще не написан
   }
 
-  closeCreateWindow(): void {
-    this.createService.setCreateWindowStatus();
+  getBrandTypes() {
+    this.createService.getBrandTypes().subscribe(
+      (data: any) => {
+        this.brandTypes = data;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
   }
+
+  getProductTypes() {
+    this.createService.getProductTypes().subscribe(
+      (data: any) => {
+        this.productTypes = data;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
+  }
+
 }

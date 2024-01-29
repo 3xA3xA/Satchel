@@ -5,6 +5,7 @@ import { Product } from '../catalog/catalog.component';
 import { CartPageService } from 'src/app/core/services/cart-page.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-product',
@@ -14,10 +15,27 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 export class ProductComponent implements OnInit {
 
   id = 0;
-
   selectedSize: string | null = null;
 
-  constructor( private route: ActivatedRoute, private productService: ProductService, private cartPageService: CartPageService, private userService: UserService, private registrationService: AuthorizationService) { }
+  @Input() product: Product = {
+    productId: 0,   
+    name: '',
+    description: '',
+    producrCategoryId: 0,
+    productTypeId: 0,
+    price: 0,
+    images: [''],
+    sizes: [''],
+    brandTypeId: 0,
+    genderTypeId: 0
+  }
+
+  constructor( private route: ActivatedRoute, 
+               private productService: ProductService, 
+               private cartPageService: CartPageService, 
+               private userService: UserService, 
+               private registrationService: AuthorizationService,
+               private configService: ConfigService) { }
 
   onSizeClick(size: string) {
     if (size === this.selectedSize) {
@@ -37,12 +55,18 @@ export class ProductComponent implements OnInit {
     }
   }
 
-
-
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.id = id ? +id : 0;
+    
+    this.getProductById();
+  }
 
+  getFormatPrice(price: number){
+    return (this.configService.getFormattedPrice(price))
+  }
+
+  getProductById() : void {
     this.productService.getProductById(this.id).subscribe(
       (product) => {
         this.product = product;
@@ -52,22 +76,5 @@ export class ProductComponent implements OnInit {
         console.error('Error fetching product by ID:', error);
       }
     );
-  }
-
-  getFormatPrice(price: number){
-    return (this.productService.getFormattedPrice(price))
-  }
-
-  @Input() product: Product = {
-    productId: 0,   
-    name: '',
-    description: '',
-    producrCategoryId: 0,
-    productTypeId: 0,
-    price: 0,
-    images: [''],
-    sizes: [''],
-    brandTypeId: 0,
-    genderTypeId: 0
   }
 }

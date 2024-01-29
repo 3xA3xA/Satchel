@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { AuthorizationService} from 'src/app/core/services/authorization.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { UserDto } from 'src/app/core/services/user.service';
+import { UserDto, ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-auth-window',
   templateUrl: './auth-window.component.html',
   styleUrls: ['./auth-window.component.css']
 })
+
 export class AuthWindowComponent {
 
   step$ = this.registrationService.step;
@@ -23,10 +24,11 @@ export class AuthWindowComponent {
     this.registrationService.stepChange.subscribe(() => {
       this.updateStep(); 
     });
-    // Восстановите данные пользователя из localStorage
   }  
 
-  constructor(private registrationService: AuthorizationService, private userService: UserService) { }
+  constructor(private registrationService: AuthorizationService, 
+              private userService: UserService,
+              private configService: ConfigService) { }
 
   updateStep() {
     this.step$ = this.registrationService.step; 
@@ -45,7 +47,6 @@ export class AuthWindowComponent {
     if (this.email && this.password) {
       this.registrationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
         (user: UserDto) => {
-          console.log(user);
           this.userService.setAuthorizedStatus();
           this.setUserData(user.userId);
           localStorage.setItem('userId', user.userId.toString());
@@ -60,11 +61,10 @@ export class AuthWindowComponent {
   handleUserRegistration() : void {
     this.registrationService.goToRegistration();
 
-    if (this.email && this.password && this.userTypeName)
+    if (this.email && this.password && this.userTypeName && !this.isLoginVisible) //дописал проверку, что кнопка логина должна быть скрыта
     {
       this.registrationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
         (user: UserDto) => {
-          console.log(user);
           this.userService.setAuthorizedStatus();
           this.setUserData(user.userId);
           localStorage.setItem('userId', user.userId.toString());
@@ -80,15 +80,9 @@ export class AuthWindowComponent {
     this.userService.userId = userId;
   }
 
-  public onBgClick(event: any) {
-    if (!event.target.classList.contains('registration-form')) { 
-      this.closeAuthWindow();
-    } 
+  onBgClick(event: any) {
+    this.configService.onBgClick(event, 'registration-form')
   }
-
-  closeAuthWindow(): void {
-      this.registrationService.closeAuthWindow();
-   }
 
   onEmailChange(event: any): void {
     this.email = event.target.value;

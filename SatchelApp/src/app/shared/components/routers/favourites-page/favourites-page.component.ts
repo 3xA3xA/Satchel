@@ -1,8 +1,9 @@
-import { Component, Input, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../catalog/catalog.component';
 import { FavouriteService } from 'src/app/core/services/favourite.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-favourites-page',
@@ -11,24 +12,21 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class FavouritesPageComponent {
 
-  constructor(private router: Router, private favouriteService: FavouriteService, private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private router: Router, 
+              private favouriteService: FavouriteService, 
+              private userService: UserService, 
+              private configService: ConfigService) { }
 
   favouriteProducts : Product[] = [];
   
-  inactiveStar = '../../../../../assets/images/icons/favourites.svg'
-  activeStar = '../../../../../assets/images/icons/activeFavourite.svg'
+  inactiveStar = this.configService.PATHS.inactiveStar;
+  activeStar = this.configService.PATHS.activeStar;
 
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
-    this.favouriteService.GetFavourites(this.userService.userId).subscribe(
-      (productsFromQuery: Product[]) => {
-        this.favouriteProducts = productsFromQuery;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
+    
+    this.getFavourites();
   }
 
   isFavourite(product: Product): boolean {
@@ -50,12 +48,19 @@ export class FavouritesPageComponent {
   goToProduct(id: number) {
     this.router.navigate(['catalog/product', id]);
   }
-
-  formatNumber(num: number) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  }
   
+  getFavourites() : void {
+    this.favouriteService.GetFavourites(this.userService.userId).subscribe(
+      (productsFromQuery: Product[]) => {
+        this.favouriteProducts = productsFromQuery;
+      },
+      (error) => {
+        console.error('Error fetching products', error);
+      }
+    );
+  }
+
   getFormattedPrice(price: number) {
-    return `${this.formatNumber(price)} ₽`; 
+    return `${this.configService.getFormattedPrice(price)}`; 
   }
 }

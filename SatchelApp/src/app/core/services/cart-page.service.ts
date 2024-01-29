@@ -21,16 +21,13 @@ export class CartPageService {
   AddProductToShoppingCart(productId: number, userId: number, selectedSize: string) {
     return this.http.post(this.apiUrl + `/AddProductToShoppingCart?productId=${productId}&userId=${userId}&sizeTypeName=${selectedSize}`, null)
     .subscribe(data => {
+      //console.log(data);
     }, error => {
       console.error(error);
     });
   }
 
   DeleteProductFromShoppingCart(productId: number, userId: number) {
-    return this.http.delete(this.apiUrl + `/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}`)
-    .subscribe(data => {
-    }, error => {
-      console.error(error);
-    });
-  }
+    return this.http.delete(this.apiUrl + `/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}`);
+  }  
 }
