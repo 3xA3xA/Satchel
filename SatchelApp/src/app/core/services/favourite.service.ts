@@ -13,23 +13,13 @@ export class FavouriteService {
 
   constructor(private http: HttpClient) { }
 
-  AddFavouriteProduct(productId: number, userId: number){
-    return this.http.post(this.apiUrl + `/AddProductToFavourites?productId=${productId}&userId=${userId}`, null)
-      .subscribe(data => {
-        console.log(data);
-      }, error => {
-        console.error(error);
-      });
+  AddFavouriteProduct(productId: number, userId: number) {
+    return this.http.post(this.apiUrl + `/AddProductToFavourites?productId=${productId}&userId=${userId}`, null);
   }
 
   DeleteProductFromFavourites(productId: number, userId: number){
-      return this.http.delete(this.apiUrl + `/DeleteProductFromFavourites?productId=${productId}&userId=${userId}`)
-        .subscribe(data => {
-          console.log(data);
-        }, error => {
-          console.error(error);
-        });
-      }
+    return this.http.delete(this.apiUrl + `/DeleteProductFromFavourites?productId=${productId}&userId=${userId}`)
+  }
 
   getAllProducts(productType : string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}`);

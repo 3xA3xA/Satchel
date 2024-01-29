@@ -18,22 +18,22 @@
     <div class="sex-filter__container">
       <p class="filter-heading">Сортировать по полу:</p>
       <ul class="sex-filter">
-        <li [class.selected]= "genderType[0] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[0])">Мужской</li>
-        <li [class.selected]= "genderType[1] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[1])">Женский</li> 
-        <li [class.selected]= "genderType[2] === selectedGender" class="sex-filter__item" (click)="onGenderClick(genderType[2])">Унисекс</li>
+        <li [class.selected]= "genderType[0] === selectedGender" class="sex-filter__item" (click)="toggleGenderFilter(genderType[0])">Мужской</li>
+        <li [class.selected]= "genderType[1] === selectedGender" class="sex-filter__item" (click)="toggleGenderFilter(genderType[1])">Женский</li> 
+        <li [class.selected]= "genderType[2] === selectedGender" class="sex-filter__item" (click)="toggleGenderFilter(genderType[2])">Унисекс</li>
       </ul>
     </div>
 
     <div class="optional-menu__btnGroup">
       <button class="optional-menu__btn" (click)="clearFilters()">Очистить фильтры</button>
     
-      <button class="optional-menu__btn" (click)="getFilteredProducts()">Применить фильтры</button>
+      <button class="optional-menu__btn" (click)="updateProducts()">Применить фильтры</button>
     </div>
   </div>
 
   <div class="product" *ngFor="let product of products">
-    <!-- <img class="star" (click)="addToFavourite(product, star)" [src]="inactiveStar" #star> -->
-    <img class="star" (click)="addToFavourite(product, star)" [src]="isFavourite(product) ? activeStar : inactiveStar" #star>
+    <img class="star" (click)="toggleFavourite(product, star)" [src]="isFavourite(product) ? getActiveStarPath() : getInactiveStarPath()" #star>
+    
     <div class="product-image">
       <app-carousel [images]="product.images"></app-carousel>
     </div>

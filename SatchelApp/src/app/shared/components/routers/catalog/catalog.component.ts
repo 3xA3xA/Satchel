@@ -26,6 +26,7 @@ export interface Product{
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.css']
 })
+
 export class CatalogComponent implements OnInit{
 
   constructor(private router: Router, 
@@ -38,95 +39,74 @@ export class CatalogComponent implements OnInit{
 
   products: Product[] = [];
   favouriteProducts: Product[] = [];
-
-  filters: Filters = {} ;
-  productType: string = '';
+  filters: Filters = {};
+  productType = '';
   selectedGender: number | null = null;
-  genderType = [1, 2 ,3]
-  
-  inactiveStar = this.configService.PATHS.inactiveStar;
-  activeStar = this.configService.PATHS.activeStar;
+  genderType = [1, 2 ,3];
 
   ngOnInit() {
-    // получение типа продуктов из роута
     this.route.params.subscribe(params => { 
       this.productType = params['item']; 
-      this.getAllProducts();   
+      this.updateProducts();   
     });
-
-    this.getFavourites();
+    this.updateFavourites();
   }
 
   isFavourite(product: Product): boolean {
     return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
   }
 
-  addToFavourite(product: Product, star: HTMLImageElement) {
+  toggleFavourite(product: Product, star: HTMLImageElement) {
     if(!this.userService.isAuthorized){
       this.registrationService.setAuthWindowStatus();
       return;
     }     
-    
-    if(star.src.includes('activeFavourite')){
-      star.src = this.inactiveStar;
-      this.favouriteService.DeleteProductFromFavourites(product.productId, this.userService.userId);
-    }
-    else {
-      star.src = this.activeStar;
-      this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
-    }
+  
+    const isActive = star.src.includes('activeFavourite');
+    star.src = isActive ? this.configService.PATHS.inactiveStar : this.configService.PATHS.activeStar;
+    const action = isActive ? this.favouriteService.DeleteProductFromFavourites.bind(this.favouriteService) : this.favouriteService.AddFavouriteProduct.bind(this.favouriteService);
+  
+    action(product.productId, this.userService.userId).subscribe(() => this.updateFavourites(), console.log);
   }
 
-  getFavourites() : void {
+  updateFavourites() {
     if(this.userService.isAuthorized) { 
       this.favouriteService.GetFavourites(this.userService.userId).subscribe(
-        (productsFromQuery: Product[]) => {
-          this.favouriteProducts = productsFromQuery;
-        },
-        (error) => {
-          console.error('Error fetching products', error);
-        }
+        products => this.favouriteProducts = products,
+        console.error
       );
     } 
   }
 
-  getAllProducts() : void {
-    this.productService.getAllProducts(this.productType).subscribe(
-      (productsFromQuery: Product[]) => {
-        this.products = productsFromQuery;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
-  }
-
-  onGenderClick(gender: number) {
-    if (gender === this.selectedGender) {
-      this.selectedGender = 0;
-      delete this.filters.filterByGender
-
+  updateProducts() {
+    if (Object.keys(this.filters).length) {
+      this.productService.getFilteredProducts(this.filters, this.productType).subscribe(
+        products => this.products = products,
+        console.error
+      );
     } else {
-      this.selectedGender = gender;
-      this.filters.filterByGender = this.selectedGender
+      this.productService.getAllProducts(this.productType).subscribe(
+        products => this.products = products,
+        console.error
+      );
     }
   }
 
-  clearFilters(){
-    this.selectedGender = 0
-    this.filters = {}
-    this.getFilteredProducts()
+  toggleGenderFilter(gender: number) {
+    if (gender === this.selectedGender) {
+      this.selectedGender = 0;
+      delete this.filters.filterByGender;
+    } else {
+      this.selectedGender = gender;
+      this.filters.filterByGender = this.selectedGender;
+    }
+    this.updateProducts();
   }
 
-  getFilteredProducts(){
-    this.productService.getFilteredProducts(this.filters, this.productType).subscribe(
-      (productsFromQuery: Product[]) => {
-        this.products = productsFromQuery;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
-    );
+  clearFilters(){
+    this.selectedGender = 0;
+    this.filters = {};
+    this.updateProducts();
   }
 
   goToProduct(id: number) {
@@ -137,4 +117,11 @@ export class CatalogComponent implements OnInit{
     return (this.configService.getFormattedPrice(price))
   }
 
+  getActiveStarPath(): string {
+    return this.configService.PATHS.activeStar;
+  }
+  
+  getInactiveStarPath(): string {
+    return this.configService.PATHS.inactiveStar;
+  }
 }
