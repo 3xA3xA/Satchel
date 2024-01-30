@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CreateService} from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
-import { ProductType, Brand, ConfigService } from 'src/app/core/services/config.service';
+import { ProductType, Brand, ConfigService, ProductDto } from 'src/app/core/services/config.service';
+import { ProductService } from 'src/app/core/services/product.service';
 
 
 
@@ -19,8 +20,19 @@ export class CreateWindowComponent {
   brandTypes : Brand[] = [];
   sizeByProductTypes : any[] = []; // Временно :))))
 
+  @Input() newProduct: ProductDto = {  
+    name: '',
+    description: '',
+    productTypeId: 0,
+    price: 0,
+    brandTypeId: 0,
+    genderTypeId: 0,
+    sizeIds: []
+  }
+
   constructor(private createService: CreateService,
-              private configeService: ConfigService) { }
+              private configeService: ConfigService,
+              private productService: ProductService) { }
 
   @ViewChild('fileInput') fileInput = new ElementRef(null) ;
 
@@ -52,13 +64,19 @@ export class CreateWindowComponent {
   }
 
   addNewProduct() : void {
-    //еще не написан
-  }
+    this.productService.addNewProduct(this.newProduct, this.imageUrls)//.subscribe
+    //   (data => {
+    //     console.log(data);
+    //   }, error => {
+    //     console.error(error);
+    //   });
+    }
 
   getBrandTypes() {
     this.createService.getBrandTypes().subscribe(
       (data: any) => {
         this.brandTypes = data;
+        console.log(data)
       },
       (error) => {
         console.error('Error fetching products', error);

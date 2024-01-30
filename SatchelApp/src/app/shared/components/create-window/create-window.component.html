@@ -11,52 +11,53 @@
                     <ul class="form-inputGroup__list">
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Название:</label>
-                            <input class="form-input" type="text">
+                            <input class="form-input" type="text" [(ngModel)]="newProduct.name" name="productName">
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Тип продукта:</label>
-                            <select class="form-input" name="" id="">
+                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId">
                                 <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{productType.name}}</option>
                             </select>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Описание:</label>
-                            <textarea class="form-textarea" type="text"></textarea>
+                            <textarea class="form-textarea" name="description" type="text" [(ngModel)]="newProduct.description"></textarea>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label for="">Размеры в наличии:</label>
-                            <select class="form-input sizeSelect" multiple size="2" id="">
+                            <select class="form-input sizeSelect" name="sizes" multiple size="2" id="" [(ngModel)]="newProduct.sizeIds">
                                 <option value="">XS</option>
+                                <option value="">S</option>
+                                <option value="">M</option>
                                 <option *ngFor="let sizeByProductType of sizeByProductTypes" [value]="sizeByProductType.productTypeId">{{sizeByProductType.name}}</option>
                             </select>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label for="">Для кого:</label>
-                            <select class="form-input" id="">
-                                <option value="">Мужской</option>
-                                <option value="">Женский</option>
-                                <option value="">Унисекс</option>
+                            <select class="form-input" name="genderTypeId" id="" [(ngModel)]="newProduct.genderTypeId">
+                                <option value="1">Мужской</option>
+                                <option value="2">Женский</option>
+                                <option value="3">Унисекс</option>
                             </select>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Цена:</label>
-                            <input class="form-input" type="text">
+                            <input class="form-input" name="price" type="text" [(ngModel)]="newProduct.price">
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Бренд:</label>
-                            <select class="form-input" name="" id="">
-                                <option *ngFor="let brandType of brandTypes" [value]="brandType.brantTypeId">{{brandType.name}}</option>
+                            <select class="form-input" name="brandTypeId" id="" [(ngModel)]="newProduct.brandTypeId">
+                                <option *ngFor="let brandType of brandTypes" [value]="brandType.brandTypeId">{{brandType.name}}</option>
                             </select>
                         </li>                 
                     </ul>
-                </div>
-                
+                </div>               
             </form>
 
             <form class="form" action="">

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthorizationService } from './authorization.service';
 
 export interface Brand {
-  brantTypeId: number;
+  brandTypeId: number;
   name: string;
 }
 
@@ -15,6 +15,16 @@ export interface UserDto {
   userId: number,
   email: string,
   userTypeName: string
+}
+
+export interface ProductDto {
+  name: string,
+  description: string,
+  productTypeId: number,
+  price: number,
+  brandTypeId: number,
+  genderTypeId: number
+  sizeIds: number[]
 }
 
 export interface UserPageData{
