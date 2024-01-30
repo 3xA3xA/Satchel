@@ -36,6 +36,7 @@ export class CartPageComponent {
       (productsFromQuery: Product[]) => {
         this.shoppingCart = productsFromQuery;
         this.sumPriceCart();
+        console.log(this.shoppingCart)
       },
       (error) => {
         this.handleError('Error fetching products', error);
@@ -51,8 +52,8 @@ export class CartPageComponent {
     return this.finalPrice
   }
 
-  deleteProductFromProductCart(productId : number) {
-    this.cartPageService.DeleteProductFromShoppingCart(productId, this.userService.userId).subscribe(
+  deleteProductFromProductCart(productId : number, sizeTypeId : number) {
+    this.cartPageService.DeleteProductFromShoppingCart(productId, this.userService.userId, sizeTypeId).subscribe(
       () => {
         this.getShoppingCart(); //получение нового списка товаров
       },

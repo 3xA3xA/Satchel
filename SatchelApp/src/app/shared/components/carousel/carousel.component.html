@@ -4,7 +4,8 @@
         [ngClass]="{'image-active': selectedIndex === i}"
     >
 
-    <div *ngIf="indicators" class="carousel-dot-container">
+    <!-- <div *ngIf="indicators" class="carousel-dot-container"> -->
+    <div *ngIf="images.length > 1" class="carousel-dot-container">
         <span *ngFor="let dot of images; let i = index" 
             class="dot"
             [ngClass]="{'active': selectedIndex === i}"

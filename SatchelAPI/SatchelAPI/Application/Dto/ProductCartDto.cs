@@ -7,4 +7,5 @@ public class ProductCartDto
     public decimal Price { get; set; }
     public List<string>? Images { get; set; }
     public string SizeName { get; set; }
+    public int SizeTypeId { get; set; }
 }

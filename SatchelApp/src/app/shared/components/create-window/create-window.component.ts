@@ -17,6 +17,7 @@ export class CreateWindowComponent {
   imageUrls = [this.configeService.PATHS.defaultProductImage];
   productTypes : ProductType[] = [];
   brandTypes : Brand[] = [];
+  sizeByProductTypes : any[] = []; // Временно :))))
 
   constructor(private createService: CreateService,
               private configeService: ConfigService) { }

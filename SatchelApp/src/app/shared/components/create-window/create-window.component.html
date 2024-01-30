@@ -1,6 +1,6 @@
 <div class="overlay" (click)="onBgClick($event)">
 
-    <div class="create-form">
+    <div class="create-form" (click)="$event.stopPropagation()">
         <h1 class="create-form__title">Добавление товара</h1>
 
         <div class="formsGroup">
@@ -30,11 +30,7 @@
                             <label for="">Размеры в наличии:</label>
                             <select class="form-input sizeSelect" multiple size="2" id="">
                                 <option value="">XS</option>
-                                <option value="">S</option>
-                                <option value="">L</option>
-                                <option value="">M</option>
-                                <option value="">XL</option>
-                                <option value="">XXL</option>
+                                <option *ngFor="let sizeByProductType of sizeByProductTypes" [value]="sizeByProductType.productTypeId">{{sizeByProductType.name}}</option>
                             </select>
                         </li>
 

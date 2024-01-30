@@ -18,7 +18,8 @@ export interface Product{
   sizes: string[]
   brandTypeId: number,
   genderTypeId: number,
-  sizeName?: string
+  sizeName?: string,
+  sizeTypeId: number,
 }
 
 @Component({

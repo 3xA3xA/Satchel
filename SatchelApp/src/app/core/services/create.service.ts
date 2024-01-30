@@ -17,7 +17,6 @@ export class CreateService {
 
   setCreateWindowStatus() : void{
     this.isCreateOpen = !this.isCreateOpen;
-    console.log(this.isCreateOpen)
   }
 
   getBrandTypes() {

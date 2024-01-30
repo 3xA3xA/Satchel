@@ -27,7 +27,7 @@ export class CartPageService {
     });
   }
 
-  DeleteProductFromShoppingCart(productId: number, userId: number) {
-    return this.http.delete(this.apiUrl + `/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}`);
+  DeleteProductFromShoppingCart(productId: number, userId: number, sizeTypeId: number) {
+    return this.http.delete(this.apiUrl + `/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}&sizeTypeId=${sizeTypeId}`);
   }  
 }

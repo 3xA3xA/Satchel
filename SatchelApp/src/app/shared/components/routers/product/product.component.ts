@@ -27,7 +27,8 @@ export class ProductComponent implements OnInit {
     images: [''],
     sizes: [''],
     brandTypeId: 0,
-    genderTypeId: 0
+    genderTypeId: 0,
+    sizeTypeId: 0
   }
 
   constructor( private route: ActivatedRoute, 

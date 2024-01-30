@@ -8,7 +8,7 @@
             </div>
 
             <div class="cart-list__item__info">
-                <img class="cart-list__item__trash" (click)="deleteProductFromProductCart(product.productId)" src="../../../../../assets/images/icons/trash.svg" alt="">
+                <img class="cart-list__item__trash" (click)="deleteProductFromProductCart(product.productId, product.sizeTypeId)" src="../../../../../assets/images/icons/trash.svg" alt="">
 
                 <div class="cart-list__item__price">{{getFormatPrice(product.price)}}</div>
 

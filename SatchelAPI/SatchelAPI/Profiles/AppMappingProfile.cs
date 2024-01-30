@@ -17,7 +17,8 @@ public class AppMappingProfile : Profile
         _ => _.MapFrom(s => s.Product.ProductImages!
                     .Where(e => e.ProductId == s.ProductId)
                     .Select(e => e.ImagePath)))
-            .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.SizeType.Name));
+            .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.SizeType.Name))
+            .ForMember(_ => _.SizeTypeId, _ => _.MapFrom(s => s.SizeType.SizeTypeId));
 
         CreateMap<Product, ProductCartDto>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom((s => s.ProductId)))
