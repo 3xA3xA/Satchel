@@ -41,7 +41,6 @@ export class AuthorizationService {
   }
 
   sendLoginRequestToBackend(email: string, password: string): Observable<UserDto> {
-    this.closeAuthWindow();
     const user = {
       email: email,
       password: password
@@ -50,7 +49,6 @@ export class AuthorizationService {
   }
 
   sendRegistrationRequestToBackend(email : string, password : string, userTypeName : string) : Observable<UserDto> {
-    this.closeAuthWindow();
     const user = {
       email: email,
       password: password,

@@ -12,10 +12,13 @@ import { UserDto, ConfigService } from 'src/app/core/services/config.service';
 export class AuthWindowComponent {
 
   constructor(private authorizationService: AuthorizationService, 
-    private userService: UserService,
-    private configService: ConfigService) { }
+              private userService: UserService,
+              private configService: ConfigService) { }
+
+  EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
   step$ = this.authorizationService.step;
+  errorMsg = '';
 
   email: string = '';
   password: string = '';
@@ -30,10 +33,24 @@ export class AuthWindowComponent {
     });
   }  
 
+  emailValidation(email: string): boolean{
+    if(this.EMAIL_REGEXP.test(email)){
+      return true
+    }
+    else return false
+  }
+
+  delayErrorMsg(){
+    setTimeout(() => {
+      this.errorMsg = ''
+    }, 3000)
+  }
+
   updateStep() {
     this.step$ = this.authorizationService.step; 
     this.isLoginVisible = false; //Кнопка входа 
     this.isSwitchVisible = true;
+    this.errorMsg = '';
     console.log(this.isLoginVisible)
   }
 
@@ -48,13 +65,24 @@ export class AuthWindowComponent {
     if (this.email && this.password)
       this.loginUser();
     else {
-      // написать оповещение, что не все поля заполнены
+      this.errorMsg = 'Не все поля заполнены'
+      this.delayErrorMsg()
     }
   }
   
   handleUserRegistration() : void {
-    if (this.email && this.password && this.userTypeName && !this.isLoginVisible) //дописал проверку, что кнопка логина должна быть скрыта
+    if (this.email && this.password && this.userTypeName && !this.isLoginVisible) {
+      if (!this.emailValidation(this.email)) {
+        this.errorMsg = 'Неверный формат почты'
+        this.delayErrorMsg()
+        return
+      }
       this.addNewUser();
+    }
+    else if (!this.isLoginVisible) {
+      this.errorMsg = 'Не все поля заполнены'
+      this.delayErrorMsg()
+    }
     else
       this.authorizationService.goToRegistration();
   }
@@ -62,12 +90,14 @@ export class AuthWindowComponent {
   loginUser() : void {
     this.authorizationService.sendLoginRequestToBackend(this.email, this.password).subscribe(
       (user: UserDto) => {
+        this.authorizationService.closeAuthWindow();
         this.userService.setAuthorizedStatus();
         this.setUserData(user.userId);
         localStorage.setItem('userId', user.userId.toString());
       },
       error => {
-        console.log(error);
+        this.errorMsg = error.error
+        this.delayErrorMsg()
       }
     );
   }
@@ -75,12 +105,14 @@ export class AuthWindowComponent {
   addNewUser() : void {
     this.authorizationService.sendRegistrationRequestToBackend(this.email, this.password, this.userTypeName).subscribe(
       (user: UserDto) => {
+        this.authorizationService.closeAuthWindow();
         this.userService.setAuthorizedStatus();
         this.setUserData(user.userId);
         localStorage.setItem('userId', user.userId.toString());
       },
       error => {
-        console.log(error);
+        this.errorMsg = error.error
+        this.delayErrorMsg()
       }
     );
   }

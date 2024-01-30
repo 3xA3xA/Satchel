@@ -47,6 +47,7 @@
 }
 
 .input-group{
+  position: relative;
   margin-bottom: 3.5rem;
 }
 
@@ -66,7 +67,7 @@
 }
 
 .select-container{
-  margin-top: 2rem;
+  margin-top: 5rem;
   display: flex;
   gap: 4rem;
 }
@@ -172,5 +173,12 @@
 
 .secondaryBtn:hover{
   color: #000;
+}
+
+.error-msg{
+  position: absolute;
+  color: #CA0D0D;;
+  font: 1.6rem 'DaysOne', sans-serif;
+  text-align: center;
 }
 

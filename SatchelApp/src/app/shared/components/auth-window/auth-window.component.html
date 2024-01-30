@@ -9,6 +9,8 @@
       <div class="input-group"> 
         <input class="form-input" [type]="field.type" *ngFor="let field of step$.fields" placeholder="{{field.name}}" (change)="field.name === 'email' ? onEmailChange($event) : onPasswordChange($event)">
 
+        <div *ngIf="errorMsg" class="error-msg">{{this.errorMsg}}</div>
+
         <div class="select-container" *ngIf="isSwitchVisible">
           <p class="select-choise">Покупатель</p>
 
@@ -24,6 +26,7 @@
 
       <button type="button" *ngIf="isLoginVisible" class="mainBtn btn" (click)="handleUserLogin()">Войти</button>
       <button type="button" class="secondaryBtn btn" (click)="handleUserRegistration()">Зарегистрироваться</button>
+
     </form>
   </div>
 
