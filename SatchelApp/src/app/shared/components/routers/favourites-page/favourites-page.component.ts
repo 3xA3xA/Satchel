@@ -4,6 +4,7 @@ import { Product } from '../catalog/catalog.component';
 import { FavouriteService } from 'src/app/core/services/favourite.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { ConfigService } from 'src/app/core/services/config.service';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 
 @Component({
   selector: 'app-favourites-page',
@@ -15,13 +16,11 @@ export class FavouritesPageComponent {
   constructor(private router: Router, 
               private favouriteService: FavouriteService, 
               private userService: UserService, 
-              private configService: ConfigService) { }
+              private configService: ConfigService,
+              private authorizationService: AuthorizationService) { }
 
   favouriteProducts : Product[] = [];
   
-  inactiveStar = this.configService.PATHS.inactiveStar;
-  activeStar = this.configService.PATHS.activeStar;
-
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
@@ -33,34 +32,34 @@ export class FavouritesPageComponent {
     return this.favouriteProducts.some(favProduct => favProduct.productId === product.productId);
   }
 
-  public addToFavourite(product: Product, star: HTMLImageElement) {
-    if(star.src.includes('activeFavourite'))
-    {
-      star.src = this.inactiveStar;
-      this.favouriteService.DeleteProductFromFavourites(product.productId, this.userService.userId);
-    }
-    else {
-      star.src = this.activeStar;
-      this.favouriteService.AddFavouriteProduct(product.productId, this.userService.userId);
-    }
-  }
-
   goToProduct(id: number) {
     this.router.navigate(['catalog/product', id]);
   }
   
   getFavourites() : void {
     this.favouriteService.GetFavourites(this.userService.userId).subscribe(
-      (productsFromQuery: Product[]) => {
-        this.favouriteProducts = productsFromQuery;
-      },
-      (error) => {
-        console.error('Error fetching products', error);
-      }
+      products => this.favouriteProducts = products,
+      console.error
     );
+  }
+
+  toggleFavourite(product: Product, star: HTMLImageElement) {  
+    const isActive = star.src.includes('activeFavourite');
+    star.src = isActive ? this.configService.PATHS.inactiveStar : this.configService.PATHS.activeStar;
+    const action = isActive ? this.favouriteService.DeleteProductFromFavourites.bind(this.favouriteService) : this.favouriteService.AddFavouriteProduct.bind(this.favouriteService);
+  
+    action(product.productId, this.userService.userId).subscribe(() => this.getFavourites(), console.log);
   }
 
   getFormattedPrice(price: number) {
     return `${this.configService.getFormattedPrice(price)}`; 
+  }
+
+  getActiveStarPath(): string {
+    return this.configService.PATHS.activeStar;
+  }
+  
+  getInactiveStarPath(): string {
+    return this.configService.PATHS.inactiveStar;
   }
 }

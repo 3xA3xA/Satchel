@@ -7,7 +7,7 @@
     </div>
     <ul class="favourites-list">
         <li class="favourites-list__item" *ngFor="let product of favouriteProducts">
-            <img class="star" (click)="addToFavourite(product, star)" [src]="isFavourite(product) ? activeStar : inactiveStar" #star>
+          <img class="star" (click)="toggleFavourite(product, star)" [src]="isFavourite(product) ? getActiveStarPath() : getInactiveStarPath()" #star>
             <div class="favourites-item__image">
               <app-carousel [images]="product.images"></app-carousel>
             </div>
