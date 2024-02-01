@@ -172,7 +172,7 @@ namespace SatchelAPI.Services
         {
             if (isFilterByDecreasePrice)
             {
-                return products.OrderBy(_ => _.Price).ToList();
+                return products.OrderByDescending(_ => _.Price).ToList();
             }
 
             return products;
@@ -182,7 +182,7 @@ namespace SatchelAPI.Services
         {
             if (isFilterByIncreasePrice)
             {
-                return products.OrderByDescending(_ => _.Price).ToList();
+                return products.OrderBy(_ => _.Price).ToList();
             }
 
             return products;

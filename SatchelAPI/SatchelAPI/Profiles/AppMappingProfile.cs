@@ -80,5 +80,13 @@ public class AppMappingProfile : Profile
         CreateMap<BrandType, GetBrandTypeDto>()
             .ForMember(_ => _.BrandTypeId, _ => _.MapFrom(s => s.BrandTypeId))
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
+
+        CreateMap<SizeType, GetSizeTypeDto>()
+            .ForMember(_ => _.SizeTypeId, _ => _.MapFrom(s => s.SizeTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
+
+        CreateMap<GenderType, GetGenderTypeDto>()
+            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
     }
 }

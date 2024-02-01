@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Satchel.Infrastructure;
+using SatchelAPI.Interfaces;
 using SatchelAPI.Interfaces.ServicesInterfaces;
 using SatchelAPI.Profiles;
 using SatchelAPI.Services;
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ISizeTypeService, SizeTypeService>();
+builder.Services.AddScoped<IGenderTypeService, GenderTypeService>();
 
 var app = builder.Build();
 
