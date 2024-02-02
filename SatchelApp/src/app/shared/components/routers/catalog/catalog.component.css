@@ -5,9 +5,10 @@ input::-webkit-inner-spin-button {
 }
 
 .container{
-    padding: 2rem 20.5rem;
+    padding: 2rem 0 2rem 20.5rem;
     display: flex;
     flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .settings-bar{
@@ -31,18 +32,23 @@ input::-webkit-inner-spin-button {
     height: 4rem;
 }
 
+.product__section{
+    width: 140rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
 .product{
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 47.2rem;
-    height: 38.4rem;
+    width: 40.2rem;
+    height: 40.2rem;
     background-color: #fff;
     border-radius: 2.5rem;
     padding: 0.8rem 1.6rem;
-    margin-left: 2rem;
-    margin-bottom: 2rem;
 }
 
 .star{

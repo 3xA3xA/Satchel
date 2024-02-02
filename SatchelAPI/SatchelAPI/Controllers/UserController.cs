@@ -80,10 +80,10 @@ namespace SatchelAPI.Controllers
         {
             try
             {
-                if (_service.EmailExist(viewUserDto.Email, userId))
-                {
-                    return BadRequest("Пользователь с таким email уже существует");
-                }
+                //if (_service.EmailExist(viewUserDto.Email, userId))
+                //{
+                //    return BadRequest("Пользователь с таким email уже существует");
+                //}
                 
                 await _service.UpdateProfileInfoUser(userId, viewUserDto);
                 return Ok();

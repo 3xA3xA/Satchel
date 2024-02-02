@@ -35,15 +35,19 @@ export class ProductService {
 
   //https://localhost:7082/api/Product/AddProduct
   addNewProduct(productDto: ProductDto, productImages: string[]) {
-    // const object = {
-    //   productDto: productDto,
-    //   addProductImagesDto: productImages
-    // };
-  
-    // return this.http.post(`${this.apiUrl}/AddProduct`, object);
-    console.log(productDto)
-    console.log(productImages)
+    const object = {
+      productDto: productDto,
+      // addProductImagesDto: productImages
+      addProductImagesDto: []
+    };
+
+    return this.http.post(`${this.apiUrl}/AddProduct`, object);
   }
+
+  getSellerProducts(userId: number): Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.apiUrl}/GetSellerProducts?userId=${userId}`)
+  }
+  //'https://localhost:7082/api/Product/GetSellerProducts?userId=4' \
 
   getFilteredProducts(filters: Filters, productType: string): Observable<Product[]>{
 

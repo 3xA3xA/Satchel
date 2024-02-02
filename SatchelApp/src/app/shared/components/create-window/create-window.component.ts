@@ -51,7 +51,7 @@ export class CreateWindowComponent {
         reader.onload = (event: any) => {
           this.imageUrls.push(event.target.result);
         }
-    
+        console.log(this.imageUrls)
         reader.readAsDataURL(file);
       }
     }
@@ -64,12 +64,12 @@ export class CreateWindowComponent {
   }
 
   addNewProduct() : void {
-    this.productService.addNewProduct(this.newProduct, this.imageUrls)//.subscribe
-    //   (data => {
-    //     console.log(data);
-    //   }, error => {
-    //     console.error(error);
-    //   });
+    this.productService.addNewProduct(this.newProduct, this.imageUrls).subscribe
+      (data => {
+        console.log(data);
+      }, error => {
+        console.error(error);
+      });
     }
 
   getBrandTypes() {

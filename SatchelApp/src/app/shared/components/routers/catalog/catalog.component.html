@@ -33,16 +33,19 @@
     </div>
   </div>
 
-  <div class="product" *ngFor="let product of products">
-    <img class="star" (click)="toggleFavourite(product, star)" [src]="isFavourite(product) ? getActiveStarPath() : getInactiveStarPath()" #star>
-    
-    <div class="product-image">
-      <app-carousel [images]="product.images"></app-carousel>
+  <section class="product__section">
+    <div class="product" *ngFor="let product of products">
+      <img class="star" (click)="toggleFavourite(product, star)" [src]="isFavourite(product) ? getActiveStarPath() : getInactiveStarPath()" #star>
+      
+      <div class="product-image">
+        <app-carousel [images]="product.images"></app-carousel>
+      </div>
+      <div class="product-description" (click)="goToProduct(product.productId)">
+        <h2 class="product-name">{{product.name}}</h2>
+        <p class="product-price">{{getFormatPrice(product.price)}}</p>
+      </div>
     </div>
-    <div class="product-description" (click)="goToProduct(product.productId)">
-      <h2 class="product-name">{{product.name}}</h2>
-      <p class="product-price">{{getFormatPrice(product.price)}}</p>
-    </div>
-  </div>
+  </section>
+
 </div>
 <app-footer></app-footer>

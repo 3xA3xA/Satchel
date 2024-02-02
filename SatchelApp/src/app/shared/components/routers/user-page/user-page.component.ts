@@ -4,6 +4,8 @@ import { UserService, UserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { CreateService } from 'src/app/core/services/create.service';
 import { ConfigService } from 'src/app/core/services/config.service';
+import { Product } from '../catalog/catalog.component';
+import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
   selector: 'app-user-page',
@@ -13,6 +15,7 @@ import { ConfigService } from 'src/app/core/services/config.service';
 export class UserPageComponent {
   
   constructor(private userService: UserService, 
+              private productService: ProductService,
               private createService: CreateService, 
               private router: Router,
               private configService: ConfigService) { }
@@ -21,16 +24,39 @@ export class UserPageComponent {
 
   userData: UserPageData = this.initializeUserData();
   userInfoForm = this.initializeUserInfoForm(this.userData);
+  sellerProducts: Product[] = [];
 
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
 
     this.getUserData();
+
+    this.getSellerProducts();
   }
 
   get isCreateProductWindowOpen(): boolean {
     return this.createService.isCreateOpen;
+  }
+
+  getFormattedPrice(price: number) {
+    return `${this.configService.getFormattedPrice(price)}`; 
+  }
+
+  goToProduct(id: number) {
+    this.router.navigate(['catalog/product', id]);
+  }
+
+  getSellerProducts(){
+    this.productService.getSellerProducts(this.userService.userId).subscribe(
+      (data: Product[]) => {
+        this.sellerProducts = data;
+        console.log(data)
+      },
+      (error) => {
+
+      }
+    )
   }
 
   updateUserInfo() {
