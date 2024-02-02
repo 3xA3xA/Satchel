@@ -9,6 +9,7 @@ namespace SatchelAPI.Interfaces.ServicesInterfaces
         public string HashPassword(string password);
         public Task<GetUserDTO> AddNewUser(UserDTO userData);
         public bool UserExists(string email);
+        public bool EmailExist(string email, int userId);
         public Task<GetViewUserDto> GetViewUserData(int userId);
         public Task UpdateProfileInfoUser(int userId, GetViewUserDto viewUserDto);
     }

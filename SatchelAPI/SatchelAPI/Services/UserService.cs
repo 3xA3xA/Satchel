@@ -70,6 +70,11 @@ namespace SatchelAPI.Services
             return _context.User.Any(e => e.Email == email);
         }
 
+        public bool EmailExist(string email, int userId)
+        {
+            return _context.User.Any(_ => _.Email == email && _.UserId != userId);
+        }
+
         private async Task<User> GetUser(int userId)
         {
             return await _context.User

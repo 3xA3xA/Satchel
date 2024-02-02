@@ -80,7 +80,7 @@ namespace SatchelAPI.Controllers
         {
             try
             {
-                if (_service.UserExists(viewUserDto.Email))
+                if (_service.EmailExist(viewUserDto.Email, userId))
                 {
                     return BadRequest("Пользователь с таким email уже существует");
                 }
