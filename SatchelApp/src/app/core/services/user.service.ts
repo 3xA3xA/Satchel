@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
 
 // не могу вынести
 export interface UserPageData{
