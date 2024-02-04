@@ -64,19 +64,13 @@ namespace SatchelAPI.Controllers
                 return BadRequest(e);
             }
         }
-
-        public class ProductData
-        {
-            public ProductDto ProductDto { get; set; }
-            public ICollection<ProductImageDto> AddProductImagesDto { get; set; }
-        }
         
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddProduct([FromBody] ProductData addProductData)
+        public async Task<IActionResult> AddProduct([FromBody] AddProductDto addProductDto)
         {
             try
             {
-                await _service.AddProduct(addProductData.ProductDto, addProductData.AddProductImagesDto);
+                await _service.AddProduct(addProductDto);
                 return Ok();
             }
             catch (Exception e)
@@ -99,19 +93,19 @@ namespace SatchelAPI.Controllers
             }
         }
 
-        [HttpPut("{productId}")]
-        public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductData productData)
-        {
-            try
-            {
-                await _service.UpdateProduct(productId, productData.ProductDto, productData.AddProductImagesDto);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
+        // [HttpPut("{productId}")]
+        // public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductData productData)
+        // {
+        //     try
+        //     {
+        //         await _service.UpdateProduct(productId, productData.ProductDto, productData.AddProductImagesDto);
+        //         return Ok();
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e);
+        //     }
+        // }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetSellerProducts(int userId)

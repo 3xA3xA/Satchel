@@ -30,13 +30,14 @@ public class AppMappingProfile : Profile
                     .Select(e => e.ImagePath)))
             .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.Name));
 
-        CreateMap<ProductDto, Product>()
+        CreateMap<AddProductDto, Product>()
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
             .ForMember(_ => _.Description, _ => _.MapFrom(s => s.Description))
             .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Price))
             .ForMember(_ => _.ProductTypeId, _ => _.MapFrom(s => s.ProductTypeId))
             .ForMember(_ => _.BrandTypeId, _ => _.MapFrom(s => s.BrandTypeId))
-            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId));
+            .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
+            .ForMember(_ => _.UserId, _ => _.MapFrom(_ => _.UserId));
 
         CreateMap<ProductImageDto, ProductImages>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom(s => s.ProductId))
@@ -88,5 +89,9 @@ public class AppMappingProfile : Profile
         CreateMap<GenderType, GetGenderTypeDto>()
             .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
+
+        CreateMap<SizeTypeToProductDto, SizeTypeToProduct>()
+            .ForMember(_ => _.ProductId, _ => _.MapFrom(s => s.ProductId))
+            .ForMember(_ => _.SizeTypeId, _ => _.MapFrom(s => s.SizeTypeId));
     }
 }

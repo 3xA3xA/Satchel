@@ -30,6 +30,7 @@ public class SatchelDbContext : DbContext
     public DbSet<SizeTypeToProductType> SizeTypeToProductTypes { get; set; }
     public DbSet<User> User { get; set; }
     public DbSet<UserType> UserTypes { get; set; }
+    public DbSet<SizeTypeToProduct> SizeTypeToProducts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

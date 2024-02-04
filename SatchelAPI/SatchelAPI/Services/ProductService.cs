@@ -19,22 +19,30 @@ namespace SatchelAPI.Services
             _mapper = mapper;
         }
 
-        private void AddProductIdToProductImagesDto(ICollection<ProductImageDto> addProductImagesDto, int productId)
+        private ICollection<ProductImageDto> CreateProductImagesDto(ICollection<string> images, int productId)
         {
-            foreach (var addProductImageDto in addProductImagesDto)
-            {
-                addProductImageDto.ProductId = productId;
-            }
+            return images.Select(image => new ProductImageDto(productId, image)).ToList();
+        }
+
+        private ICollection<SizeTypeToProduct> CreateSizeTypeToProducts(ICollection<int> sizeTypeIds, int productId)
+        {
+            return sizeTypeIds.Select(sizeTypeId => new SizeTypeToProduct(sizeTypeId, productId)).ToList();
         }
         
-        public async Task AddProduct(ProductDto productDto, ICollection<ProductImageDto> addProductImagesDto)
+        public async Task AddProduct(AddProductDto addProductDto)
         {
-            var newProduct = _mapper.Map<Product>(productDto);
-            AddProductIdToProductImagesDto(addProductImagesDto, newProduct.ProductId);
-            var newProductImage = _mapper.Map<ICollection<ProductImages>>(addProductImagesDto);
-            newProduct.ProductImages = newProductImage;
+            var newProduct = _mapper.Map<Product>(addProductDto);
+            var addProductImageDtos = CreateProductImagesDto(addProductDto.Images, newProduct.ProductId);
+            var newProductImages = _mapper.Map<ICollection<ProductImages>>(addProductImageDtos);
+            var sizeTypeToProductDtos = CreateSizeTypeToProducts(addProductDto.SizeTypeIds, newProduct.ProductId);
+            var newSizeTypeToProducts = _mapper.Map<ICollection<SizeTypeToProduct>>(sizeTypeToProductDtos);
 
+            newProduct.ProductImages = newProductImages;
+            newProduct.SizeTypeToProducts = newSizeTypeToProducts;
+            
             await _context.Products.AddAsync(newProduct);
+            //await _context.ProductImages.AddRangeAsync(newProductImages);
+            //await _context.SizeTypeToProducts.AddRangeAsync(newSizeTypeToProducts);
             await _context.SaveChangesAsync();
         }
 
@@ -98,15 +106,15 @@ namespace SatchelAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        private async Task UpdateProductImages(int productId, ICollection<ProductImageDto> productImageDto)
-        {
-            var productImages = await GetProductImagesByProductId(productId);
-            AddProductIdToProductImagesDto(productImageDto, productId);
-            var newProductImages = _mapper.Map<ICollection<ProductImages>>(productImageDto);
-            
-            _context.ProductImages.RemoveRange(productImages);
-            await _context.ProductImages.AddRangeAsync(newProductImages);
-        }
+        // private async Task UpdateProductImages(int productId, ICollection<ProductImageDto> productImageDto)
+        // {
+        //     var productImages = await GetProductImagesByProductId(productId);
+        //     AddProductIdToProductImagesDto(productImageDto, productId);
+        //     var newProductImages = _mapper.Map<ICollection<ProductImages>>(productImageDto);
+        //     
+        //     _context.ProductImages.RemoveRange(productImages);
+        //     await _context.ProductImages.AddRangeAsync(newProductImages);
+        // }
 
         private void SetProductNewValues(Product product, ProductDto productDto)
         {
@@ -120,12 +128,12 @@ namespace SatchelAPI.Services
 
         public async Task UpdateProduct(int productId, ProductDto productDto, ICollection<ProductImageDto> productImageDto)
         {
-            var updateProduct = await GetProductById(productId);
-            await UpdateProductImages(productId, productImageDto);
-            SetProductNewValues(updateProduct, productDto);
-
-            _context.Products.Update(updateProduct);
-            await _context.SaveChangesAsync();
+            // var updateProduct = await GetProductById(productId);
+            // await UpdateProductImages(productId, productImageDto);
+            // SetProductNewValues(updateProduct, productDto);
+            //
+            // _context.Products.Update(updateProduct);
+            // await _context.SaveChangesAsync();
         }
 
         private List<Product> FiltrationProductsByMinPrice(List<Product> products, int? filterByMinPrice)

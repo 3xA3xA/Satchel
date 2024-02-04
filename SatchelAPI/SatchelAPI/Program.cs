@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Satchel.Infrastructure;
 using SatchelAPI.Interfaces;
@@ -36,6 +37,12 @@ builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ISizeTypeService, SizeTypeService>();
 builder.Services.AddScoped<IGenderTypeService, GenderTypeService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+    );
 
 var app = builder.Build();
 

@@ -5,26 +5,51 @@ namespace Satchel.Application.Models;
 
 public class Order
 {
+    public Order(
+        int productId, 
+        int userId, 
+        int orderStatusTypeId, 
+        int paymentTypeId, 
+        int shippingTypeId)
+    {
+        ProductId = productId;
+        UserId = userId;
+        OrderStatusTypeId = orderStatusTypeId;
+        PaymentTypeId = paymentTypeId;
+        ShippingTypeId = shippingTypeId;
+    }
+    
     [Key]
-    public required int OrderId { get; set; }
-    public required int ProductId { get; set; }
-    public required int UserId { get; set; }
-    public required int OrderStatusTypeId { get; set; }
-    public required int PaymentTypeId { get; set; }
-    public required int ShippingTypeId { get; set; }
+    [Required]
+    public int OrderId { get; set; }
+    
+    [Required]
+    public int ProductId { get; set; }
+    
+    [Required]
+    public int UserId { get; set; }
+    
+    [Required]
+    public int OrderStatusTypeId { get; set; }
+    
+    [Required]
+    public int PaymentTypeId { get; set; }
+    
+    [Required]
+    public int ShippingTypeId { get; set; }
 
     [ForeignKey(nameof(ProductId))]
-    public required Product Product { get; set; }
+    public Product Product { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public required User User { get; set; }
+    public User User { get; set; }
 
     [ForeignKey(nameof(OrderStatusTypeId))]
-    public required OrderStatusType OrderStatusType { get; set; }
+    public OrderStatusType OrderStatusType { get; set; }
 
     [ForeignKey(nameof(PaymentTypeId))]
-    public required PaymentType PaymentType { get; set; }
+    public PaymentType PaymentType { get; set; }
 
     [ForeignKey(nameof(ShippingTypeId))]
-    public required ShippingType ShippingType { get; set; }
+    public ShippingType ShippingType { get; set; }
 }

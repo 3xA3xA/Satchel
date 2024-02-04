@@ -291,10 +291,10 @@ namespace SatchelAPI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SizeTypeId")
+                    b.Property<int>("SizeTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ShoppingCartId");
@@ -433,6 +433,29 @@ namespace SatchelAPI.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("SatchelAPI.Application.Models.SizeTypeToProduct", b =>
+                {
+                    b.Property<int>("SizeTypeToProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SizeTypeToProductId"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SizeTypeToProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeTypeId");
+
+                    b.ToTable("SizeTypeToProducts");
+                });
+
             modelBuilder.Entity("Satchel.Application.Models.Favourites", b =>
                 {
                     b.HasOne("Satchel.Application.Models.Product", "Product")
@@ -567,11 +590,15 @@ namespace SatchelAPI.Migrations
 
                     b.HasOne("Satchel.Application.Models.SizeType", "SizeType")
                         .WithMany("ShoppingCarts")
-                        .HasForeignKey("SizeTypeId");
+                        .HasForeignKey("SizeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Satchel.Application.Models.User", "User")
                         .WithMany("ShoppingCarts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 
@@ -621,6 +648,25 @@ namespace SatchelAPI.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("SatchelAPI.Application.Models.SizeTypeToProduct", b =>
+                {
+                    b.HasOne("Satchel.Application.Models.Product", "Product")
+                        .WithMany("SizeTypeToProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Satchel.Application.Models.SizeType", "SizeType")
+                        .WithMany("SizeTypeToProducts")
+                        .HasForeignKey("SizeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("SizeType");
+                });
+
             modelBuilder.Entity("Satchel.Application.Models.BrandType", b =>
                 {
                     b.Navigation("Products");
@@ -652,6 +698,8 @@ namespace SatchelAPI.Migrations
                     b.Navigation("ProductImages");
 
                     b.Navigation("ShoppingCarts");
+
+                    b.Navigation("SizeTypeToProducts");
                 });
 
             modelBuilder.Entity("Satchel.Application.Models.ProductType", b =>
@@ -671,6 +719,8 @@ namespace SatchelAPI.Migrations
                     b.Navigation("ShoppingCarts");
 
                     b.Navigation("SizeTypeToProductTypes");
+
+                    b.Navigation("SizeTypeToProducts");
                 });
 
             modelBuilder.Entity("Satchel.Application.Models.User", b =>

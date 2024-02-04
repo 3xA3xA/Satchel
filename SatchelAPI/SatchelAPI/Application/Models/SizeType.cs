@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SatchelAPI.Application.Models;
 
 namespace Satchel.Application.Models;
 
@@ -15,4 +16,7 @@ public class SizeType
 
     [InverseProperty(nameof(SizeTypeToProductType.SizeType))]
     public required ICollection<SizeTypeToProductType> SizeTypeToProductTypes { get; set; }
+    
+    [InverseProperty(nameof(SizeTypeToProduct.SizeType))]
+    public required ICollection<SizeTypeToProduct> SizeTypeToProducts { get; set; }
 }

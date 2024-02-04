@@ -20,7 +20,6 @@ public class Product
     [Precision(18, 2)]
     [Required]
     public decimal Price { get; set; }
-    public ICollection<ProductImages>? ProductImages { get; set; }
     [Required] public int BrandTypeId { get; set; }
     [Required] public int GenderTypeId { get; set; }
     public int? UserId { get; set; }
@@ -48,4 +47,10 @@ public class Product
 
     [InverseProperty(nameof(ShoppingCart.Product))]
     public ICollection<ShoppingCart> ShoppingCarts { get; set; }
+    
+    [InverseProperty(nameof(SizeTypeToProduct.Product))]
+    public required ICollection<SizeTypeToProduct> SizeTypeToProducts { get; set; }
+    
+    [InverseProperty(nameof(SatchelAPI.Application.Models.ProductImages.Product))]
+    public ICollection<ProductImages>? ProductImages { get; set; }
 }

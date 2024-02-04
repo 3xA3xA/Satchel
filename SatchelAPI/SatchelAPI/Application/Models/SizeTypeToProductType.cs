@@ -6,13 +6,18 @@ namespace Satchel.Application.Models;
 public class SizeTypeToProductType
 {
     [Key]
-    public required int SizeTypeToProductTypeId { get; set; }
-    public required int SizeTypeId { get; set; }
-    public required int ProductTypeId { get; set; }
-
-    [ForeignKey((nameof(SizeTypeId)))]
-    public required SizeType SizeType { get; set; }
-
+    [Required]
+    public int SizeTypeToProductTypeId { get; set; }
+    
+    [Required]
+    public int SizeTypeId { get; set; }
+    
+    [Required]
+    public int ProductTypeId { get; set; }
+    
+    [ForeignKey(nameof(SizeTypeId))]
+    public SizeType SizeType { get; set; }
+    
     [ForeignKey(nameof(ProductTypeId))]
-    public required ProductType ProductType { get; set; }
+    public ProductType ProductType { get; set; }
 }
