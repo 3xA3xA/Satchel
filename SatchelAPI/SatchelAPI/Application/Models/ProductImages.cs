@@ -9,10 +9,11 @@ namespace SatchelAPI.Application.Models
         [Key]
         public int ImageId { get; set; }
 
-        public required int ProductId { get; set; }
-
-        [MaxLength(255)]
-        public required string ImagePath { get; set; }
+        [Required]
+        public int ProductId { get; set; }
+        
+        [Required]
+        public string ImagePath { get; set; }
 
         [ForeignKey(nameof(ProductId))]
         public required Product Product { get; set; }
