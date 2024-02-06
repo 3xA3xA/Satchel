@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SatchelAPI.Application.Dto;
 using SatchelAPI.Interfaces.ServicesInterfaces;
 
 namespace SatchelAPI.Controllers;
@@ -14,12 +15,12 @@ public class OrderController : Controller
         _service = service;
     }
     
-    [HttpGet("[action]")]
-    public async Task<IActionResult> FormingOrders(int userId, int paymentTypeId, int shippingTypeId)
+    [HttpPost("[action]")]
+    public async Task<IActionResult> FormingOrders(FormingOrderDto formingOrderDto)
     {
         try
         {
-            await _service.FormingOrders(userId, paymentTypeId, shippingTypeId);
+            await _service.FormingOrders(formingOrderDto.UserId, formingOrderDto.UserId, formingOrderDto.ShippingTypeId);
             return Ok();
         }
         catch (Exception e)
