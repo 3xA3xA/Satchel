@@ -91,3 +91,18 @@
     margin-top: 4.2rem;
     text-align: center;
 }
+
+.statusMessage{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28rem;
+    height: 8.8rem;
+    background-color: #fff;
+    color: #000;
+    border: 0.2rem solid #000;
+    border-radius: 1rem;
+    bottom: 53rem;
+    right: 83rem;
+}

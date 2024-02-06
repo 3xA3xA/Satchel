@@ -59,7 +59,7 @@ export class ProductService {
         .filter(([key, value]) => value != null) 
     );
 
-    return this.http.get<Product[]>(`${this.apiUrl}/Product/GetAllProducts/${productType}/`, {
+    return this.http.get<Product[]>(`${this.apiUrl}/GetAllProducts/${productType}/`, {
       params: filteredParams
     });
   }

@@ -93,6 +93,10 @@ export class UserPageComponent {
     );
   }
 
+  getOrders() {
+
+  }
+
   onFileSelected(event : any) {
     const file:File = event.target.files[0];
 

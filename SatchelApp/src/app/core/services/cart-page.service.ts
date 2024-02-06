@@ -12,22 +12,21 @@ export class CartPageService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl: string = `${environment.apiUrl}/ShoppingCart`;
+  private apiUrl: string = `${environment.apiUrl}`;
 
   GetShoppingCart(userId: number): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl + `/GetShoppingCart?userId=${userId}`)
+    return this.http.get<Product[]>(this.apiUrl + `/ShoppingCart/GetShoppingCart?userId=${userId}`)
+  }
+
+  GetOrders(){
+    
   }
 
   AddProductToShoppingCart(productId: number, userId: number, selectedSize: string) {
-    return this.http.post(this.apiUrl + `/AddProductToShoppingCart?productId=${productId}&userId=${userId}&sizeTypeName=${selectedSize}`, null)
-    .subscribe(data => {
-      //console.log(data);
-    }, error => {
-      console.error(error);
-    });
+    return this.http.post(this.apiUrl + `/ShoppingCart/AddProductToShoppingCart?productId=${productId}&userId=${userId}&sizeTypeName=${selectedSize}`, null)
   }
 
   DeleteProductFromShoppingCart(productId: number, userId: number, sizeTypeId: number) {
-    return this.http.delete(this.apiUrl + `/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}&sizeTypeId=${sizeTypeId}`);
+    return this.http.delete(this.apiUrl + `/ShoppingCart/DeleteProductFromShoppingCart?productId=${productId}&userId=${userId}&sizeTypeId=${sizeTypeId}`);
   }  
 }
