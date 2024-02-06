@@ -16,6 +16,7 @@ export class ProductComponent implements OnInit {
 
   id = 0;
   selectedSize: string | null = null;
+  statusMsg = ''
 
   @Input() product: Product = {
     productId: 0,   
@@ -38,6 +39,13 @@ export class ProductComponent implements OnInit {
                private registrationService: AuthorizationService,
                private configService: ConfigService) { }
 
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.id = id ? +id : 0;
+    
+    this.getProductById();
+  }
+
   onSizeClick(size: string) {
     if (size === this.selectedSize) {
       this.selectedSize = null;  
@@ -52,15 +60,21 @@ export class ProductComponent implements OnInit {
       return 
     } 
     if (this.selectedSize != null && this.userService.userId != 0){
-        this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId, this.selectedSize);
-    }
-  }
+      this.cartPageService.AddProductToShoppingCart(this.id, this.userService.userId, this.selectedSize).subscribe(
+        () => {
+          this.statusMsg = 'Товар успешно добавлен!';
+        },
+        (error) => {
+          this.statusMsg = 'Что-то пошло не так!';
+        }
+      );
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.id = id ? +id : 0;
-    
-    this.getProductById();
+      setTimeout(() => {
+        this.statusMsg = ''
+      }, 2000)
+
+      this.selectedSize = null
+    }
   }
 
   getFormatPrice(price: number){

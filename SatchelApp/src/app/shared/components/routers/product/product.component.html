@@ -22,11 +22,14 @@
             </ul>
     
             <button class="buy-btn" (click)="addProductToShoppingCart()"> Добавить в корзину</button>
+
         </div>
     
         <div class="product__description">
             {{product.description}}
         </div>
     </div>
+
+    <div *ngIf="statusMsg" class="statusMessage">{{statusMsg}}</div>
 </div>
 
