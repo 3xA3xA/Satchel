@@ -64,22 +64,31 @@
 
 </div>
 
-<h2 class="products__title">Мои Товары:</h2>
+<div *ngIf="this.userData.userType == 'Продавец'" class="secondaryContainer">
+    <h2 class="products__title">Мои Товары:</h2>
 
-<ul class="products__container">
-    <li class="product__item" *ngFor="let product of sellerProducts">
-        <div class="product-item__image">
-            <app-carousel [images]="product.images"></app-carousel>
-        </div>
+    <ul class="products__container">
+        <li class="product__item" *ngFor="let product of sellerProducts">
+            <div class="product-item__image">
+                <app-carousel [images]="product.images"></app-carousel>
+            </div>
+    
+            <div class="product-item__description" (click)="goToProduct(product.productId)">
+                <h2 class="product-item__name">{{product.name}}</h2>
+                <p class="product-item__price">{{getFormattedPrice(product.price)}}</p>
+            </div>
+    
+            <img class="product-item__trash" (click)="deleteSellerProduct(product.productId)" src="../../../../../assets/images/icons/trash.svg" alt="">
+        </li>
+    </ul>
+    
+    <button *ngIf="sellerProducts.length < 4" (click)="showMoreProducts()" class="moreBtn">Ещё</button>
+</div>
 
-        <div class="product-item__description" (click)="goToProduct(product.productId)">
-            <h2 class="product-item__name">{{product.name}}</h2>
-            <p class="product-item__price">{{getFormattedPrice(product.price)}}</p>
-        </div>
+<div class="secondaryContainer">
+    <h2 class="products__title">Мои заказы:</h2>
 
-        <img class="product-item__trash" (click)="deleteSellerProduct(product.productId)" src="../../../../../assets/images/icons/trash.svg" alt="">
-    </li>
-</ul>
+</div>
 
 <app-footer></app-footer>
 
