@@ -77,7 +77,7 @@
             <p class="product-item__price">{{getFormattedPrice(product.price)}}</p>
         </div>
 
-        <img class="product-item__trash" src="../../../../../assets/images/icons/trash.svg" alt="">
+        <img class="product-item__trash" (click)="deleteSellerProduct(product.productId)" src="../../../../../assets/images/icons/trash.svg" alt="">
     </li>
 </ul>
 

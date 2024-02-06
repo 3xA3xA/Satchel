@@ -28,11 +28,8 @@
 
                         <li class="form-inputGroup__list__item">
                             <label for="">Размеры в наличии:</label>
-                            <select class="form-input sizeSelect" name="sizes" multiple size="2" id="" [(ngModel)]="newProduct.sizeIds">
-                                <option value="">XS</option>
-                                <option value="">S</option>
-                                <option value="">M</option>
-                                <option *ngFor="let sizeByProductType of sizeByProductTypes" [value]="sizeByProductType.productTypeId">{{sizeByProductType.name}}</option>
+                            <select class="form-input sizeSelect" name="sizes" multiple size="2" id="" [(ngModel)]="newProduct.sizeTypeIds">
+                                <option *ngFor="let sizeByProductType of sizeByProductTypes" [value]="sizeByProductType.sizeTypeId">{{sizeByProductType.name}}</option>
                             </select>
                         </li>
 
@@ -63,7 +60,7 @@
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
                 <div class="image-container" (dblclick)="fileInput.click()">
-                    <app-carousel  class="product-carousel" [images]="imageUrls"></app-carousel>
+                    <app-carousel  class="product-carousel" [images]="newProduct.images"></app-carousel>
                 </div>                 
                 <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" multiple>
             </form>

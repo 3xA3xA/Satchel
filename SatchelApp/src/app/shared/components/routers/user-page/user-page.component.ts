@@ -106,6 +106,18 @@ export class UserPageComponent {
     }
   }
 
+  deleteSellerProduct(productId: number) {
+    this.productService.deleteSellerProduct(productId).subscribe(
+      (data: any) => {
+        this.sellerProducts = data;
+        console.log(data) //verim верим
+      },
+      (error) => {
+        this.handleError('Error fetching user data', error);
+      }
+    );
+  }
+
   updateUserInfoForm() {
     this.userInfoForm.patchValue({
       firstName: this.userData.firstName,

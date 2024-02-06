@@ -33,13 +33,13 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/GetAllProducts/${productType}`);
   }
 
-  //https://localhost:7082/api/Product/AddProduct
-  addNewProduct(productDto: ProductDto, productImages: string[]) {
+  addNewProduct(productDto: ProductDto) {
     const object = {
       productDto: productDto,
-      // addProductImagesDto: productImages
       addProductImagesDto: []
     };
+
+    console.log(productDto)
 
     return this.http.post(`${this.apiUrl}/AddProduct`, object);
   }
@@ -47,7 +47,10 @@ export class ProductService {
   getSellerProducts(userId: number): Observable<Product[]>{
     return this.http.get<Product[]>(`${this.apiUrl}/GetSellerProducts?userId=${userId}`)
   }
-  //'https://localhost:7082/api/Product/GetSellerProducts?userId=4' \
+  
+  deleteSellerProduct(productId: number) {
+    return this.http.delete(`${this.apiUrl}/${productId}`)
+  }
 
   getFilteredProducts(filters: Filters, productType: string): Observable<Product[]>{
 
