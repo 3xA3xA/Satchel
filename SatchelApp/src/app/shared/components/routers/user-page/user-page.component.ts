@@ -47,11 +47,10 @@ export class UserPageComponent {
     this.router.navigate(['catalog/product', id]);
   }
 
-  getSellerProducts(){
+  getSellerProducts(simplifiedData: boolean = true){
     this.productService.getSellerProducts(this.userService.userId).subscribe(
       (data: Product[]) => {
-        this.sellerProducts = data;
-        console.log(data)
+        simplifiedData ? this.sellerProducts = data.slice(0, 3) :  this.sellerProducts = data;
       },
       (error) => {
 
@@ -104,6 +103,21 @@ export class UserPageComponent {
         }
         reader.readAsDataURL(file);
     }
+  }
+
+  showMoreProducts() {
+    this.getSellerProducts(false)
+  }
+
+  deleteSellerProduct(productId: number) {
+    this.productService.deleteSellerProduct(productId).subscribe(
+      (data: any) => {
+        this.getSellerProducts();
+      },
+      (error) => {
+        this.handleError('Error fetching user data', error);
+      }
+    );
   }
 
   updateUserInfoForm() {

@@ -11,6 +11,11 @@ export interface ProductType {
   name: string;
 }
 
+export interface SizeType {
+  sizeTypeId: number,
+  name: string
+}
+
 export interface UserDto {
   userId: number,
   email: string,
@@ -23,8 +28,10 @@ export interface ProductDto {
   productTypeId: number,
   price: number,
   brandTypeId: number,
-  genderTypeId: number
-  sizeIds: number[]
+  genderTypeId: number,
+  userId: number,
+  images: string[],
+  sizeTypeIds: number[],
 }
 
 export interface UserPageData{

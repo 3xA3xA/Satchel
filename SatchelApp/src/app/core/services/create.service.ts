@@ -26,4 +26,8 @@ export class CreateService {
   getProductTypes() {
     return this.http.get(this.apiUrl + `/ProductType/GetProductTypes`)
   }
+
+  getSizesByProductType(clothesType: string) { 
+    return this.http.get(this.apiUrl + `/SizeType/GetSizeTypesByProductType?productTypeName=${clothesType}`)
+  }
 }

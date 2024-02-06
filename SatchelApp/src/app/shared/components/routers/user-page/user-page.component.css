@@ -106,14 +106,12 @@
     font: 3.6rem 'DaysOne';
     color: #fff;
     margin: 2rem 0;
-    padding: 0rem 22.8rem;
 }
 
 .products__container{
     display: flex;
     flex-wrap: wrap;
     gap: 2.4rem;
-    padding: 0rem 22.8rem;
 }
 
 .product__item{
@@ -155,5 +153,26 @@
     height: 4rem;
     top: 2rem;
     left: 40rem;
+    cursor: pointer;
+}
+
+.secondaryContainer{
+    margin-top: 4rem;
+    padding: 0 22.8rem;
+}
+
+.moreBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 2rem 'DaysOne';
+    width: 12.4rem;
+    height: 5.6rem;
+    color: #000;
+    background-color: #fff;
+    border: 0.2rem solid #0ABAB5;
+    border-radius: 1.8rem;
+    margin-top: 2rem;
+    margin-left: 131rem;
     cursor: pointer;
 }
