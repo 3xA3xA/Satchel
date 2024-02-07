@@ -2,6 +2,11 @@
 
 public class AddProductDto
 {
+    public AddProductDto()
+    {
+        
+    }
+    
     public AddProductDto(
         string name,
         string description,

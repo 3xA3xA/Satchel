@@ -70,12 +70,16 @@ namespace SatchelAPI.Controllers
 
         public class AddProductBody
         {
+            public AddProductBody()
+            {
+                addProductDto = null;
+            }
             public AddProductDto addProductDto { get; set; }
             public List<IFormFile> images { get; set; }
         }
         
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddProduct([FromBody] AddProductBody addProductBody)
+        public async Task<IActionResult> AddProduct([FromForm] AddProductBody addProductBody)
         {
             try
             {
