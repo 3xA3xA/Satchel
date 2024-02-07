@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CreateService} from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
-import { ProductType, Brand, ConfigService, ProductDto, SizeType, GenderType } from 'src/app/core/services/config.service';
+import { ProductType, Brand, ConfigService, AddProductBody, SizeType, GenderType } from 'src/app/core/services/config.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -21,18 +21,20 @@ export class CreateWindowComponent {
   sizeByProductTypes : SizeType[] = [];
   genderTypes: GenderType[] = [];
   statusMsg = ''
-  formDataImages: FormData = new FormData();
+  newProductImages: string[] = [this.configeService.PATHS.defaultProductImage]
 
-  @Input() newProduct: ProductDto = {  
-    name: '',
-    description: '',
-    productTypeId: 0,
-    price: 0,
-    brandTypeId: 0,
-    genderTypeId: 0,
-    userId: this.userService.userId,
-    sizeTypeIds: [],
-    images: [this.configeService.PATHS.defaultProductImage]
+  @Input() newProduct: AddProductBody = {  
+    addProductDto: {
+      name: '',
+      description: '',
+      productTypeId: 0,
+      price: 0,
+      brandTypeId: 0,
+      genderTypeId: 0,
+      userId: this.userService.userId,
+      sizeTypeIds: [],
+    },
+    images: new FormData()
   }
 
   constructor(private createService: CreateService,
@@ -45,53 +47,25 @@ export class CreateWindowComponent {
   ngOnInit() {
     this.getBrandTypes();
     this.getProductTypes();   
-    //this.GetSizes();
     this.getGenderTypes();
-  }
-
-  // onFileSelected(event: any) { Прошлый метод, сохранял в base64
-  //   if (event.target.files && event.target.files.length) {
-  //     this.newProduct.images = [] //обнулил предыдущие загруженные фотографии
-  //     for (let i = 0; i < event.target.files.length; i++) {
-  //       const file = event.target.files[i];
-  //       let reader = new FileReader();
-    
-  //       reader.onload = (event: any) => {
-  //         this.newProduct.images.push(event.target.result);
-  //       }
-  //       console.log(this.newProduct.images)
-  //       reader.readAsDataURL(file);
-  //     }
-  //   }
-  // } 
+  } 
 
   onFileSelected(event : any) {
     if (event.target.files && event.target.files.length) {
-      const formData = new FormData();
+      this.newProduct.images = new FormData();
+      this.newProductImages = [] //обнулил предыдущие загруженные фотографии
       for (let i = 0; i < event.target.files.length; i++) {
-        formData.append('images', event.target.files[i]);
-        console.log(formData)
-      }
-      // this.productService.addNewImages(formData).subscribe(
-      //   filepaths => {
-      //     this.newProduct.images = filepaths;
-      //   },
-      //   error => {
-      //     console.error('Error uploading images:', error);
-      //   }
-      // );
-    }
-  }
+        this.newProduct.images.append('images', event.target.files[i]);
 
-  addNewImages() {
-    this.productService.addNewImages(this.formDataImages).subscribe(
-      filepaths => {
-        this.newProduct.images = filepaths;
-      },
-      error => {
-        console.error('Error uploading images:', error);
+        const file = event.target.files[i];
+        let reader = new FileReader();
+
+        reader.onload = (event: any) => {
+          this.newProductImages.push(event.target.result);
+        }
+        reader.readAsDataURL(file);
       }
-    );
+    }
   }
 
   onBgClick(event: any) {
@@ -101,8 +75,6 @@ export class CreateWindowComponent {
   }
 
   addNewProduct() : void {
-    this.addNewImages(); // сохраняем на беке картинки в проект в виде файлов.
-
     this.productService.addNewProduct(this.newProduct).subscribe
       (data => {       
         this.statusMsg = 'Товар поступил в продажу';
@@ -114,11 +86,8 @@ export class CreateWindowComponent {
 
         
       }, error => {
-        this.statusMsg = 'Что-то пошло не так!';
-
-        setTimeout(() => {
-          this.statusMsg = ''
-        }, 2000)
+        this.errorMsg()
+        console.log(error)
       });
     }
 
@@ -128,7 +97,7 @@ export class CreateWindowComponent {
         this.brandTypes = data;
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -139,7 +108,7 @@ export class CreateWindowComponent {
         this.productTypes = data;
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -150,7 +119,7 @@ export class CreateWindowComponent {
         this.sizeByProductTypes = data;
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -161,7 +130,7 @@ export class CreateWindowComponent {
         this.genderTypes = data;
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -171,5 +140,12 @@ export class CreateWindowComponent {
     const product = this.productTypes.find(pt => pt.productTypeId === Number(id));
     return product ? product.name : '';
   }  
+
+  errorMsg(){
+    this.statusMsg = 'Что-то пошло не так!';
+    setTimeout(() => {
+      this.statusMsg = ''
+    }, 2000)
+  }
   
 }
