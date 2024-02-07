@@ -12,7 +12,7 @@ export interface UserPageData{
   middleName: string;
   lastName: string;
   email: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   userPhotoSrc: string;
   userType: string;
   // можно будет дописать - отзывы

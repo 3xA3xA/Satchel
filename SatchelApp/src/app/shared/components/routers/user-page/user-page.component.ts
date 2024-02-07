@@ -93,6 +93,7 @@ export class UserPageComponent {
     this.userService.getUserData().subscribe(
       (data: UserPageData) => {
         this.userData = data;
+        this.userData.dateOfBirth = data.dateOfBirth.toString().slice(0, 10);
         this.updateUserInfoForm();
         if (this.userData.userPhotoSrc == null)
           this.userData.userPhotoSrc = this.defaultUserPhoto;
@@ -170,7 +171,7 @@ export class UserPageComponent {
       middleName: '',
       lastName: '',
       email: '',
-      dateOfBirth: new Date(1990, 0, 1),
+      dateOfBirth: '',
       userPhotoSrc: '',
       userType: 'Покупатель'
     };
