@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CreateService} from 'src/app/core/services/create.service';
 import { ElementRef, ViewChild } from '@angular/core';
-import { ProductType, Brand, ConfigService, ProductDto, SizeType } from 'src/app/core/services/config.service';
+import { ProductType, Brand, ConfigService, ProductDto, SizeType, GenderType } from 'src/app/core/services/config.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -19,7 +19,9 @@ export class CreateWindowComponent {
   productTypes : ProductType[] = [];
   brandTypes : Brand[] = [];
   sizeByProductTypes : SizeType[] = [];
+  genderTypes: GenderType[] = [];
   statusMsg = ''
+  formDataImages: FormData = new FormData();
 
   @Input() newProduct: ProductDto = {  
     name: '',
@@ -44,22 +46,52 @@ export class CreateWindowComponent {
     this.getBrandTypes();
     this.getProductTypes();   
     //this.GetSizes();
+    this.getGenderTypes();
   }
 
-  onFileSelected(event: any) {
-    if (event.target.files && event.target.files.length) {
-      this.newProduct.images = [] //обнулил предыдущие загруженные фотографии
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
-        let reader = new FileReader();
+  // onFileSelected(event: any) { Прошлый метод, сохранял в base64
+  //   if (event.target.files && event.target.files.length) {
+  //     this.newProduct.images = [] //обнулил предыдущие загруженные фотографии
+  //     for (let i = 0; i < event.target.files.length; i++) {
+  //       const file = event.target.files[i];
+  //       let reader = new FileReader();
     
-        reader.onload = (event: any) => {
-          this.newProduct.images.push(event.target.result);
-        }
-        console.log(this.newProduct.images)
-        reader.readAsDataURL(file);
+  //       reader.onload = (event: any) => {
+  //         this.newProduct.images.push(event.target.result);
+  //       }
+  //       console.log(this.newProduct.images)
+  //       reader.readAsDataURL(file);
+  //     }
+  //   }
+  // } 
+
+  onFileSelected(event : any) {
+    if (event.target.files && event.target.files.length) {
+      const formData = new FormData();
+      for (let i = 0; i < event.target.files.length; i++) {
+        formData.append('images', event.target.files[i]);
+        console.log(formData)
       }
+      // this.productService.addNewImages(formData).subscribe(
+      //   filepaths => {
+      //     this.newProduct.images = filepaths;
+      //   },
+      //   error => {
+      //     console.error('Error uploading images:', error);
+      //   }
+      // );
     }
+  }
+
+  addNewImages() {
+    this.productService.addNewImages(this.formDataImages).subscribe(
+      filepaths => {
+        this.newProduct.images = filepaths;
+      },
+      error => {
+        console.error('Error uploading images:', error);
+      }
+    );
   }
 
   onBgClick(event: any) {
@@ -69,6 +101,8 @@ export class CreateWindowComponent {
   }
 
   addNewProduct() : void {
+    this.addNewImages(); // сохраняем на беке картинки в проект в виде файлов.
+
     this.productService.addNewProduct(this.newProduct).subscribe
       (data => {       
         this.statusMsg = 'Товар поступил в продажу';
@@ -110,7 +144,7 @@ export class CreateWindowComponent {
     );
   }
 
-  GetSizes(productTypeName: string) {
+  getSizes(productTypeName: string) {
     this.createService.getSizesByProductType(productTypeName).subscribe(
       (data: any) => {
         this.sizeByProductTypes = data;
@@ -120,6 +154,18 @@ export class CreateWindowComponent {
       }
     );
   }
+
+  getGenderTypes(){
+    this.createService.getGenderTypes().subscribe(
+      (data: GenderType[]) => {
+        this.genderTypes = data;
+      },
+      (error) => {
+        this.statusMsg = 'Что-то пошло не так!';
+      }
+    );
+  }
+
 
   getProductNameById(id: number): string {
     const product = this.productTypes.find(pt => pt.productTypeId === Number(id));

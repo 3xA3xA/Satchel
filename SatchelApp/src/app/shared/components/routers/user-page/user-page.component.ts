@@ -56,7 +56,7 @@ export class UserPageComponent {
   getSellerProducts(simplifiedData: boolean = true){
     this.productService.getSellerProducts(this.userService.userId).subscribe(
       (data: Product[]) => {
-        simplifiedData ? this.sellerProducts = data.slice(0, 3) :  this.sellerProducts = data;
+        simplifiedData && data.length > 3 ? this.sellerProducts = data.slice(0, 3) :  this.sellerProducts = data;
       },
       (error) => {
         console.log(error);   
@@ -146,7 +146,7 @@ export class UserPageComponent {
   deleteSellerProduct(productId: number) {
     this.productService.deleteSellerProduct(productId).subscribe(
       (data: any) => {
-        this.getSellerProducts();
+        this.getSellerProducts(false);
       },
       (error) => {
         this.errorMsg()

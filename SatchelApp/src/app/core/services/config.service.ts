@@ -44,6 +44,11 @@ export interface ShippingType {
   name: string
 }
 
+export interface GenderType {
+  genderTypeId: number,
+  name: string
+}
+
 export interface UserPageData{
   firstName: string;
   middleName: string;

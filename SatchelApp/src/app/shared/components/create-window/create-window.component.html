@@ -16,7 +16,7 @@
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Тип продукта:</label>
-                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId" (change)="GetSizes(getProductNameById(newProduct.productTypeId))">
+                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId" (change)="getSizes(getProductNameById(newProduct.productTypeId))">
                                 <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{productType.name}}</option>
                             </select>
                         </li>
@@ -37,9 +37,7 @@
                         <li class="form-inputGroup__list__item">
                             <label for="">Для кого:</label>
                             <select class="form-input" name="genderTypeId" id="" [(ngModel)]="newProduct.genderTypeId">
-                                <option value="1">Мужской</option>
-                                <option value="2">Женский</option>
-                                <option value="3">Унисекс</option>
+                                <option *ngFor="let genderType of genderTypes" [value]="genderType.genderTypeId">{{genderType.name}}</option>
                             </select>
                         </li>
 

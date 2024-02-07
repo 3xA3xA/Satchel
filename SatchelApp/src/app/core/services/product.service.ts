@@ -37,6 +37,12 @@ export class ProductService {
     return this.http.post(`${this.apiUrl}/AddProduct`, productDto);
   }
 
+  addNewImages(formData: FormData ) : Observable<string[]> {     ///////////////////////////////////////////////////////////////////////////////////////////
+    console.log(formData)
+    return this.http.post<string[]>('/upload', formData)
+  }
+
+
   getSellerProducts(userId: number): Observable<Product[]>{
     return this.http.get<Product[]>(`${this.apiUrl}/GetSellerProducts?userId=${userId}`)
   }
