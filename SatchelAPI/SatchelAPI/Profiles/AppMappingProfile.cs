@@ -99,5 +99,13 @@ public class AppMappingProfile : Profile
                 _ => _.MapFrom(s => s.Date.AddDays(s.ShippingType.Days).ToString("dd.MM.yyyy")))
             .ForMember(_ => _.ReceiptCode, _ => _.MapFrom(s => s.ReceiptCode))
             .ForMember(_ => _.OrderStatusTypeName, _ => _.MapFrom(s => s.OrderStatusType.Name));
+
+        CreateMap<PaymentType, GetPaymentTypeDto>()
+            .ForMember(_ => _.PaymentTypeId, _ => _.MapFrom(s => s.PaymentTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
+
+        CreateMap<ShippingType, GetShippingTypeDto>()
+            .ForMember(_ => _.ShippingTypeId, _ => _.MapFrom(s => s.ShippingTypeId))
+            .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name));
     }
 }

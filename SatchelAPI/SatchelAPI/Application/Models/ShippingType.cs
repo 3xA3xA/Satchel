@@ -6,11 +6,16 @@ namespace Satchel.Application.Models;
 public class ShippingType
 {
     [Key]
-    public required int ShippingTypeId { get; set; }
+    [Required]
+    public int ShippingTypeId { get; set; }
+    
     [MaxLength(100)]
-    public required string Name { get; set; }
-    public required int Days { get; set; }
+    [Required]
+    public string Name { get; set; }
+    
+    [Required]
+    public int Days { get; set; }
 
     [InverseProperty(nameof(Order.ShippingType))]
-    public required ICollection<Order> Orders { get; set; }
+    public ICollection<Order> Orders { get; set; }
 }

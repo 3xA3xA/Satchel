@@ -39,6 +39,7 @@ builder.Services.AddScoped<ISizeTypeService, SizeTypeService>();
 builder.Services.AddScoped<IGenderTypeService, GenderTypeService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPaymentTypeService, PaymentTypeService>();
+builder.Services.AddScoped<IShippingTypeService, ShippingTypeService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
