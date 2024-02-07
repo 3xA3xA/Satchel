@@ -20,7 +20,7 @@ public class OrderController : Controller
     {
         try
         {
-            await _service.FormingOrders(formingOrderDto.UserId, formingOrderDto.UserId, formingOrderDto.ShippingTypeId);
+            await _service.FormingOrders(formingOrderDto.UserId, formingOrderDto.PaymentTypeId, formingOrderDto.ShippingTypeId);
             return Ok();
         }
         catch (Exception e)
