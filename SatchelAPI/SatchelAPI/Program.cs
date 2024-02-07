@@ -38,6 +38,7 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ISizeTypeService, SizeTypeService>();
 builder.Services.AddScoped<IGenderTypeService, GenderTypeService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPaymentTypeService, PaymentTypeService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

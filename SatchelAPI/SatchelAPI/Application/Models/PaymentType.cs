@@ -6,10 +6,12 @@ namespace Satchel.Application.Models;
 public class PaymentType
 {
     [Key]
-    public required int PaymentTypeId { get; set; }
-    [MaxLength(100)]
-    public required string Name { get; set; }
+    [Required]
+    public int PaymentTypeId { get; set; }
+    
+    [Required]
+    public string Name { get; set; }
 
     [InverseProperty(nameof(Order.PaymentType))]
-    public required ICollection<Order> Orders { get; set; }
+    public ICollection<Order> Orders { get; set; }
 }
