@@ -50,4 +50,7 @@ export class UserService {
     return this.http.get<UserPageData>(`${this.apiUrl}/GetViewUserData/${this.userId}`);
   } 
 
+  getPaymentType() {
+
+  }
 }

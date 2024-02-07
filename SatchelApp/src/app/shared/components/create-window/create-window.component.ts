@@ -18,7 +18,8 @@ export class CreateWindowComponent {
   // массивы нужны для хранения списка фотографий продукта, брендов и типов продукта.
   productTypes : ProductType[] = [];
   brandTypes : Brand[] = [];
-  sizeByProductTypes : SizeType[] = []; // Временно :))))
+  sizeByProductTypes : SizeType[] = [];
+  statusMsg = ''
 
   @Input() newProduct: ProductDto = {  
     name: '',
@@ -42,7 +43,7 @@ export class CreateWindowComponent {
   ngOnInit() {
     this.getBrandTypes();
     this.getProductTypes();   
-    this.GetSizes();
+    //this.GetSizes();
   }
 
   onFileSelected(event: any) {
@@ -69,10 +70,21 @@ export class CreateWindowComponent {
 
   addNewProduct() : void {
     this.productService.addNewProduct(this.newProduct).subscribe
-      (data => {
-        console.log(data);
+      (data => {       
+        this.statusMsg = 'Товар поступил в продажу';
+
+        setTimeout(() => {
+          this.statusMsg = ''
+          this.createService.setCreateWindowStatus();
+        }, 2000)
+
+        
       }, error => {
-        console.error(error);
+        this.statusMsg = 'Что-то пошло не так!';
+
+        setTimeout(() => {
+          this.statusMsg = ''
+        }, 2000)
       });
     }
 
@@ -80,10 +92,9 @@ export class CreateWindowComponent {
     this.createService.getBrandTypes().subscribe(
       (data: any) => {
         this.brandTypes = data;
-        console.log(data)
       },
       (error) => {
-        console.error('Error fetching products', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
   }
@@ -94,20 +105,25 @@ export class CreateWindowComponent {
         this.productTypes = data;
       },
       (error) => {
-        console.error('Error fetching products', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
   }
 
-  GetSizes() {
-    this.createService.getSizesByProductType('clothes').subscribe( //fix later
+  GetSizes(productTypeName: string) {
+    this.createService.getSizesByProductType(productTypeName).subscribe(
       (data: any) => {
         this.sizeByProductTypes = data;
       },
       (error) => {
-        console.error('Error fetching products', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
   }
 
+  getProductNameById(id: number): string {
+    const product = this.productTypes.find(pt => pt.productTypeId === Number(id));
+    return product ? product.name : '';
+  }  
+  
 }

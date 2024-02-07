@@ -18,8 +18,24 @@ export class CartPageService {
     return this.http.get<Product[]>(this.apiUrl + `/ShoppingCart/GetShoppingCart?userId=${userId}`)
   }
 
-  GetOrders(){
-    
+  AddToOrder(userId: number, paymentTypeId: number, shippingTypeId: number) {
+    const obj = {
+      userId: userId,
+      paymentTypeId: 1,
+      shippingTypeId: shippingTypeId
+    }
+
+    console.log(obj)
+
+    return this.http.post(this.apiUrl + `/Order/FormingOrders`, obj)
+  }
+
+  GetOrders(userId: number) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.apiUrl}/Order/GetOrders?userId=${userId}`);
+  }
+
+  DeleteAllProductsFromShoppingCart(userId: number) {
+    return this.http.delete(this.apiUrl + `/ShoppingCart/DeleteAllProductFromShoppingCart?userId=${userId}`)
   }
 
   AddProductToShoppingCart(productId: number, userId: number, selectedSize: string) {

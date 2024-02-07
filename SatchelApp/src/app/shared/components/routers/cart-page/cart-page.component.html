@@ -33,10 +33,15 @@
             </li>
         </ol>
 
-        <select class="cart-list__select" name="" id="">
-            <option value="" selected disabled hidden>Способ оплаты</option>
-            <option value="">На месте получения</option>
+        <select class="cart-list__select" [(ngModel)]="paymentTypeId" name="" id="">
+            <option value="0" selected disabled hidden>Способ оплаты</option>
+            <option value="1">На месте получения</option>
             <option value="">Добавить новую карту</option>
+        </select>
+
+        <select class="cart-list__select" name="" id="">
+            <option value="0" selected disabled hidden>Способ доставки</option>
+            <option value="1">На 😊</option>
         </select>
 
         <div class="cartInfo__promoSection">
@@ -44,7 +49,7 @@
             <input class="cartInfo__promoSection__input" type="text">
         </div>
 
-        <button class="buyBtn">Оплатить</button>
+        <button class="buyBtn" (click)="addToOrder()">Оплатить</button>
     </div>
 </main>
 

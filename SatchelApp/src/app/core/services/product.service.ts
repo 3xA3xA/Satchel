@@ -34,14 +34,7 @@ export class ProductService {
   }
 
   addNewProduct(productDto: ProductDto) {
-    const object = {
-      productDto: productDto,
-      addProductImagesDto: []
-    };
-
-    console.log(productDto)
-
-    return this.http.post(`${this.apiUrl}/AddProduct`, object);
+    return this.http.post(`${this.apiUrl}/AddProduct`, productDto);
   }
 
   getSellerProducts(userId: number): Observable<Product[]>{
