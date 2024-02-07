@@ -10,7 +10,6 @@ public class AddProductDto
         int brandTypeId,
         int genderTypeId,
         int userId,
-        ICollection<string> images,
         ICollection<int> sizeTypeIds)
     {
         Name = name;
@@ -20,7 +19,6 @@ public class AddProductDto
         BrandTypeId = brandTypeId;
         GenderTypeId = genderTypeId;
         UserId = userId;
-        Images = images;
         SizeTypeIds = sizeTypeIds;
     }
 
@@ -31,6 +29,5 @@ public class AddProductDto
     public int BrandTypeId { get; set; }
     public int GenderTypeId { get; set; }
     public int UserId { get; set; }
-    public ICollection<string> Images { get; set; }
     public ICollection<int> SizeTypeIds { get; set; }
 }

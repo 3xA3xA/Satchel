@@ -12,11 +12,13 @@ namespace SatchelAPI.Services
     {
         private readonly SatchelDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
     
-        public ProductService(SatchelDbContext context, IMapper mapper)
+        public ProductService(SatchelDbContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         private ICollection<ProductImageDto> CreateProductImagesDto(ICollection<string> images, int productId)
@@ -29,13 +31,47 @@ namespace SatchelAPI.Services
             return sizeTypeIds.Select(sizeTypeId => new SizeTypeToProduct(sizeTypeId, productId)).ToList();
         }
         
-        public async Task AddProduct(AddProductDto addProductDto)
+        private async Task<List<string>> SaveImagesToFolder(List<IFormFile> images)
+        {
+            var imagePaths = new List<string>();
+            var imagePath = _configuration.GetSection("PathToSaveImages").Value;
+
+            foreach (var image in images)
+            {
+                var imageName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                var filePath = Path.Combine(imagePath!, imageName);
+
+                await using (var stream = File.Create(filePath))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                imagePaths.Add(filePath);
+            }
+
+            return imagePaths;
+        }
+
+        private List<ProductImages> CreateProductImages(int productId, List<string> imagePaths)
+        {
+            var productImages = new List<ProductImages>();
+
+            foreach (var imagePath in imagePaths)
+            {
+                productImages.Add(new ProductImages(productId, imagePath));
+            }
+
+            return productImages;
+        }
+        
+        public async Task AddProduct(AddProductDto addProductDto, List<IFormFile> images)
         {
             var newProduct = _mapper.Map<Product>(addProductDto);
-            var addProductImageDtos = CreateProductImagesDto(addProductDto.Images, newProduct.ProductId);
-            var newProductImages = _mapper.Map<ICollection<ProductImages>>(addProductImageDtos);
             var sizeTypeToProductDtos = CreateSizeTypeToProducts(addProductDto.SizeTypeIds, newProduct.ProductId);
             var newSizeTypeToProducts = _mapper.Map<ICollection<SizeTypeToProduct>>(sizeTypeToProductDtos);
+
+            var pathImages = await SaveImagesToFolder(images);
+            var newProductImages = CreateProductImages(newProduct.ProductId, pathImages);
 
             newProduct.ProductImages = newProductImages;
             newProduct.SizeTypeToProducts = newSizeTypeToProducts;

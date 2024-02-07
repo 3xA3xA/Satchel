@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -21,10 +22,12 @@ namespace SatchelAPI.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _service;
+        private readonly IConfiguration _configuration;
 
-        public ProductController(IProductService service)
+        public ProductController(IProductService service, IConfiguration configuration)
         {
             _service = service;
+            _configuration = configuration;
         }
 
         [HttpGet("[action]/{productType}")]
@@ -64,13 +67,19 @@ namespace SatchelAPI.Controllers
                 return BadRequest(e);
             }
         }
+
+        public class AddProductBody
+        {
+            public AddProductDto addProductDto { get; set; }
+            public List<IFormFile> images { get; set; }
+        }
         
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddProduct([FromBody] AddProductDto addProductDto)
+        public async Task<IActionResult> AddProduct([FromBody] AddProductBody addProductBody)
         {
             try
             {
-                await _service.AddProduct(addProductDto);
+                await _service.AddProduct(addProductBody.addProductDto, addProductBody.images);
                 return Ok();
             }
             catch (Exception e)

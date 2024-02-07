@@ -6,6 +6,12 @@ namespace SatchelAPI.Application.Models
 {
     public class ProductImages
     {
+        public ProductImages(int productId, string imagePath)
+        {
+            ProductId = productId;
+            ImagePath = imagePath;
+        }
+
         [Key]
         public int ImageId { get; set; }
 
@@ -16,6 +22,6 @@ namespace SatchelAPI.Application.Models
         public string ImagePath { get; set; }
 
         [ForeignKey(nameof(ProductId))]
-        public required Product Product { get; set; }
+        public Product Product { get; set; }
     }
 }
