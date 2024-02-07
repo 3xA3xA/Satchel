@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService, UserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { CreateService } from 'src/app/core/services/create.service';
-import { ConfigService, PaymentType } from 'src/app/core/services/config.service';
+import { ConfigService, PaymentType, Order } from 'src/app/core/services/config.service';
 import { Product } from '../catalog/catalog.component';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CartPageService } from 'src/app/core/services/cart-page.service';
@@ -27,7 +27,7 @@ export class UserPageComponent {
   userData: UserPageData = this.initializeUserData();
   userInfoForm = this.initializeUserInfoForm(this.userData);
   sellerProducts: Product[] = [];
-  orders: Product[] = [];
+  orders: Order[] = [];
   paymentTypes: PaymentType[] = [];
   statusMsg = '';
 
@@ -105,9 +105,9 @@ export class UserPageComponent {
 
   getOrders() {
     this.cartPageService.GetOrders(this.userService.userId).subscribe(
-      (data: Product[]) => {
+      (data: Order[]) => {
         this.orders = data;
-        this.updateUserInfoForm();
+        console.log(this.orders)
       },
       (error) => {
         this.errorMsg()

@@ -63,6 +63,20 @@ export interface Step {
   }[] 
 }
 
+export interface Order {
+  productCartDto: {
+    productId: number,
+    name: string,
+    price: number,
+    images: string[],
+    sizeName: null,
+    sizeTypeId: null
+  },
+  orderStatusTypeName: string,
+  deliveryDate: string,
+  receiptCode: number
+}
+
 @Injectable({
   providedIn: 'root'
 })

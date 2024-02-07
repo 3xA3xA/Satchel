@@ -85,8 +85,37 @@
     <button *ngIf="sellerProducts.length < 4" (click)="showMoreProducts()" class="moreBtn">Ещё</button>
 </div>
 
-<div class="secondaryContainer">
+<div *ngIf="orders" class="secondaryContainer">
     <h2 class="products__title">Мои заказы:</h2>
+
+    <ul class="orders__list">
+        <li *ngFor="let order of orders" class="orders__list__item">
+            <div class="order-image">
+                <app-carousel [images]="order.productCartDto.images"></app-carousel>
+            </div>
+
+            <div class="order-info">
+                <h3 class="order__text title">{{order.productCartDto.name}}</h3>
+
+                <p class="order__text">{{order.productCartDto.price}}</p>
+            </div>
+
+            <div class="order__shipping-info">
+                <div class="shipping-info">
+                    <div>Статус заказа:</div>
+                    <div>{{order.orderStatusTypeName}}</div>
+                </div>
+                <div class="shipping-info">
+                    <div>Дата поступления:</div>
+                    <div>{{order.deliveryDate}}</div>
+                </div>
+                <div class="shipping-info">
+                    <div>Код выдачи:</div>
+                    <div>{{order.receiptCode}}</div>
+                </div>
+            </div>  
+        </li>
+    </ul>
 
 </div>
 

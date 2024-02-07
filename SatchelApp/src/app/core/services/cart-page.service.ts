@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
+import { Order } from './config.service';
 
 
 @Injectable({
@@ -30,8 +31,8 @@ export class CartPageService {
     return this.http.post(this.apiUrl + `/Order/FormingOrders`, obj)
   }
 
-  GetOrders(userId: number) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.apiUrl}/Order/GetOrders?userId=${userId}`);
+  GetOrders(userId: number) : Observable<Order[]>{
+    return this.http.get<Order[]>(`${this.apiUrl}/Order/GetOrders?userId=${userId}`);
   }
 
   DeleteAllProductsFromShoppingCart(userId: number) {

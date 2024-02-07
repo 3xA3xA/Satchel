@@ -192,3 +192,49 @@
     right: 83rem;
     font: 1.6rem 'DaysOne';
 }
+
+.orders__list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.orders__list__item{
+    display: flex;
+    width: 71.2rem;
+    height: 21.6rem;
+    gap: 5rem;
+    background-color: #fff;
+    color: #000;
+    font: 1.6rem 'DaysOne';
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.order-image{
+    width: 22.7rem;
+    height: 100%;
+}
+
+.order-info{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.title{
+    font-size: 2rem;
+}
+
+.order__shipping-info{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.shipping-info{
+    display: flex;
+    gap: 1rem;
+}
