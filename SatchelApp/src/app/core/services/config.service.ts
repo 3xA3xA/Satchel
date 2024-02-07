@@ -34,6 +34,16 @@ export interface ProductDto {
   sizeTypeIds: number[],
 }
 
+export interface PaymentType {
+  paymentTypeId: number,
+  name: string
+}
+
+export interface ShippingType {
+  shippingTypeId: number,
+  name: string
+}
+
 export interface UserPageData{
   firstName: string;
   middleName: string;

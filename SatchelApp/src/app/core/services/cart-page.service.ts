@@ -21,7 +21,7 @@ export class CartPageService {
   AddToOrder(userId: number, paymentTypeId: number, shippingTypeId: number) {
     const obj = {
       userId: userId,
-      paymentTypeId: 1,
+      paymentTypeId: paymentTypeId,
       shippingTypeId: shippingTypeId
     }
 

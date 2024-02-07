@@ -33,15 +33,18 @@
             </li>
         </ol>
 
-        <select class="cart-list__select" [(ngModel)]="paymentTypeId" name="" id="">
+        <select class="cart-list__select" [(ngModel)]="paymentTypeId" name="paymentTypeId" id="">
             <option value="0" selected disabled hidden>Способ оплаты</option>
-            <option value="1">На месте получения</option>
-            <option value="">Добавить новую карту</option>
+            <option *ngFor="let paymentType of paymentTypes" [value]="paymentType.paymentTypeId">
+                {{paymentType.name}}
+            </option>
         </select>
 
-        <select class="cart-list__select" name="" id="">
+        <select class="cart-list__select" [(ngModel)]="shippingTypeId" name="shippingTypeId" id="">
             <option value="0" selected disabled hidden>Способ доставки</option>
-            <option value="1">На 😊</option>
+            <option *ngFor="let shippingType of shippingTypes" [value]="shippingType.shippingTypeId">
+                {{shippingType.name}}
+            </option>
         </select>
 
         <div class="cartInfo__promoSection">
@@ -51,6 +54,7 @@
 
         <button class="buyBtn" (click)="addToOrder()">Оплатить</button>
     </div>
+    <div *ngIf="statusMsg" class="statusMessage">{{statusMsg}}</div>
 </main>
 
 <app-footer></app-footer>

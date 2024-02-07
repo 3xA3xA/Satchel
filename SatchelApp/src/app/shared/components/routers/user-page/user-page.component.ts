@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService, UserPageData } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
 import { CreateService } from 'src/app/core/services/create.service';
-import { ConfigService } from 'src/app/core/services/config.service';
+import { ConfigService, PaymentType } from 'src/app/core/services/config.service';
 import { Product } from '../catalog/catalog.component';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CartPageService } from 'src/app/core/services/cart-page.service';
@@ -28,7 +28,7 @@ export class UserPageComponent {
   userInfoForm = this.initializeUserInfoForm(this.userData);
   sellerProducts: Product[] = [];
   orders: Product[] = [];
-  payMethods: any[] = [];
+  paymentTypes: PaymentType[] = [];
   statusMsg = '';
 
   ngOnInit() {
@@ -98,7 +98,7 @@ export class UserPageComponent {
           this.userData.userPhotoSrc = this.defaultUserPhoto;
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -110,13 +110,20 @@ export class UserPageComponent {
         this.updateUserInfoForm();
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
 
   getPaymentTypes() {
-    //dal dal yshel
+    this.userService.getPaymentTypes().subscribe(
+      (data: PaymentType[]) => {
+        this.paymentTypes = data;
+      },
+      (error) => {
+        this.errorMsg()
+      }
+    );
   }
 
   onFileSelected(event : any) {
@@ -141,7 +148,7 @@ export class UserPageComponent {
         this.getSellerProducts();
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg()
       }
     );
   }
@@ -178,5 +185,13 @@ export class UserPageComponent {
       birth: new FormControl(data.dateOfBirth),
       userPhoto: new FormControl(data.userPhotoSrc)
     });
+  }
+
+  errorMsg(){
+    this.statusMsg = 'Что-то пошло не так!';
+
+    setTimeout(() => {
+      this.statusMsg = ''
+    }, 2000)
   }
 }

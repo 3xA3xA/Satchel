@@ -31,20 +31,17 @@
                 </div>
             </div>
 
-            <section class="payDataSection">
+            <!-- <section class="payDataSection">
                 <h2 class="heading">Оплата</h2>
                 <div class="payData">
                     <p class="blockName">Cпособ оплаты:</p>
-                     <select name="PayMethod" class="personalAreaSelect" name="paySelection"> <!-- [(ngModel)]="PayMethod" -->
-                        <option *ngFor="let method of payMethods" [value]="method.value">
-                            {{method.viewValue}}
+                     <select name="PayMethod" class="personalAreaSelect" name="paySelection" [(ngModel)]="userData"> 
+                        <option *ngFor="let paymentType of paymentTypes" [value]="paymentType.paymentTypeId">
+                            {{paymentType.name}}
                           </option>
-                        <option value="ShipPay">Оплата при получении заказа</option> 
-                        <option value="MasterCard">Оплата на сайте</option> 
-                        <option value="Visa">Оплата при погрузке</option> 
                     </select>
                 </div>
-            </section>
+            </section> -->
         
             <!-- <section class="feedbackDataSection">
                 <h2 class="heading">Отзывы</h2>
@@ -67,7 +64,7 @@
 
 </div>
 
-<div *ngIf="this.userData.userType == 'Продавец'" class="secondaryContainer">
+<div *ngIf="this.userData.userType == 'Продавец' && sellerProducts.length > 0" class="secondaryContainer">
     <h2 class="products__title">Мои Товары:</h2>
 
     <ul class="products__container">
