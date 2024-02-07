@@ -10,13 +10,16 @@ public class Order
         int userId, 
         int orderStatusTypeId, 
         int paymentTypeId, 
-        int shippingTypeId)
+        int shippingTypeId,
+        int receiptCode)
     {
         ProductId = productId;
         UserId = userId;
         OrderStatusTypeId = orderStatusTypeId;
         PaymentTypeId = paymentTypeId;
         ShippingTypeId = shippingTypeId;
+        Date = DateTime.UtcNow;
+        ReceiptCode = receiptCode;
     }
     
     [Key]
@@ -37,6 +40,12 @@ public class Order
     
     [Required]
     public int ShippingTypeId { get; set; }
+    
+    [Required]
+    public DateTime Date { get; set; }
+    
+    [Required]
+    public int ReceiptCode { get; set; } 
 
     [ForeignKey(nameof(ProductId))]
     public Product Product { get; set; }

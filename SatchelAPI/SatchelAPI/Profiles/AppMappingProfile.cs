@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Humanizer;
 using Satchel.Application.Models;
 using SatchelAPI.Application.Dto;
 using SatchelAPI.Application.Models;
@@ -25,10 +26,9 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
             .ForMember(_ => _.Price, _ => _.MapFrom(s => s.Price))
             .ForMember(_ => _.Images,
-        _ => _.MapFrom(s => s.ProductImages!
+                _ => _.MapFrom(s => s.ProductImages!
                     .Where(e => e.ProductId == s.ProductId)
-                    .Select(e => e.ImagePath)))
-            .ForMember(_ => _.SizeName, _ => _.MapFrom(s => s.Name));
+                    .Select(e => e.ImagePath)));
 
         CreateMap<AddProductDto, Product>()
             .ForMember(_ => _.Name, _ => _.MapFrom(s => s.Name))
@@ -93,5 +93,11 @@ public class AppMappingProfile : Profile
         CreateMap<SizeTypeToProductDto, SizeTypeToProduct>()
             .ForMember(_ => _.ProductId, _ => _.MapFrom(s => s.ProductId))
             .ForMember(_ => _.SizeTypeId, _ => _.MapFrom(s => s.SizeTypeId));
+
+        CreateMap<Order, GetOrderDto>()
+            .ForMember(_ => _.DeliveryDate,
+                _ => _.MapFrom(s => s.Date.AddDays(s.ShippingType.Days).ToString("dd.MM.yyyy")))
+            .ForMember(_ => _.ReceiptCode, _ => _.MapFrom(s => s.ReceiptCode))
+            .ForMember(_ => _.OrderStatusTypeName, _ => _.MapFrom(s => s.OrderStatusType.Name));
     }
 }

@@ -49,7 +49,7 @@ public class Product
     public ICollection<ShoppingCart> ShoppingCarts { get; set; }
     
     [InverseProperty(nameof(SizeTypeToProduct.Product))]
-    public required ICollection<SizeTypeToProduct> SizeTypeToProducts { get; set; }
+    public required ICollection<SizeTypeToProduct>? SizeTypeToProducts { get; set; }
     
     [InverseProperty(nameof(SatchelAPI.Application.Models.ProductImages.Product))]
     public ICollection<ProductImages>? ProductImages { get; set; }

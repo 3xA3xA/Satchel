@@ -12,7 +12,7 @@ using Satchel.Infrastructure;
 namespace SatchelAPI.Migrations
 {
     [DbContext(typeof(SatchelDbContext))]
-    [Migration("20240204203235_AddSizeTypeToProductAndIncreaseImagePathLength")]
+    [Migration("20240206192801_AddSizeTypeToProductAndIncreaseImagePathLength")]
     partial class AddSizeTypeToProductAndIncreaseImagePathLength
     {
         /// <inheritdoc />
