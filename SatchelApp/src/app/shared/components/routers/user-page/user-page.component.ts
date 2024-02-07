@@ -6,6 +6,7 @@ import { CreateService } from 'src/app/core/services/create.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { Product } from '../catalog/catalog.component';
 import { ProductService } from 'src/app/core/services/product.service';
+import { CartPageService } from 'src/app/core/services/cart-page.service';
 
 @Component({
   selector: 'app-user-page',
@@ -18,21 +19,26 @@ export class UserPageComponent {
               private productService: ProductService,
               private createService: CreateService, 
               private router: Router,
-              private configService: ConfigService) { }
+              private configService: ConfigService,
+              private cartPageService: CartPageService) { }
 
   defaultUserPhoto: string = this.configService.PATHS.defaultUserPhoto;
 
   userData: UserPageData = this.initializeUserData();
   userInfoForm = this.initializeUserInfoForm(this.userData);
   sellerProducts: Product[] = [];
+  orders: Product[] = [];
+  payMethods: any[] = [];
+  statusMsg = '';
 
   ngOnInit() {
     if (!this.userService.isAuthorized)
       this.router.navigate(['/']);
 
     this.getUserData();
-
     this.getSellerProducts();
+    this.getPaymentTypes();
+    this.getOrders();
   }
 
   get isCreateProductWindowOpen(): boolean {
@@ -53,7 +59,7 @@ export class UserPageComponent {
         simplifiedData ? this.sellerProducts = data.slice(0, 3) :  this.sellerProducts = data;
       },
       (error) => {
-
+        console.log(error);   
       }
     )
   }
@@ -61,12 +67,16 @@ export class UserPageComponent {
   updateUserInfo() {
     this.userService.updateUserInfo(this.userData).subscribe(
       (data: UserPageData) => {
-        //получить ответ
+        this.statusMsg = 'Данные обновлены';
       },
       (error) => {
-        console.error('Error fetching products', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
+    
+    setTimeout(() => {
+      this.statusMsg = ''
+    }, 2000)
   }
 
   openCreateWindow(){
@@ -88,13 +98,25 @@ export class UserPageComponent {
           this.userData.userPhotoSrc = this.defaultUserPhoto;
       },
       (error) => {
-        this.handleError('Error fetching user data', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
   }
 
   getOrders() {
+    this.cartPageService.GetOrders(this.userService.userId).subscribe(
+      (data: Product[]) => {
+        this.orders = data;
+        this.updateUserInfoForm();
+      },
+      (error) => {
+        this.statusMsg = 'Что-то пошло не так!';
+      }
+    );
+  }
 
+  getPaymentTypes() {
+    //dal dal yshel
   }
 
   onFileSelected(event : any) {
@@ -119,7 +141,7 @@ export class UserPageComponent {
         this.getSellerProducts();
       },
       (error) => {
-        this.handleError('Error fetching user data', error);
+        this.statusMsg = 'Что-то пошло не так!';
       }
     );
   }
@@ -157,9 +179,4 @@ export class UserPageComponent {
       userPhoto: new FormControl(data.userPhotoSrc)
     });
   }
-
-  handleError(message: string, error: any) {
-    console.error(message, error);
-  }
-
 }

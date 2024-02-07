@@ -16,10 +16,11 @@
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Тип продукта:</label>
-                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId">
+                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId" (change)="GetSizes(getProductNameById(newProduct.productTypeId))">
                                 <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{productType.name}}</option>
                             </select>
                         </li>
+                                          
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Описание:</label>
@@ -68,4 +69,6 @@
 
         <button class="create-btn" (click)="addNewProduct()">Создать товар</button>
     </div>
+
+    <div *ngIf="statusMsg" class="statusMessage">{{statusMsg}}</div>
 </div>

@@ -19,6 +19,7 @@ export class CartPageComponent {
 
   shoppingCart : Product[] = [];
   finalPrice: number = 0
+  paymentTypeId: number = 0; 
 
   ngOnInit() {
     this.checkAuthorization();
@@ -56,6 +57,28 @@ export class CartPageComponent {
     this.cartPageService.DeleteProductFromShoppingCart(productId, this.userService.userId, sizeTypeId).subscribe(
       () => {
         this.getShoppingCart(); //получение нового списка товаров
+      },
+      (error) => {
+        this.handleError('Error deleting product', error);
+      }
+    );
+  }
+
+  addToOrder() {
+    this.cartPageService.AddToOrder(this.userService.userId, this.paymentTypeId, 1).subscribe(
+      () => {
+        this.deleteAllProductsFromShoppingCart();
+        this.getShoppingCart(); //получение нового списка товаров
+      },
+      (error) => {
+        this.handleError('Error deleting product', error);
+      }
+    );
+  }
+
+  deleteAllProductsFromShoppingCart(){
+    this.cartPageService.DeleteAllProductsFromShoppingCart(this.userService.userId).subscribe(
+      () => {
       },
       (error) => {
         this.handleError('Error deleting product', error);
