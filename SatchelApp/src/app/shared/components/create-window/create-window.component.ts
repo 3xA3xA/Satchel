@@ -34,7 +34,7 @@ export class CreateWindowComponent {
       userId: this.userService.userId,
       sizeTypeIds: [],
     },
-    images: new FormData()
+    images: []
   }
 
   constructor(private createService: CreateService,
@@ -52,11 +52,10 @@ export class CreateWindowComponent {
 
   onFileSelected(event : any) {
     if (event.target.files && event.target.files.length) {
-      this.newProduct.images = new FormData();
+      let imageFilesArr: File[] = []
       this.newProductImages = [] //обнулил предыдущие загруженные фотографии
       for (let i = 0; i < event.target.files.length; i++) {
-        this.newProduct.images.append('images', event.target.files[i]);
-
+        imageFilesArr.push(event.target.files[i]);
         const file = event.target.files[i];
         let reader = new FileReader();
 
@@ -65,6 +64,8 @@ export class CreateWindowComponent {
         }
         reader.readAsDataURL(file);
       }
+
+      this.newProduct.images = imageFilesArr;
     }
   }
 

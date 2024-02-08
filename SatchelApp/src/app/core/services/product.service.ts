@@ -38,21 +38,21 @@ export class ProductService {
   // }
 
   addNewProduct(productBody: AddProductBody) {
-    const formData = new FormData();
+    let formData = new FormData();
     Object.entries(productBody.addProductDto).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-            value.forEach((v, i) => formData.append(`addProductDto.${key}[${i}]`, v.toString()));
+            value.forEach((v, i) => formData.append(`addProductDto.${key}[${i}]`, String(v)));
         } else {
-            formData.append(`addProductDto.${key}`, value.toString());
+            formData.append(`addProductDto.${key}`, String(value));
         }
     });
-    if (productBody.images instanceof FormData) {
-        productBody.images.forEach((value, key) => {
-            if (value instanceof Blob) {
-                formData.append('images', value, key);
-            }
-        });
-    }
+
+    productBody.images.forEach((value, key) => {
+      if (value instanceof File) {
+          formData.append('images', value, String(key));
+      }
+    });
+
     return this.http.post(`${this.apiUrl}/AddProduct`, formData);
   }
 

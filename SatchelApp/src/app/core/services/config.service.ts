@@ -47,7 +47,7 @@ export interface AddProductDto {
 
 export interface AddProductBody {
   addProductDto: AddProductDto;
-  images: FormData;
+  images: File[];
 }
 
 export interface PaymentType {
