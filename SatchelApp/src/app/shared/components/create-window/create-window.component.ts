@@ -71,7 +71,7 @@ export class CreateWindowComponent {
 
   onBgClick(event: any) {
     if (!event.target.classList.contains('create-form')) { 
-      this.createService.setCreateWindowStatus()
+      this.createService.closeCreateWindow()
     } 
   }
 
@@ -80,9 +80,11 @@ export class CreateWindowComponent {
       (data => {       
         this.statusMsg = 'Товар поступил в продажу';
 
+        this.createService.announceRefresh(); //обновляем компонент user-page
+
         setTimeout(() => {
           this.statusMsg = ''
-          this.createService.setCreateWindowStatus();
+          this.createService.closeCreateWindow();
         }, 2000)
 
         

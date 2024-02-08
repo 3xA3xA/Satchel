@@ -20,7 +20,11 @@ export class UserPageComponent {
               private createService: CreateService, 
               private router: Router,
               private configService: ConfigService,
-              private cartPageService: CartPageService) { }
+              private cartPageService: CartPageService) { 
+    createService.refreshAnnounced$.subscribe(() => {
+      this.ngOnInit();
+    });
+  }
 
   defaultUserPhoto: string = this.configService.PATHS.defaultUserPhoto;
 
@@ -80,7 +84,7 @@ export class UserPageComponent {
   }
 
   openCreateWindow(){
-    this.createService.setCreateWindowStatus();
+    this.createService.openCreateWindow();
   }
 
   exitFromAccount(){

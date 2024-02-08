@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
-import { AddProductBody, AddProductDto } from './config.service';
+import { AddProductBody } from './config.service';
 
 // не могу его вынести
 export interface Filters{
@@ -32,10 +32,6 @@ export class ProductService {
   getAllProducts(productType : string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/GetAllProducts/${productType}`);
   }
-
-  // addNewProduct(productDto: ProductDto) {
-  //   return this.http.post(`${this.apiUrl}/AddProduct`, productDto);
-  // }
 
   addNewProduct(productBody: AddProductBody) {
     let formData = new FormData();
