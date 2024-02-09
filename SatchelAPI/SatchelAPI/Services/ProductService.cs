@@ -30,16 +30,25 @@ namespace SatchelAPI.Services
         {
             return sizeTypeIds.Select(sizeTypeId => new SizeTypeToProduct(sizeTypeId, productId)).ToList();
         }
+
+        private string GetExtensionImage(string strImage)
+        {
+            return strImage.Split('/')[1];
+        }
+
+        private string GenerateImageName(string imageContentType)
+        {
+            return Guid.NewGuid() + "." + GetExtensionImage(imageContentType);
+        }
         
         private async Task<List<string>> SaveImagesToFolder(List<IFormFile> images)
         {
-            var imagePaths = new List<string>();
-            var imagePath = _configuration.GetSection("PathToSaveImages").Value;
+            var imageNames = new List<string>();
+            var imagePath = _configuration.GetSection("PathToSaveImagesToFolder").Value;
 
             foreach (var image in images)
             {
-                // эту строку тоже лучше написать красиво. пока сделал, чтобы работало
-                var imageName = Guid.NewGuid() + "." + image.ContentType.Split('/')[1];
+                var imageName = GenerateImageName(image.ContentType);
                 var filePath = Path.Combine(imagePath!, imageName);
 
                 // вообще, уже не нужен. но крч создает папку images в каталоге. круто да 🤔
@@ -54,31 +63,23 @@ namespace SatchelAPI.Services
                     await image.CopyToAsync(stream);
                 }
 
-                imagePaths.Add(filePath);
+                imageNames.Add(imageName);
             }
 
-            return imagePaths;
+            return imageNames;
         }
 
-        private List<ProductImages> CreateProductImages(int productId, List<string> imagePaths)
+        private List<ProductImages> CreateProductImages(int productId, List<string> imageNames)
         {
             var productImages = new List<ProductImages>();
 
-            foreach (var imagePath in imagePaths)
+            foreach (var imageName in imageNames)
             {
-                var frontEndPath = ConvertToFrontEndPath(imagePath);
-                productImages.Add(new ProductImages(productId, frontEndPath));
+                var imagePath = _configuration.GetSection("PathToSaveImagesToDb").Value + imageName;
+                productImages.Add(new ProductImages(productId, imagePath));
             }
 
             return productImages;
-        }
-
-        // Лучше написать по-другому. Заменяет путь на другой для фронта при сохранении в базу.
-        private string ConvertToFrontEndPath(string savePath)
-        {
-            var basePath = "/SatchelApp/src/";
-            var frontEndBasePath = "../../";
-            return savePath.Replace(basePath, frontEndBasePath);
         }
 
         public async Task AddProduct(AddProductDto addProductDto, List<IFormFile> images)
