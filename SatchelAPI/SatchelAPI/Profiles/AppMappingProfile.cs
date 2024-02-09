@@ -62,7 +62,7 @@ public class AppMappingProfile : Profile
             .ForMember(_ => _.GenderTypeId, _ => _.MapFrom(s => s.GenderTypeId))
             .ForMember(_ => _.Images, _ => _.MapFrom(s => s.ProductImages.Select(_ => _.ImagePath)))
             .ForMember(_ => _.Sizes,
-                _ => _.MapFrom(s => s.ProductType.SizeTypeToProductTypes
+                _ => _.MapFrom(s => s.SizeTypeToProducts
                     .Select(_ => _.SizeType.Name)));
 
         CreateMap<User, GetViewUserDto>()

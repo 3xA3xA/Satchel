@@ -278,8 +278,7 @@ namespace SatchelAPI.Services
         {
             return await _context.Products
                 .Include(_ => _.ProductImages)
-                .Include(_ => _.ProductType)
-                .ThenInclude(_ => _.SizeTypeToProductTypes)
+                .Include(_ => _.SizeTypeToProducts)
                 .ThenInclude(_ => _.SizeType)
                 .FirstOrDefaultAsync(_ => _.ProductId == productId);
         }
@@ -288,7 +287,7 @@ namespace SatchelAPI.Services
         {
             var product = await GetProductWithImagesAndSizes(productId);
             var getProductDto = _mapper.Map<GetProductDto>(product);
-
+            
             return getProductDto;
         }
 
