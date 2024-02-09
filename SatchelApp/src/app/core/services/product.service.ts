@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from 'src/app/shared/components/routers/catalog/catalog.component';
-import { ProductDto } from './config.service';
+import { AddProductBody } from './config.service';
 
 // не могу его вынести
 export interface Filters{
@@ -33,19 +33,30 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/GetAllProducts/${productType}`);
   }
 
-  addNewProduct(productDto: ProductDto) {
-    return this.http.post(`${this.apiUrl}/AddProduct`, productDto);
-  }
+  addNewProduct(productBody: AddProductBody) {
+    let formData = new FormData();
+    Object.entries(productBody.addProductDto).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+            value.forEach((v, i) => formData.append(`addProductDto.${key}[${i}]`, String(v)));
+        } else {
+            formData.append(`addProductDto.${key}`, String(value));
+        }
+    });
 
-  addNewImages(formData: FormData ) : Observable<string[]> {     ///////////////////////////////////////////////////////////////////////////////////////////
-    console.log(formData)
-    return this.http.post<string[]>('/upload', formData)
+    productBody.images.forEach((value, key) => {
+      if (value instanceof File) {
+          formData.append('images', value, String(key));
+      }
+    });
+
+    return this.http.post(`${this.apiUrl}/AddProduct`, formData);
   }
 
 
   getSellerProducts(userId: number): Observable<Product[]>{
     return this.http.get<Product[]>(`${this.apiUrl}/GetSellerProducts?userId=${userId}`)
   }
+  
   
   deleteSellerProduct(productId: number) {
     return this.http.delete(`${this.apiUrl}/${productId}`)

@@ -38,8 +38,16 @@ namespace SatchelAPI.Services
 
             foreach (var image in images)
             {
-                var imageName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                // эту строку тоже лучше написать красиво. пока сделал, чтобы работало
+                var imageName = Guid.NewGuid() + "." + image.ContentType.Split('/')[1];
                 var filePath = Path.Combine(imagePath!, imageName);
+
+                // вообще, уже не нужен. но крч создает папку images в каталоге. круто да 🤔
+                var directory = Path.GetDirectoryName(filePath); 
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
 
                 await using (var stream = File.Create(filePath))
                 {
@@ -58,12 +66,21 @@ namespace SatchelAPI.Services
 
             foreach (var imagePath in imagePaths)
             {
-                productImages.Add(new ProductImages(productId, imagePath));
+                var frontEndPath = ConvertToFrontEndPath(imagePath);
+                productImages.Add(new ProductImages(productId, frontEndPath));
             }
 
             return productImages;
         }
-        
+
+        // Лучше написать по-другому. Заменяет путь на другой для фронта при сохранении в базу.
+        private string ConvertToFrontEndPath(string savePath)
+        {
+            var basePath = "/SatchelApp/src/";
+            var frontEndBasePath = "../../";
+            return savePath.Replace(basePath, frontEndBasePath);
+        }
+
         public async Task AddProduct(AddProductDto addProductDto, List<IFormFile> images)
         {
             var newProduct = _mapper.Map<Product>(addProductDto);

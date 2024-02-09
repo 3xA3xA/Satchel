@@ -34,6 +34,22 @@ export interface ProductDto {
   sizeTypeIds: number[],
 }
 
+export interface AddProductDto {
+  name: string;
+  description: string;
+  productTypeId: number;
+  price: number;
+  brandTypeId: number;
+  genderTypeId: number;
+  userId: number;
+  sizeTypeIds: number[];
+}
+
+export interface AddProductBody {
+  addProductDto: AddProductDto;
+  images: File[];
+}
+
 export interface PaymentType {
   paymentTypeId: number,
   name: string

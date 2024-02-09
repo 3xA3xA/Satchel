@@ -11,12 +11,12 @@
                     <ul class="form-inputGroup__list">
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Название:</label>
-                            <input class="form-input" type="text" [(ngModel)]="newProduct.name" name="productName">
+                            <input class="form-input" type="text" [(ngModel)]="newProduct.addProductDto.name" name="productName">
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Тип продукта:</label>
-                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.productTypeId" (change)="getSizes(getProductNameById(newProduct.productTypeId))">
+                            <select class="form-input" name="productTypeId" id="" [(ngModel)]="newProduct.addProductDto.productTypeId" (change)="getSizes(getProductNameById(newProduct.addProductDto.productTypeId))">
                                 <option *ngFor="let productType of productTypes" [value]="productType.productTypeId">{{productType.name}}</option>
                             </select>
                         </li>
@@ -24,31 +24,31 @@
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Описание:</label>
-                            <textarea class="form-textarea" name="description" type="text" [(ngModel)]="newProduct.description"></textarea>
+                            <textarea class="form-textarea" name="description" type="text" [(ngModel)]="newProduct.addProductDto.description"></textarea>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label for="">Размеры в наличии:</label>
-                            <select class="form-input sizeSelect" name="sizes" multiple size="2" id="" [(ngModel)]="newProduct.sizeTypeIds">
+                            <select class="form-input sizeSelect" name="sizes" multiple size="2" id="" [(ngModel)]="newProduct.addProductDto.sizeTypeIds">
                                 <option *ngFor="let sizeByProductType of sizeByProductTypes" [value]="sizeByProductType.sizeTypeId">{{sizeByProductType.name}}</option>
                             </select>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label for="">Для кого:</label>
-                            <select class="form-input" name="genderTypeId" id="" [(ngModel)]="newProduct.genderTypeId">
+                            <select class="form-input" name="genderTypeId" id="" [(ngModel)]="newProduct.addProductDto.genderTypeId">
                                 <option *ngFor="let genderType of genderTypes" [value]="genderType.genderTypeId">{{genderType.name}}</option>
                             </select>
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Цена:</label>
-                            <input class="form-input" name="price" type="text" [(ngModel)]="newProduct.price">
+                            <input class="form-input" name="price" type="text" [(ngModel)]="newProduct.addProductDto.price">
                         </li>
 
                         <li class="form-inputGroup__list__item">
                             <label class="form-input__label" for="">Бренд:</label>
-                            <select class="form-input" name="brandTypeId" id="" [(ngModel)]="newProduct.brandTypeId">
+                            <select class="form-input" name="brandTypeId" id="" [(ngModel)]="newProduct.addProductDto.brandTypeId">
                                 <option *ngFor="let brandType of brandTypes" [value]="brandType.brandTypeId">{{brandType.name}}</option>
                             </select>
                         </li>                 
@@ -59,7 +59,7 @@
             <form class="form" action="">
                 <h2 class="form__title">Фото товара</h2>
                 <div class="image-container" (dblclick)="fileInput.click()">
-                    <app-carousel  class="product-carousel" [images]="newProduct.images"></app-carousel>
+                    <app-carousel  class="product-carousel" [images]="newProductImages"></app-carousel>
                 </div>                 
                 <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)" multiple>
             </form>

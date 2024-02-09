@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GenderType } from './config.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,21 @@ export class CreateService {
 
   constructor(private http: HttpClient) { }
 
-  setCreateWindowStatus() : void{
-    this.isCreateOpen = !this.isCreateOpen;
+  // Добавляем подписку
+  private refreshAnnouncedSource = new Subject<void>();
+
+  refreshAnnounced$ = this.refreshAnnouncedSource.asObservable();
+
+  announceRefresh() {
+    this.refreshAnnouncedSource.next();
+  }
+
+  openCreateWindow() : void{
+    this.isCreateOpen = true;
+  }
+
+  closeCreateWindow() : void {
+    this.isCreateOpen = false;
   }
 
   getBrandTypes() {
