@@ -81,12 +81,11 @@ export class CreateWindowComponent {
         this.statusMsg = 'Товар поступил в продажу';
 
         this.createService.announceRefresh(); //обновляем компонент user-page
-
+        
         setTimeout(() => {
-          this.statusMsg = ''
           this.createService.closeCreateWindow();
+          this.statusMsg = ''          
         }, 2000)
-
         
       }, error => {
         this.errorMsg()

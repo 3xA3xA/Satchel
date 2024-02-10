@@ -82,6 +82,7 @@ export class CartPageComponent {
       },
       (error) => {
         this.errorMsg();
+        console.log(error)
       }
     );
   }

@@ -91,6 +91,11 @@
     background-color: #0ABAB5;
 }
 
+.image-container{
+    width: 20rem;
+    height: 50rem;
+}
+
 .create-btn{
     display: flex;
     justify-content: center;

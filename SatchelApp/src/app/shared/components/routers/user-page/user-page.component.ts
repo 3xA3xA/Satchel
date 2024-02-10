@@ -22,7 +22,7 @@ export class UserPageComponent {
               private configService: ConfigService,
               private cartPageService: CartPageService) { 
     createService.refreshAnnounced$.subscribe(() => {
-      this.ngOnInit();
+      this.getSellerProducts();
     });
   }
 
@@ -72,15 +72,15 @@ export class UserPageComponent {
     this.userService.updateUserInfo(this.userData).subscribe(
       (data: UserPageData) => {
         this.statusMsg = 'Данные обновлены';
+
+        setTimeout(() => {
+          this.statusMsg = ''
+        }, 2000)
       },
       (error) => {
-        this.statusMsg = 'Что-то пошло не так!';
+        this.errorMsg();
       }
-    );
-    
-    setTimeout(() => {
-      this.statusMsg = ''
-    }, 2000)
+    );   
   }
 
   openCreateWindow(){
@@ -97,7 +97,10 @@ export class UserPageComponent {
     this.userService.getUserData().subscribe(
       (data: UserPageData) => {
         this.userData = data;
-        this.userData.dateOfBirth = data.dateOfBirth.toString().slice(0, 10);
+        if (this.userData.dateOfBirth == '')  
+          this.userData.dateOfBirth = ''
+        else
+          this.userData.dateOfBirth = data.dateOfBirth.toString().slice(0, 10);
         this.updateUserInfoForm();
         if (this.userData.userPhotoSrc == null)
           this.userData.userPhotoSrc = this.defaultUserPhoto;
@@ -112,7 +115,6 @@ export class UserPageComponent {
     this.cartPageService.GetOrders(this.userService.userId).subscribe(
       (data: Order[]) => {
         this.orders = data;
-        console.log(this.orders)
       },
       (error) => {
         this.errorMsg()

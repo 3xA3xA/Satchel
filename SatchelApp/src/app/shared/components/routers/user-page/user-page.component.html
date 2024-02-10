@@ -85,7 +85,7 @@
     <button *ngIf="sellerProducts.length >= 3" (click)="showMoreProducts()" class="moreBtn">Ещё</button>
 </div>
 
-<div *ngIf="orders" class="secondaryContainer">
+<div *ngIf="orders.length > 0" class="secondaryContainer">
     <h2 class="products__title">Мои заказы:</h2>
 
     <ul class="orders__list">
