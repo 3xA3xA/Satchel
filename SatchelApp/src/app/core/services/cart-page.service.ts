@@ -26,8 +26,6 @@ export class CartPageService {
       shippingTypeId: shippingTypeId
     }
 
-    console.log(obj)
-
     return this.http.post(this.apiUrl + `/Order/FormingOrders`, obj)
   }
 

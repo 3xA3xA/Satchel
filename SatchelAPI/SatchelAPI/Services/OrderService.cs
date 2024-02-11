@@ -56,7 +56,7 @@ public class OrderService : IOrderService
         {
             orders.Add(new Order(productId, userId, 1, paymentTypeId, shippingTypeId, receiptCode));
         }
-
+        
         await _context.AddRangeAsync(orders);
         await _context.SaveChangesAsync();
     }

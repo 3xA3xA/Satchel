@@ -62,9 +62,11 @@ export class CartPageComponent {
   deleteProductFromProductCart(productId : number, sizeTypeId : number) {
     this.cartPageService.DeleteProductFromShoppingCart(productId, this.userService.userId, sizeTypeId).subscribe(
       () => {
+        this.getShoppingCart();
       },
       (error) => {
         this.errorMsg();
+        console.log(error)
       }
     );
   }
@@ -78,7 +80,7 @@ export class CartPageComponent {
     this.cartPageService.AddToOrder(this.userService.userId, this.paymentTypeId, this.shippingTypeId).subscribe(
       () => {
         this.deleteAllProductsFromShoppingCart();
-        this.ngOnInit(); // имба мув (движение)
+        this.getShoppingCart(); // имба мув (движение)
       },
       (error) => {
         this.errorMsg();

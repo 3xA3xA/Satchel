@@ -97,8 +97,9 @@ export class UserPageComponent {
     this.userService.getUserData().subscribe(
       (data: UserPageData) => {
         this.userData = data;
-        if (this.userData.dateOfBirth == '')  
-          this.userData.dateOfBirth = ''
+        console.log(data)
+        if (this.userData.dateOfBirth == null)
+          this.userData.dateOfBirth = ''       
         else
           this.userData.dateOfBirth = data.dateOfBirth.toString().slice(0, 10);
         this.updateUserInfoForm();

@@ -82,7 +82,7 @@
         </li>
     </ul>
     
-    <button *ngIf="sellerProducts.length >= 3" (click)="showMoreProducts()" class="moreBtn">Ещё</button>
+    <button *ngIf="sellerProducts.length <= 3" (click)="showMoreProducts()" class="moreBtn">Ещё</button>
 </div>
 
 <div *ngIf="orders.length > 0" class="secondaryContainer">
