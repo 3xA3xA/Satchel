@@ -30,7 +30,7 @@
 .product_info{
     padding: 1.6rem;
     width: 47.2rem;
-    height: 37.6rem;
+    max-height: 37.6rem;
     background-color: #fff;
 }
 
@@ -43,7 +43,7 @@
     color: #CA0D0D;
     font-family: 'Normalidad';
     font-weight: 700;
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
 }
 
 .sizes-container{

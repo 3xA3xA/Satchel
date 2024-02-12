@@ -67,7 +67,8 @@ export class CartPageComponent {
       (error) => {
         this.errorMsg();
         console.log(error)
-      }
+        return;
+      }    
     );
   }
 
@@ -80,7 +81,14 @@ export class CartPageComponent {
     this.cartPageService.AddToOrder(this.userService.userId, this.paymentTypeId, this.shippingTypeId).subscribe(
       () => {
         this.deleteAllProductsFromShoppingCart();
-        this.getShoppingCart(); // имба мув (движение)
+        this.shoppingCart = [];
+        this.finalPrice = 0;
+
+        this.statusMsg = 'Заказ оформлен';    
+        setTimeout(() => {
+          this.statusMsg = ''          
+        }, 2000)
+        
       },
       (error) => {
         this.errorMsg();

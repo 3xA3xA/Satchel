@@ -25,6 +25,7 @@ input::-webkit-inner-spin-button {
     font-size: 1.6rem;
     left: 126rem;
     margin-bottom: 2rem;
+    cursor: pointer;
 }
 
 .settings__image{

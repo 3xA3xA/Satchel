@@ -79,6 +79,7 @@ export class UserPageComponent {
       },
       (error) => {
         this.errorMsg();
+        console.log(error)
       }
     );   
   }
@@ -99,7 +100,7 @@ export class UserPageComponent {
         this.userData = data;
         console.log(data)
         if (this.userData.dateOfBirth == null)
-          this.userData.dateOfBirth = ''       
+          this.userData.dateOfBirth = '2024-02-13T00:00:00'       
         else
           this.userData.dateOfBirth = data.dateOfBirth.toString().slice(0, 10);
         this.updateUserInfoForm();
